@@ -46,12 +46,12 @@ var writData2 = [];
 
 d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, csv) {
 	// SCALING
-	/*var xScale = d3.scale.linear()
+	var xScale = d3.scale.linear()
 				.domain([0, 100])
 				.range([margin.left, w - margin.right]);
 	var yScale = d3.scale.linear()
 				.domain([0, csv.length])
-				.range([h - margin.bottom, margin.top]);*/
+				.range([h - margin.bottom, margin.top]);
 			
 	// SET UP CHART
 	var svg = d3.select(".chart")
@@ -124,9 +124,9 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, csv) {
 		})
 		.attr("height", h / writdata.length - barpadding)
 		.attr("class", "writdata")
-		/*.on("click", function() {
+		.on("click", function() {
 		        sortBars();
-		});*/
+		});
 		
 	// DISPLAY STAGGERED ELECTION BARS
 	svg.append("g")
@@ -169,7 +169,6 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, csv) {
 	   })
 	   .attr("class", "writdatalabel");
 });
-
 
 
 </script>
