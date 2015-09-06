@@ -12,16 +12,39 @@ body {
   font: 10px sans-serif;
 }
 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.selected:after {
+  content: "\0025BC";
+}
+
 </style>
+
+<div class="controls">
+	<div class="sorting">
+		<div class="sortOpt selected" data-key="Election">Sort by election</div>
+		<div class="sortOpt" data-key="Length">Sort by campaign length</div>
+	</div>
+	<div class="showDissolution">Show days after dissolution of parliament</div>
+</div>
+<div class="chart"></div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <!--<script src="{{ site.baseurl }}/d3.min.js"></script>-->
 <script>
-
-(function() {
-	
-
-
 var margin = {top: 80, right: 20, bottom: 30, left: 40},
     width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -33,7 +56,7 @@ var y = d3.scale.linear()
     .rangeRound([height, 0]);
 
 var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    .range(["#bd0026", "#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -48,23 +71,51 @@ var svg = d3.select(".chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+	.attr("class", "bars");
 	
-		console.log("hello!");
+var sortOption = "d";
 
+var showDissolution = 0;
+var first = 0;
+
+generateChart();
+
+d3.selectAll(".showDissolution")
+.on("click", dissolution);
+
+function dissolution() {
+	showDissolution = (showDissolution == 0) ? 1 : 0;
+	d3.select("g.bars").selectAll( "g" ).remove(); 
+	generateChart();
+}
+
+function generateChart() {
 d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
   if (error) throw error;
 
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Election"; }));
+  if (!showDissolution) {
+  var color = d3.scale.ordinal()
+      .range(["#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
+	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "Days after dissolution"); }));
+  } else {
+  var color = d3.scale.ordinal()
+      .range(["#bd0026", "#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
+  	color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Election"; }));
+  }
 
 	// Assign new data types
   data.forEach(function(d) {
     var y0 = 0;
-    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-    d.total = d.ages[d.ages.length - 1].y1;
+    d.lengths = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.lengths[d.lengths.length - 1].y1;
   });
 
-  //data.sort(function(a, b) { return b.total - a.total; });
+  if (sortOption === "election") {
+	  data.sort(function(a, b) { return b.Election - a.Election; });
+  } else {
+  	  data.sort(function(a, b) { return b.total - a.total; });
+  }
 
   x.domain(data.map(function(d) { return d.Election; }));
   y.domain([0, d3.max(data, function(d) { return d.total; })]);
@@ -84,7 +135,7 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("");
+      .text("Days");
 
   // Create state data, align it horizontally
   var state = svg.selectAll(".state")
@@ -95,35 +146,30 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
 
   // Position state data
   state.selectAll("rect")
-      .data(function(d) { return d.ages; })
+      .data(function(d) { return d.lengths; })
     .enter().append("rect")
       .attr("width", x.rangeBand())
 	  .attr("y", 0)
 	  .attr("height", 0)
       .style("fill", function(d) { return color(d.name); })
 	  .attr("class", "databar");
-	  
+  
   // Create bar labels
   state.append("text")
 	  .attr("x", 2)
 	  .attr("y", 0)
 	  .text(function(d) { return d.total; });
-	  
+  
   state.transition()
 	  .delay(function(d, i) {return i * 8})
 	  .selectAll("rect")
 	  .attr("y", function(d) {  return y(d.y1); })
 	  .attr("height", function(d) { return y(d.y0) - y(d.y1); });
-	  
+  
   state.transition()
 	  .delay(function(d, i) {return i * 8})
 	  .selectAll("text")
   	  .attr("y", function(d) { return y(d.total) - 5; });
-	  
-  // The arrow that controls sorting
-  /*var columnLabel = d3.selectAll(".sortOpt")
-      .datum(function() { return this.getAttribute("data-key"); })
-      .on("click", clicked)*/
 
   // Create legend groups
   var legend = svg.selectAll(".legend")
@@ -147,19 +193,36 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-});
+  // The arrow that controls sorting
+  var columnLabel = d3.selectAll(".sortOpt")
+      .datum(function() { return this.getAttribute("data-key"); })
+      .on("click", clicked);
+	  
+  function clicked(key) {
+	  if (key === "Election") {
+		  data.sort(function(a, b) { return b.Election - a.Election; });
+	  } else {
+		  data.sort(function(a, b) { return b.total - a.total; });
+	  }
 
-})()
+	  x.domain(data.map(function(d) { return d.Election; }));
+
+	  state.transition()
+		  .delay(function(d) {return d.Election * 8})
+		  .attr("transform", function(d) { return "translate(" + x(d.Election) + ",0)"; });
+
+	  svg.selectAll("g.x.axis")
+		  .transition()
+		  .delay(function(d) {return 5;})
+          .call(xAxis);
+
+  }
+
+});
+}
 
 </script>
 
-<div class="controls">
-	<div class="sorting">
-		<div class="sortOpt" data-key="Election">Sort by election</div>
-		<div class="sortOpt" data-key="Length">Sort by campaign length</div>
-	</div>
-</div>
-<div class="chart"></div>
 
 Source: [Parliament of Canada](http://www.parl.gc.ca/about/parliament/PARLINFO/infography/LengthFederalElection-e.htm)
 

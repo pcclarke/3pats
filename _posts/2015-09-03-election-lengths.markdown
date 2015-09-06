@@ -177,6 +177,12 @@ var formatCurrency = d3.format("$,.0f"),
 var x = d3.scale.linear()
     .domain([0, 100])
     .range([0, 300]);
+	
+var svg = d3.select(".chart")
+	.attr("width", 300)
+	.attr("height", 150)
+	.append("g")
+	.attr("transform", "translate(" + 25 + "," + 30 + ")");
 
 d3.csv("{{ site.baseurl }}/data/election_lengths.csv", type, function(error, elections) {
 
@@ -246,8 +252,8 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", type, function(error, ele
     else sortKey = key;
 
     elections
-        .sort(function(a, b) { return sortOrder(a[sortKey], b[sortKey]); })
-        .forEach(function(d, i) { d.index = i; });
+	.sort(function(a, b) { return sortOrder(a[sortKey], b[sortKey]); })
+        .forEach(function(d, i) { console.log(d); d.index = i; });
 
     columnLabel
 	        .classed("g-table-column-" + (sortOrder === d3.ascending ? "ascending" : "descending"), function(d) { return d === sortKey; });
@@ -270,6 +276,8 @@ function type(d) {
 })()
 
 </script>
+
+<div class="chart"></div>
 
 <div class="g-graphic">
 	<div class="g-instruction">Click a column header to sort.</div>
