@@ -65,7 +65,7 @@ body {
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
 	<p>Dissolution of previous parliament: <span id="tipDissolution"></span></p>
 	<p>Writs issued: <span id="tipWrits"></span></p>
-	<p>Election Day(s): <span id="tipElection"></span></p>
+	<p>Election Day(s): <span id="tipElection"></span><span id="tipElection2" class="hidden"></span></p>
 </div>
 <div id="controls">
 	<div class="sorting">
@@ -129,15 +129,34 @@ function dissolution() {
 function generateChart() {
 d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
   if (error) throw error;
+  
+	data.Election = +data.Election;
+	data["Days after dissolution"] = +data["Days after dissolution"];
+	data["Election Campaign"] = +data["Election Campaign"];
+	data["Voting and Campaigning"] = +data["Voting and Campaigning"];
+	
+	
+	data["Election Day(s)"] = data["Election Day(s)"];
+	
+	data.forEach(function(d, i) {
+		if (d.Election > 1) {
+			d["Dissolution of Previous Parliament"] = format.parse(d["Dissolution of Previous Parliament"]);
+		}
+		d["Writs Issued"] = format.parse(d["Writs Issued"]);
+		d["Election Day(s)"] = format.parse(d["Election Day(s)"]);
+		if(d.Election < 3) {
+			d["finalElectionDay"] = format.parse(d["finalElectionDay"]);
+		}
+	})
 
   if (!showDissolution) {
   var color = d3.scale.ordinal()
       .range(["#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
-	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Days after dissolution" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)"); }));
+	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Days after dissolution" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)" && key !== "finalElectionDay"); }));
   } else {
   var color = d3.scale.ordinal()
       .range(["#bd0026", "#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
-  	color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)"); }));
+  	color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)" && key !== "finalElectionDay"); }));
   }
 
 	// Assign new data types
@@ -180,8 +199,8 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
     .enter().append("g")
       .attr("class", "electionBar")
       .attr("transform", function(d) { return "translate(" + x(d.Election) + ",0)"; })
-    	.on("mouseover", function(d) {
-    		showTooltip(d);
+    	.on("mouseover", function(d, i) {
+    		showTooltip(d, i);
     	})
     	.on("mouseout", function(d) {
     		d3.select("#tooltip").classed("hidden", true);
@@ -197,7 +216,7 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
       .style("fill", function(d) { return color(d.name); })
 	.attr("class", "databar");
 
-  function showTooltip(d) {
+  function showTooltip(d, i) {
 	  console.log(d);
 	  
 	  var xPos = x(d.Election);
@@ -209,17 +228,32 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
 	  .select("#tipNum")
 	  .text(d["General Election"]);
 	  
-	d3.select("#tooltip")
-	  .select("#tipDissolution")
-	  .text(d["Dissolution of Previous Parliament"]);
+	  if (d.Election != 1) {
+		d3.select("#tooltip")
+		  .select("#tipDissolution")
+		  .text(d["Dissolution of Previous Parliament"].toDateString());
+	  } else {
+		d3.select("#tooltip")
+		  .select("#tipDissolution")
+		  .text(d["Dissolution of Previous Parliament"]);
+	  }
 	  
 	d3.select("#tooltip")
 	  .select("#tipWrits")
-	  .text(d["Writs Issued"]);
+	  .text(d["Writs Issued"].toDateString());
 	  
 	d3.select("#tooltip")
 	  .select("#tipElection")
-	  .text(d["Election Day(s)"]);
+	  .text(d["Election Day(s)"].toDateString());
+	  
+  if(d.Election < 3) {
+	d3.select("#tooltip")
+	  .select("#tipElection2")
+	  .text("-" + d["finalElectionDay"].toDateString());
+	d3.select("#tipElection2").classed("hidden", false);
+  } else {
+  	d3.select("#tipElection2").classed("hidden", true);
+  }
 	  
   	d3.select("#tooltip").classed("hidden", false);
   }
@@ -289,6 +323,7 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
           .call(xAxis);
 
   }
+  
 
 });
 }
