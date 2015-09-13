@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Length of Canadian Election Campaigns"
-date:   2015-09-05 13:12:00
+date:   2015-09-08 12:00:00
 ---
 
 There has been much discussion about how long this election campaign is. How does it compare to past campaign lengths?
@@ -31,23 +31,59 @@ body {
   content: "\0025BC";
 }
 
+.hidden {
+	display: none;
+}
+
+#tooltip {
+	border: 1px solid black;
+	background-color: white;
+        position: absolute;
+        width: 400px;
+        height: auto;
+        padding: 10px;
+        pointer-events: none;
+}
+
+#tooltip p {
+	font-family: sans-serif;
+	font-size: 16px;
+	margin: 0;
+}
+
+#tooltip strong {
+	text-transform: uppercase;
+}
+
+#tiptop {
+	margin-bottom: 10px !important;
+}
+
 </style>
 
-<div class="controls">
+<div id="tooltip" class="hidden">
+	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
+	<p>Dissolution of previous parliament: <span id="tipDissolution"></span></p>
+	<p>Writs issued: <span id="tipWrits"></span></p>
+	<p>Election Day(s): <span id="tipElection"></span></p>
+</div>
+<div id="controls">
 	<div class="sorting">
-		<div class="sortOpt selected" data-key="Election">Sort by election</div>
-		<div class="sortOpt" data-key="Length">Sort by campaign length</div>
+		<label><input class="sortOpt" data-key="Election" type="radio" name ="sorting" checked>Sort by election</label>
+		<label><input class="sortOpt" data-key="Length" type="radio" name="sorting">Sort by campaign length</label>
 	</div>
-	<div class="showDissolution">Show days after dissolution of parliament</div>
+	<label><input class="showDissolution" name="dissolution" type="checkbox">Show days after dissolution of parliament</label>
 </div>
 <div class="chart"></div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <!--<script src="{{ site.baseurl }}/d3.min.js"></script>-->
 <script>
-var margin = {top: 80, right: 20, bottom: 30, left: 40},
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
     width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
+	
+var format = d3.time.format("%Y-%m-%d");
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -74,7 +110,7 @@ var svg = d3.select(".chart").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 	.attr("class", "bars");
 	
-var sortOption = "d";
+var sortOption = "Election";
 
 var showDissolution = 0;
 var first = 0;
@@ -91,17 +127,17 @@ function dissolution() {
 }
 
 function generateChart() {
-d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
+d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
   if (error) throw error;
 
   if (!showDissolution) {
   var color = d3.scale.ordinal()
       .range(["#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
-	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "Days after dissolution"); }));
+	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Days after dissolution" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)"); }));
   } else {
   var color = d3.scale.ordinal()
       .range(["#bd0026", "#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
-  	color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Election"; }));
+  	color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)"); }));
   }
 
 	// Assign new data types
@@ -111,14 +147,15 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
     d.total = d.lengths[d.lengths.length - 1].y1;
   });
 
-  if (sortOption === "election") {
-	  data.sort(function(a, b) { return b.Election - a.Election; });
+  if (sortOption === "Election") {
+	  data.sort(function(a, b) { return a.Election - b.Election; });
   } else {
-  	  data.sort(function(a, b) { return b.total - a.total; });
+  	  data.sort(function(a, b) { return a.total - b.total; });
   }
 
   x.domain(data.map(function(d) { return d.Election; }));
-  y.domain([0, d3.max(data, function(d) { return d.total; })]);
+  //y.domain([0, d3.max(data, function(d) { return d.total; })]);
+  y.domain([0, 120]);
 
   // X axis
   svg.append("g")
@@ -137,36 +174,69 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
       .style("text-anchor", "end")
       .text("Days");
 
-  // Create state data, align it horizontally
-  var state = svg.selectAll(".state")
+  // Create election length data, align it horizontally
+  var election = svg.selectAll(".election")
       .data(data)
     .enter().append("g")
-      .attr("class", "stateBar")
-      .attr("transform", function(d) { return "translate(" + x(d.Election) + ",0)"; });
+      .attr("class", "electionBar")
+      .attr("transform", function(d) { return "translate(" + x(d.Election) + ",0)"; })
+    	.on("mouseover", function(d) {
+    		showTooltip(d);
+    	})
+    	.on("mouseout", function(d) {
+    		d3.select("#tooltip").classed("hidden", true);
+    	});
 
-  // Position state data
-  state.selectAll("rect")
-      .data(function(d) { return d.lengths; })
+  // Position election length data
+  election.selectAll("rect")
+      .data(function(d) {  return d.lengths; })
     .enter().append("rect")
       .attr("width", x.rangeBand())
-	  .attr("y", 0)
+	  .attr("y", height)
 	  .attr("height", 0)
       .style("fill", function(d) { return color(d.name); })
-	  .attr("class", "databar");
+	.attr("class", "databar");
+
+  function showTooltip(d) {
+	  console.log(d);
+	  
+	  var xPos = x(d.Election);
+	  var yPos = y(d.total) + 150;
+	  
+	d3.select("#tooltip")
+	  .style("left", xPos + "px")
+	  .style("top", yPos + "px")
+	  .select("#tipNum")
+	  .text(d["General Election"]);
+	  
+	d3.select("#tooltip")
+	  .select("#tipDissolution")
+	  .text(d["Dissolution of Previous Parliament"]);
+	  
+	d3.select("#tooltip")
+	  .select("#tipWrits")
+	  .text(d["Writs Issued"]);
+	  
+	d3.select("#tooltip")
+	  .select("#tipElection")
+	  .text(d["Election Day(s)"]);
+	  
+  	d3.select("#tooltip").classed("hidden", false);
+  }
   
   // Create bar labels
-  state.append("text")
+  election.append("text")
 	  .attr("x", 2)
-	  .attr("y", 0)
+	  .attr("y", height)
 	  .text(function(d) { return d.total; });
   
-  state.transition()
+  election.transition()
 	  .delay(function(d, i) {return i * 8})
 	  .selectAll("rect")
 	  .attr("y", function(d) {  return y(d.y1); })
 	  .attr("height", function(d) { return y(d.y0) - y(d.y1); });
   
-  state.transition()
+  election.transition()
 	  .delay(function(d, i) {return i * 8})
 	  .selectAll("text")
   	  .attr("y", function(d) { return y(d.total) - 5; });
@@ -199,15 +269,17 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
       .on("click", clicked);
 	  
   function clicked(key) {
-	  if (key === "Election") {
-		  data.sort(function(a, b) { return b.Election - a.Election; });
-	  } else {
-		  data.sort(function(a, b) { return b.total - a.total; });
+	  if (key === "Election" && sortOption !== "Election") {
+		  sortOption = "Election";
+		  data.sort(function(a, b) { return a.Election - b.Election; });
+	  } else if (sortOption !== "Length"){
+		  sortOption = "Length";
+		  data.sort(function(a, b) { return a.total - b.total; });
 	  }
 
 	  x.domain(data.map(function(d) { return d.Election; }));
 
-	  state.transition()
+	  election.transition()
 		  .delay(function(d) {return d.Election * 8})
 		  .attr("transform", function(d) { return "translate(" + x(d.Election) + ",0)"; });
 
@@ -227,6 +299,3 @@ d3.csv("{{ site.baseurl }}/data/data.csv", function(error, data) {
 Source: [Parliament of Canada](http://www.parl.gc.ca/about/parliament/PARLINFO/infography/LengthFederalElection-e.htm)
 
 Retrieved August 27, at 4:00pm PST
-
-[CBC](http://www.cbc.ca/news/politics/canada-election-2015-stephen-harper-confirms-start-of-11-week-federal-campaign-1.3175136)
-
