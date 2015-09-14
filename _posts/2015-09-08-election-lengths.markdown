@@ -52,7 +52,7 @@ There has been much discussion about how long this election campaign is. How doe
 }
 
 #tooltip strong {
-
+	font-weight: bold;
 }
 
 #tiptop {
@@ -111,6 +111,13 @@ var margin = {top: 40, right: 20, bottom: 30, left: 40},
 	
 var format = d3.time.format("%Y-%m-%d");
 
+var coordinates = [0, 0];
+
+var body = d3.select("body")
+	.on("mousemove", function() {
+		coordinates = d3.mouse(this);
+	});
+
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
 
@@ -135,6 +142,8 @@ var svg = d3.select(".chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 	.attr("class", "bars");
+	
+	
 	
 var sortOption = "Election";
 
@@ -243,13 +252,13 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
 	.attr("class", "databar");
 
   function showTooltip(d, i) {
-	  console.log(d);
 	  
-	  var xPos = x(d.Election) - 50;
-	  if (xPos < 300) {
-		  xPos = x(d.Election) + 280;
+	  console.log(coordinates[0]);
+	  var xPos = coordinates[0];
+	  if (x(d.Election) > 300) {
+		  xPos = coordinates[0] - 300;
 	  }
-	  var yPos = y(d.total) + 350;
+	  var yPos = coordinates[1];
 	  
 	d3.select("#tooltip")
 	  .style("left", xPos + "px")
