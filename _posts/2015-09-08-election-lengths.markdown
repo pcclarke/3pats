@@ -8,7 +8,7 @@ There has been much discussion about how long this election campaign is. How doe
 
 <style>
 
-body {
+.chart {
   font: 10px sans-serif;
 }
 
@@ -38,25 +38,48 @@ body {
 #tooltip {
 	border: 1px solid black;
 	background-color: white;
-        position: absolute;
-        width: 400px;
-        height: auto;
-        padding: 10px;
-        pointer-events: none;
+    position: absolute;
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    pointer-events: none;
 }
 
 #tooltip p {
 	font-family: sans-serif;
-	font-size: 16px;
+	font-size: 12px;
 	margin: 0;
 }
 
 #tooltip strong {
-	text-transform: uppercase;
+
 }
 
 #tiptop {
 	margin-bottom: 10px !important;
+}
+
+#options {
+	font-size: 12px;
+	font-weight: normal;
+	padding: 10px;
+}
+
+#options p {
+	border-bottom: 1px solid black;
+	font-weight: bold;
+	margin-bottom: 5px;
+	width: 450px;
+}
+
+#options .sorting label {
+	display: block;
+	width: 100%;
+}
+
+#options .sorting {
+	float: left;
+	width: 200px;
 }
 
 </style>
@@ -66,13 +89,16 @@ body {
 	<p>Dissolution of previous parliament: <span id="tipDissolution"></span></p>
 	<p>Writs issued: <span id="tipWrits"></span></p>
 	<p>Election Day(s): <span id="tipElection"></span><span id="tipElection2" class="hidden"></span></p>
+	<p>Number of Days from Dissolution to Election: <span id="tipDissolutionDays"></span></p>
+	<p>Number of Days from Writ to Election: <span id="tipWritDays"></span></p>
 </div>
-<div id="controls">
+<div id="options">
+	<p>Options</p>
 	<div class="sorting">
 		<label><input class="sortOpt" data-key="Election" type="radio" name ="sorting" checked>Sort by election</label>
 		<label><input class="sortOpt" data-key="Length" type="radio" name="sorting">Sort by campaign length</label>
 	</div>
-	<label><input class="showDissolution" name="dissolution" type="checkbox">Show days after dissolution of parliament</label>
+	<label class="showDays"><input class="showDissolution" name="dissolution" type="checkbox">Show days after dissolution of parliament</label>
 </div>
 <div class="chart"></div>
 
@@ -80,7 +106,7 @@ body {
 <!--<script src="{{ site.baseurl }}/d3.min.js"></script>-->
 <script>
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 800 - margin.left - margin.right,
+    width = 740 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 	
 var format = d3.time.format("%Y-%m-%d");
@@ -152,11 +178,11 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
   if (!showDissolution) {
   var color = d3.scale.ordinal()
       .range(["#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
-	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Days after dissolution" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)" && key !== "finalElectionDay"); }));
+	  color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Days after dissolution" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)" && key !== "finalElectionDay" && key !== "writDays" && key !== "dissolutionDays"); }));
   } else {
   var color = d3.scale.ordinal()
       .range(["#bd0026", "#f03b20", "#fd8d3c", "#fecc5c", "#ffffb2", "#d0743c", "#ff8c00"]);
-  	color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)" && key !== "finalElectionDay"); }));
+  	color.domain(d3.keys(data[0]).filter(function(key) { return (key !== "Election" && key !== "General Election" && key !== "Dissolution of Previous Parliament" && key !== "Writs Issued" && key !== "Election Day(s)" && key !== "finalElectionDay" && key !== "writDays" && key !== "dissolutionDays"); }));
   }
 
 	// Assign new data types
@@ -219,8 +245,11 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
   function showTooltip(d, i) {
 	  console.log(d);
 	  
-	  var xPos = x(d.Election);
-	  var yPos = y(d.total) + 150;
+	  var xPos = x(d.Election) - 50;
+	  if (xPos < 300) {
+		  xPos = x(d.Election) + 280;
+	  }
+	  var yPos = y(d.total) + 350;
 	  
 	d3.select("#tooltip")
 	  .style("left", xPos + "px")
@@ -254,6 +283,14 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
   } else {
   	d3.select("#tipElection2").classed("hidden", true);
   }
+  
+    d3.select("#tooltip")
+	  .select("#tipDissolutionDays")
+	  .text(d["dissolutionDays"]);
+	  
+	d3.select("#tooltip")
+	  .select("#tipWritDays")
+	  .text(d["writDays"]);
 	  
   	d3.select("#tooltip").classed("hidden", false);
   }
