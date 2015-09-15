@@ -24,10 +24,13 @@ $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 
 // Width of the content area
-$content-width:    1000px;
+$content-width:    800px;
 
-$on-palm:          600px;
-$on-laptop:        800px;
+$on-palm:          1px;
+$on-laptop:        1px;
+
+//$on-palm:          600px;
+//$on-laptop:        800px;
 
 
 
@@ -52,5 +55,4 @@ $on-laptop:        800px;
         "layout",
         "syntax-highlighting"
 ;
-
 

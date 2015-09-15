@@ -18,15 +18,15 @@
   
   @font-face {
       font-family: "Walbaum-Fraktur";
-  		src: url("fonts/Walbf.otf") format('opentype'),
-			 url('fonts/Walbf.woff') format('woff'),
-			 url('fonts/Walbf.ttf') format('truetype');
+  		src: url("{{ "/fonts/Walbf.otf" | prepend: site.baseurl }}") format('opentype'),
+			 url("{{ "/fonts/Walbf.woff" | prepend: site.baseurl }}") format('woff'),
+			 url("{{ "/fonts/Walbf.ttf" | prepend: site.baseurl }}") format('truetype');
   }
   @font-face {
       font-family: "Gamaliel";
-  		src: url("fonts/Gamaliel.otf") format('opentype'),
-			 url('fonts/Gamaliel.woff') format('woff'),
-			 url('fonts/Gamaliel.ttf') format('truetype');
+  		src: url("{{ "/fonts/Gamaliel.otf" | prepend: site.baseurl }}") format('opentype'),
+			 url("{{ "/fonts/Gamaliel.woff" | prepend: site.baseurl }}") format('woff'),
+			 url("{{ "/fonts/Gamaliel.ttf" | prepend: site.baseurl }}") format('truetype');
   }
   </style>
 </head>

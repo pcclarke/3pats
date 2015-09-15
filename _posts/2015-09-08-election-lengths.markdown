@@ -103,7 +103,7 @@ There has been much discussion about how long this election campaign is. How doe
 <!--<script src="{{ site.baseurl }}/d3.min.js"></script>-->
 <script>
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 940 - margin.left - margin.right,
+    width = 740 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 	
 var format = d3.time.format("%Y-%m-%d");
