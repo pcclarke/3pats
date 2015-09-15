@@ -66,18 +66,21 @@ There has been much discussion about how long this election campaign is. How doe
 	border-bottom: 1px solid black;
 	font-size: 16px;
 	margin-bottom: 5px;
-	width: 450px;
-}
-
-#options .sorting label {
-	display: block;
-	width: 100%;
+	width: 500px;
 }
 
 #options .sorting {
 	float: left;
-	width: 200px;
+	width: 250px;
 }
+
+#options .sorting label {
+	display: block;
+	margin-bottom: 5px;
+	width: 100%;
+}
+
+
 
 </style>
 
