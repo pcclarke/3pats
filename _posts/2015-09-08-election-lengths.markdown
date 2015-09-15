@@ -209,7 +209,7 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
 
   x.domain(data.map(function(d) { return d.Election; }));
   //y.domain([0, d3.max(data, function(d) { return d.total; })]);
-  y.domain([0, 120]);
+  y.domain([0, 130]);
 
   // X axis
   svg.append("g")
