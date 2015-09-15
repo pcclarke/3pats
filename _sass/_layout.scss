@@ -11,16 +11,19 @@
 }
 
 .site-title {
-    font-size: 26px;
-    line-height: 56px;
+	font-family: $title-font-family;
+    font-size: 50px;
+    line-height: 60px;
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
-
-    &,
-    &:visited {
-        color: $grey-color-dark;
-    }
+	
+	svg {
+		width: 50px;
+		height: 50px;
+		fill: #111111;
+		vertical-align: middle;
+	}
 }
 
 .site-nav {
@@ -156,6 +159,14 @@
     }
 }
 
+.pagination {
+	float: right;
+	margin-top: 40px;
+	
+	.previous, .next {
+		font-family: $heading-font-family;
+	}
+}
 
 
 /**
@@ -193,6 +204,7 @@
 /**
  * Posts
  */
+
 .post-header {
     margin-bottom: $spacing-unit;
 }
@@ -233,4 +245,10 @@
             font-size: 18px;
         }
     }
+	
+
+}
+
+text {
+	font-family: $base-font-family;
 }

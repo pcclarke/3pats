@@ -21,6 +21,7 @@ body {
     color: $text-color;
     background-color: $background-color;
     -webkit-text-size-adjust: 100%;
+	min-width: $content-width;
 }
 
 
@@ -80,6 +81,7 @@ li {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
+	font-family: $heading-font-family;
     font-weight: 300;
 }
 
