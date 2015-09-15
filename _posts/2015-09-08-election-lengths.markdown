@@ -15,12 +15,9 @@ There has been much discussion about how long this election campaign is. How doe
 .axis path,
 .axis line {
   fill: none;
+  
   stroke: #000;
   shape-rendering: crispEdges;
-}
-
-.bar {
-  fill: steelblue;
 }
 
 .x.axis path {
@@ -45,18 +42,18 @@ There has been much discussion about how long this election campaign is. How doe
     pointer-events: none;
 }
 
-#tooltip p {
-	font-family: sans-serif;
-	font-size: 12px;
-	margin: 0;
-}
-
 #tooltip strong {
 	font-weight: bold;
 }
 
-#tiptop {
+#tipTop {
+	font-size: 16px;
 	margin-bottom: 10px !important;
+}
+
+.tipInfo {
+	font-size: 12px;
+	margin: 0;
 }
 
 #options {
@@ -67,7 +64,7 @@ There has been much discussion about how long this election campaign is. How doe
 
 #options p {
 	border-bottom: 1px solid black;
-	font-weight: bold;
+	font-size: 16px;
 	margin-bottom: 5px;
 	width: 450px;
 }
@@ -86,14 +83,14 @@ There has been much discussion about how long this election campaign is. How doe
 
 <div id="tooltip" class="hidden">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
-	<p>Dissolution of previous parliament: <span id="tipDissolution"></span></p>
-	<p>Writs issued: <span id="tipWrits"></span></p>
-	<p>Election Day(s): <span id="tipElection"></span><span id="tipElection2" class="hidden"></span></p>
-	<p>Number of Days from Dissolution to Election: <span id="tipDissolutionDays"></span></p>
-	<p>Number of Days from Writ to Election: <span id="tipWritDays"></span></p>
+	<p class="tipInfo">Dissolution of previous parliament: <span id="tipDissolution"></span></p>
+	<p class="tipInfo">Writs issued: <span id="tipWrits"></span></p>
+	<p class="tipInfo">Election Day(s): <span id="tipElection"></span><span id="tipElection2" class="hidden"></span></p>
+	<p class="tipInfo">Number of Days from Dissolution to Election: <span id="tipDissolutionDays"></span></p>
+	<p class="tipInfo">Number of Days from Writ to Election: <span id="tipWritDays"></span></p>
 </div>
 <div id="options">
-	<p>Options</p>
+	<p><strong>Options</strong></p>
 	<div class="sorting">
 		<label><input class="sortOpt" data-key="Election" type="radio" name ="sorting" checked>Sort by election</label>
 		<label><input class="sortOpt" data-key="Length" type="radio" name="sorting">Sort by campaign length</label>
@@ -106,7 +103,7 @@ There has been much discussion about how long this election campaign is. How doe
 <!--<script src="{{ site.baseurl }}/d3.min.js"></script>-->
 <script>
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 740 - margin.left - margin.right,
+    width = 940 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 	
 var format = d3.time.format("%Y-%m-%d");
