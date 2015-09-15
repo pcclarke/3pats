@@ -116,6 +116,9 @@ var coordinates = [0, 0];
 var body = d3.select("body")
 	.on("mousemove", function() {
 		coordinates = d3.mouse(this);
+	})
+	.on("mousedown", function() {
+		coordinates = d3.mouse(this);
 	});
 
 var x = d3.scale.ordinal()
@@ -252,8 +255,6 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
 	.attr("class", "databar");
 
   function showTooltip(d, i) {
-	  
-	  console.log(coordinates[0]);
 	  var xPos = coordinates[0];
 	  if (x(d.Election) > 300) {
 		  xPos = coordinates[0] - 300;
