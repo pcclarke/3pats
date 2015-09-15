@@ -17,6 +17,13 @@
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
+	
+	svg {
+		width: 50px;
+		height: 50px;
+		fill: #111111;
+		vertical-align: middle;
+	}
 }
 
 .site-nav {
