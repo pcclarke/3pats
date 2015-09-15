@@ -240,6 +240,9 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
     	.on("mouseover", function(d, i) {
     		showTooltip(d, i);
     	})
+    	.on("mousedown", function(d, i) {
+    		showTooltip(d, i);
+    	})
     	.on("mouseout", function(d) {
     		d3.select("#tooltip").classed("hidden", true);
     	});
@@ -255,9 +258,9 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
 	.attr("class", "databar");
 
   function showTooltip(d, i) {
-	  var xPos = coordinates[0];
+	  var xPos = coordinates[0] + 15;
 	  if (x(d.Election) > 300) {
-		  xPos = coordinates[0] - 300;
+		  xPos = coordinates[0] - 325;
 	  }
 	  var yPos = coordinates[1];
 	  
