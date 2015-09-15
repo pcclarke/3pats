@@ -17,11 +17,6 @@
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
-
-    &,
-    &:visited {
-        color: $grey-color-dark;
-    }
 }
 
 .site-nav {
@@ -157,6 +152,14 @@
     }
 }
 
+.pagination {
+	float: right;
+	margin-top: 40px;
+	
+	.previous, .next {
+		font-family: $heading-font-family;
+	}
+}
 
 
 /**

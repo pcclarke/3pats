@@ -303,7 +303,7 @@ d3.csv("{{ site.baseurl }}/data/election_lengths.csv", function(error, data) {
   
   // Create bar labels
   election.append("text")
-	  .attr("x", 2)
+	  .attr("x", 1.5)
 	  .attr("y", height)
 	  .text(function(d) { return d.total; });
   
