@@ -8,7 +8,7 @@ There has been much discussion about how long this election campaign is. How doe
 
 <style>
 
-.chart {
+.lengthChart {
   font: 10px sans-serif;
 }
 
@@ -100,10 +100,9 @@ There has been much discussion about how long this election campaign is. How doe
 	</div>
 	<label class="showDays"><input class="showDissolution" name="dissolution" type="checkbox">Show days after dissolution of parliament</label>
 </div>
-<div class="chart"></div>
+<div class="lengthChart"></div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<!--<script src="{{ site.baseurl }}/d3.min.js"></script>-->
 <script>
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
     width = 740 - margin.left - margin.right,
@@ -139,7 +138,7 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".2s"));
 
-var svg = d3.select(".chart").append("svg")
+var svg = d3.select(".lengthChart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

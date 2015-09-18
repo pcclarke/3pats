@@ -7,7 +7,7 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://3pats.ca" # the base hostname & protocol for your site
 twitter_username: threepats
 github_username:  pcclarke
-paginate: 5
+paginate: 1
 
 # Build settings
 markdown: kramdown
