@@ -22,7 +22,7 @@ The 42nd election campaign still has another month to go until election day on O
 	</div>
 	<label class="showDays"><input class="showDissolution" name="dissolution" type="checkbox">Show days after dissolution of parliament</label>
 </div>
-<div class="lengthChart"></div>
+<div id="lengthChart"></div>
 
 And that's not even including the unofficial campaign rhetoric, which has been going on for seeming months, if not the past year.
 
@@ -33,12 +33,12 @@ Source: [Parliament of Canada](http://www.parl.gc.ca/about/parliament/PARLINFO/i
 Retrieved August 27, at 4:00pm PST
 
 <style>
-.lengthChart {
+#lengthChart {
   font: 10px sans-serif;
 }
 
-.axis path,
-.axis line {
+#lengthChart .axis path,
+#lengthChart .axis line {
   fill: none;
   
   stroke: #000;
@@ -47,10 +47,6 @@ Retrieved August 27, at 4:00pm PST
 
 .x.axis path {
   display: none;
-}
-
-.selected:after {
-  content: "\0025BC";
 }
 
 .hidden {
@@ -106,13 +102,8 @@ Retrieved August 27, at 4:00pm PST
 }
 </style>
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 740 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-	
-var format = d3.time.format("%Y-%m-%d");
+electionLengths();
 
 var coordinates = [0, 0];
 
@@ -123,6 +114,16 @@ var body = d3.select("body")
 	.on("mousedown", function() {
 		coordinates = d3.mouse(this);
 	});
+
+function electionLengths() {
+
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
+    width = 740 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+	
+var format = d3.time.format("%Y-%m-%d");
+
+
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -142,7 +143,7 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".2s"));
 
-var svg = d3.select(".lengthChart").append("svg")
+var svg = d3.select("#lengthChart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -163,7 +164,7 @@ d3.selectAll(".showDissolution")
 
 function dissolution() {
 	showDissolution = (showDissolution == 0) ? 1 : 0;
-	d3.select("g.bars").selectAll( "g" ).remove(); 
+	d3.select("#lengthChart g.bars").selectAll( "g" ).remove(); 
 	generateChart();
 }
 
@@ -376,5 +377,6 @@ function generateChart() {
 	          .call(xAxis);
 	  }
 	});
+}
 }
 </script>
