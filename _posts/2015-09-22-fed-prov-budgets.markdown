@@ -63,7 +63,9 @@ Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for
 }
 
 #selectBudget {
-  font-size: 24px;
+  font-family: Lora, Georgia, serif;
+  font-size: 20px;
+  padding: 5px 15px;
 }
 
 .hidden {
@@ -110,7 +112,8 @@ var body = d3.select("body")
   });
 
 function budgetChart() {
-budgetDraw("budget_balances");
+var sel = document.getElementById('selectBudget');
+budgetDraw(sel.options[sel.selectedIndex].value);
 
 function budgetDraw(kind) {
   d3.csv("{{ site.baseurl }}/data/" + kind + ".csv", type, function(error, data) {
@@ -166,7 +169,7 @@ function budgetDraw(kind) {
           });
 
       budgets.transition()
-        .delay(function(d, i) { console.log(d); return i * 32})
+        .delay(function(d, i) { return i * 32})
         .attr("y", function(d) { return y(Math.max(0, d[bud])); })
         .attr("height", function(d) { return Math.abs(y(d[bud]) - y(0));});
 
