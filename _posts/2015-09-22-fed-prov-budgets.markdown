@@ -15,11 +15,13 @@ Here's an overview of the budget balances for the federal and provincial governm
   <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span></p>
   <p class="tipInfo hidden" id="tipFore">(projected)</p>
 </div>
-<select id="selectBudget">
-  <option value="budget_balances" selected="selected">Budget balances</option>
-  <option value="budget_balances_gdp">Budget balances relative to GDP</option>
-  <option value="budget_balances_inf">Budget balances adjusted for inflation</option>
-</select>
+<div>
+  <select id="selectBudget">
+    <option value="budget_balances" selected="selected">Budget balances</option>
+    <option value="budget_balances_gdp">Budget balances relative to GDP</option>
+    <option value="budget_balances_inf">Budget balances adjusted for inflation</option>
+  </select>
+</div>
 <div id="budgetChart"></div>
 
 Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for September 15, 2015](http://www.rbc.com/economics/economic-reports/provincial-economic-forecasts.html), with the inflation adjustments courtesy of the [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
