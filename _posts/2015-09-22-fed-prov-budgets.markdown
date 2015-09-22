@@ -4,6 +4,22 @@ title:  "Federal and Provincial Budget Balances"
 date:   2015-09-22 12:00:00
 ---
 
+
+
+<div id="budgetTip" class="hidden">
+  <p id="tipTop"><strong><span id="tipNum"></span> Budget</strong></p>
+  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span></p>
+  <p class="tipInfo hidden" id="tipFore">(projected)</p>
+</div>
+<select id="selectBudget">
+  <option value="budget_balances" selected="selected">Budget balances</option>
+  <option value="budget_balances_gdp">Budget balances relative to GDP</option>
+  <option value="budget_balances_inf">Budget balances adjusted for inflation</option>
+</select>
+<div id="budgetChart"></div>
+
+Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for September 15, 2015](http://www.rbc.com/economics/economic-reports/provincial-economic-forecasts.html), with the inflation adjustments courtesy of the [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
+
 <style>
 #budgetChart {
   height: 1100px;
@@ -12,12 +28,21 @@ date:   2015-09-22 12:00:00
 #budgetChart svg:not(:nth-of-type(1)) {
   margin-top: 25px;
 }
+
 #budgetChart .bar.positive {
   fill: black;
 }
 
 #budgetChart .bar.negative {
   fill: brown;
+}
+
+#budgetChart .bar.forepositive {
+  fill: #808080;
+}
+
+#budgetChart .bar.forenegative {
+  fill: #FF5656;
 }
 
 #budgetChart .axis text {
@@ -64,16 +89,6 @@ date:   2015-09-22 12:00:00
   margin: 0;
 }
 </style>
-
-<div id="budgetTip" class="hidden">
-  <p id="tipTop"><strong><span id="tipNum"></span> Budget</strong></p>
-  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span></p>
-</div>
-<select id="selectBudget">
-  <option value="budget_balances" selected="selected">Budget balances</option>
-  <option value="budget_balances_gdp">Budget balances relative to GDP</option>
-</select>
-<div id="budgetChart"></div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
@@ -124,7 +139,13 @@ function budgetDraw(kind) {
       var budgets = budgetChart.selectAll(".bar")
           .data(data)
         .enter().append("rect")
-          .attr("class", function(d) { return d[bud] < 0 ? "bar negative" : "bar positive"; })
+          .attr("class", function(d) {
+            if(checkForecast(d.Year, bud)) {
+              return d[bud] < 0 ? "bar forenegative" : "bar forepositive"; 
+            } else {
+              return d[bud] < 0 ? "bar negative" : "bar positive"; 
+            }
+          })
           .attr("x", function(d) { return x(d.Year); })
           .attr("y", function(d) { return y(0); })
           .attr("width", x.rangeBand())
@@ -185,12 +206,25 @@ function budgetDraw(kind) {
             .text("");
         }
 
+        if (checkForecast(d.Year, bud)) {
+          d3.select("#budgetTip").select("#tipFore").classed("hidden", false);
+        } else {
+          d3.select("#budgetTip").select("#tipFore").classed("hidden", true);
+        }
+
         d3.select("#budgetTip").classed("hidden", false);
       }
 
+      function checkForecast(year, province) {
+        if((year == 2015 && (province === "Manitoba" || province === "Ontario" || province === "Quebec" || province === "New Brunswick" || province === "Prince Edward Island" || province === "Newfoundland and Labrador")) || year == 2016) {
+          return 1; 
+        }
+        return 0;
+      }
+
       budgetChart.append("g")
-          .attr("class", "y axis")
-          .call(yAxis);
+        .attr("class", "y axis")
+        .call(yAxis);
 
       budgetChart.append("g")
           .attr("class", "x axis")
@@ -203,7 +237,6 @@ function budgetDraw(kind) {
         .attr("x", 0)
         .attr("dy", -10)
         .style("font-weight", "bold")
-        //.style("text-anchor", "end")
         .text(bud);
     });
   });
