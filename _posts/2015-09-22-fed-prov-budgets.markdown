@@ -4,7 +4,11 @@ title:  "Federal and Provincial Budget Balances"
 date:   2015-09-22 12:00:00
 ---
 
+Here's an overview of the budget balances for the federal and provincial governments, to give some context to the federal government's recently announced budget surplus. You can select from three options:
 
+1. *The budget balance.* Each government has its own accounting practices, so they aren't exactly comparable. I am using numbers from the Royal Bank of Canada, who has made decisions on what to include and exclude for me.
+2. *The budget balance relative to GDP*. This is the percentage of Canada's or the province's GDP in the budget balance. Or in other words, it's the budget balance divided by that government's GDP.
+3. *The budget balance adjusted for inflation*. The budget balance in 2015 dollars, to account for past inflation.
 
 <div id="budgetTip" class="hidden">
   <p id="tipTop"><strong><span id="tipNum"></span> Budget</strong></p>
