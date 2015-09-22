@@ -62,7 +62,6 @@ Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for
 
 #selectBudget {
   font-size: 24px;
-  width: 300px;
 }
 
 .hidden {
@@ -72,11 +71,11 @@ Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for
 #budgetTip {
   border: 1px solid black;
   background-color: white;
-    position: absolute;
-    width: 180px;
-    height: auto;
-    padding: 5px;
-    pointer-events: none;
+  position: absolute;
+  width: 180px;
+  height: auto;
+  padding: 5px;
+  pointer-events: none;
 }
 
 #budgetTip strong {
