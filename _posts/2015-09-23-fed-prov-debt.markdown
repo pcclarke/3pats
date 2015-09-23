@@ -121,7 +121,7 @@ function debtDraw(kind) {
           height = 150 - margin.top - margin.bottom;
 
       var y = d3.scale.linear()
-          .range([height, 15]);
+          .range([height, 0]);
 
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .2);
@@ -138,7 +138,9 @@ function debtDraw(kind) {
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     	
       x.domain(data.map(function(d) { return d.Year; }));
-      y.domain(d3.extent(data, function(d) { return -1 * d[bud]; })).nice();
+      //y.domain(d3.extent(data, function(d) { return d[bud]; })).nice();
+      y.domain([d3.max(data, function(d) { return d[bud]; }), 
+        d3.min(data, function(d) { return d[bud] > 0 ? 0 : d[bud]; })]);
 
       var budgets = budgetChart.selectAll(".bar")
           .data(data)
@@ -166,7 +168,7 @@ function debtDraw(kind) {
 
       budgets.transition()
         .delay(function(d, i) { return i * 32})
-        .attr("y", function(d) { return y(Math.max(0, -1 * d[bud])); })
+        .attr("y", function(d) { return y(Math.min(0, d[bud])); })
         .attr("height", function(d) { return Math.abs(y(0) - y(d[bud]));});
 
       function showTooltip(d) {
