@@ -7,15 +7,15 @@ date:   2015-09-23 12:00:00
 In part 2 of what has turned into budget week, I'm following up yesterday's budget charts with debt charts.
 
 <div id="debtTip" class="hidden">
-  <p id="tipTop"><strong><span id="tipNum"></span> Budget</strong></p>
+  <p id="tipTop"><strong><span id="tipNum"></span></strong></p>
   <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span></p>
   <p class="tipInfo hidden" id="tipFore">(projected)</p>
 </div>
 <div>
   <select id="selectDebt">
-    <option value="budget_balances" selected="selected">Budget balances</option>
-    <option value="budget_balances_gdp">Budget balances relative to GDP</option>
-    <option value="budget_balances_inf">Budget balances adjusted for inflation</option>
+    <option value="net_debt" selected="selected">Net debt</option>
+    <option value="net_debt_gdp">Net debt relative to GDP</option>
+    <option value="net_debt_capita">Net debt per capita</option>
   </select>
 </div>
 <div id="debtChart"></div>
@@ -121,7 +121,7 @@ function debtDraw(kind) {
           height = 150 - margin.top - margin.bottom;
 
       var y = d3.scale.linear()
-          .range([height, 0]);
+          .range([height, 15]);
 
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .2);
@@ -138,16 +138,16 @@ function debtDraw(kind) {
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     	
       x.domain(data.map(function(d) { return d.Year; }));
-      y.domain(d3.extent(data, function(d) { return d[bud]; })).nice();
+      y.domain(d3.extent(data, function(d) { return -1 * d[bud]; })).nice();
 
       var budgets = budgetChart.selectAll(".bar")
           .data(data)
         .enter().append("rect")
           .attr("class", function(d) {
             if(checkForecast(d.Year, bud)) {
-              return d[bud] < 0 ? "bar forenegative" : "bar forepositive"; 
+              return d[bud] > 0 ? "bar forenegative" : "bar forepositive"; 
             } else {
-              return d[bud] < 0 ? "bar negative" : "bar positive"; 
+              return d[bud] > 0 ? "bar negative" : "bar positive"; 
             }
           })
           .attr("x", function(d) { return x(d.Year); })
@@ -166,8 +166,8 @@ function debtDraw(kind) {
 
       budgets.transition()
         .delay(function(d, i) { return i * 32})
-        .attr("y", function(d) { return y(Math.max(0, d[bud])); })
-        .attr("height", function(d) { return Math.abs(y(d[bud]) - y(0));});
+        .attr("y", function(d) { return y(Math.max(0, -1 * d[bud])); })
+        .attr("height", function(d) { return Math.abs(y(0) - y(d[bud]));});
 
       function showTooltip(d) {
         var xPos = coordinates[0] + 10;
