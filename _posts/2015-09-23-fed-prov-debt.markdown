@@ -4,11 +4,16 @@ title:  "Federal and Provincial Debt"
 date:   2015-09-23 12:00:00
 ---
 
-In part 2 of what has turned into budget week, I'm following up yesterday's budget charts with debt charts.
+In part 2 of what has now become budget week, I'm following up yesterday's budget charts with debt charts. Once again, I'm comparing data between the federal government and provinces using data collected by the Royal Bank of Canada.
+
+1. *Net debt*. As with the budget balances, debt is not exactly comparable between jurisdictions. These charts should just give you a general idea of the different debt patterns between governments.
+2. *Net debt relative to GDP*. Shows the debt as a percentage of the GDP for that jurisdiction at that year.
+3. *Net debt per capita*. The net debt per person in that jurisdiction. That is, the net debt divided by the number of people living in that area. I'm not sure if any distinction is made between residents and citizens when calculating per person.
+4. *Net debt adjusted for inflation*. The net debt, adjusted for 2015 dollars to compensate for inflation.
 
 <div id="debtTip" class="hidden">
   <p id="tipTop"><strong><span id="tipNum"></span></strong></p>
-  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span></p>
+  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span> <span id="tipCap" class="hidden">per capita</span> <span id="tipInf" class="hidden">(in 2015 dollars)</span></p>
   <p class="tipInfo hidden" id="tipFore">(projected)</p>
 </div>
 <div>
@@ -16,6 +21,7 @@ In part 2 of what has turned into budget week, I'm following up yesterday's budg
     <option value="net_debt" selected="selected">Net debt</option>
     <option value="net_debt_gdp">Net debt relative to GDP</option>
     <option value="net_debt_capita">Net debt per capita</option>
+    <option value="net_debt_inf">Net debt adjusted for inflation</option>
   </select>
 </div>
 <div id="debtChart"></div>
@@ -189,7 +195,7 @@ function debtDraw(kind) {
             .text(d.Year + " Federal ");
         }
 
-        if (kind !== "budget_balances_gdp") {
+        if (kind !== "net_debt_gdp") {
           if (Math.abs(d[bud]) > 1000) {
             d3.select("#debtTip").select("#tipVal")
               .text(Math.abs(d[bud]/1000).toFixed(2) + " billion dollars ");
@@ -198,18 +204,30 @@ function debtDraw(kind) {
               .text(Math.abs(d[bud]) + " million dollars ");
           }
 
-          if (d[bud] > 0) {
+          if (d[bud] < 0) {
             d3.select("#debtTip").select("#tipBal")
-              .text("surplus");
+              .text("excess");
           } else {
             d3.select("#debtTip").select("#tipBal")
-              .text("deficit");
+              .text("debt");
           }
         } else {
           d3.select("#debtTip").select("#tipVal")
-            .text(d[bud] + "%");
+            .text(Math.abs(d[bud]) + "% of GDP");
           d3.select("#debtTip").select("#tipBal")
             .text("");
+        }
+
+        if (kind === "net_debt_capita") {
+          d3.select("#debtTip").select("#tipCap").classed("hidden", false);
+        } else {
+          d3.select("#debtTip").select("#tipCap").classed("hidden", true);
+        }
+
+        if (kind === "net_debt_inf") {
+          d3.select("#debtTip").select("#tipInf").classed("hidden", false);
+        } else {
+          d3.select("#debtTip").select("#tipInf").classed("hidden", true);
         }
 
         if (checkForecast(d.Year, bud)) {
