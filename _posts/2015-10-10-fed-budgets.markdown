@@ -64,6 +64,10 @@ date:   2015-10-10 12:00:00
   margin: 0;
 }
 
+.hidden {
+	display: none;
+}
+
 </style>
 
 In what may be the last (no promises, though) in my series of budget charts, I show the federal budgets and the party that passed them.
@@ -249,8 +253,8 @@ function fedChart() {
 			      .attr("y", function(d) { return y(Math.max(0, d["Budget Balance"])); })
 			      .attr("height", function(d) { return Math.abs(y(d["Budget Balance"]) - y(0));});
 
-					d3.selectAll("g .x.axis").remove();
-					d3.selectAll("g .y.axis").remove();
+					d3.selectAll("#fedChart g .x.axis").remove();
+					d3.selectAll("#fedChart g .y.axis").remove();
 				
 					drawAxes();
 						
@@ -264,8 +268,8 @@ function fedChart() {
 			      .attr("height", function(d) { return Math.abs(y(d["Budget Balance adjusted for inflation"]) - y(0));});
 						
 						
-					d3.selectAll("g .x.axis").remove();
-					d3.selectAll("g .y.axis").remove();
+					d3.selectAll("#fedChart g .x.axis").remove();
+					d3.selectAll("#fedChart g .y.axis").remove();
 					
 					drawAxes();
 						
