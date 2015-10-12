@@ -65,6 +65,12 @@ date:   2015-10-10 12:00:00
 
 In what may be the last (no promises, though) in my series of budget charts, I show the federal budgets and the party that passed them.
 
+<div>
+  <select id="selectFed">
+    <option value="budgetBal" selected="selected">Budget balance</option>
+    <option value="budgetInf">Budget balance adjusted for inflation (in 2015 dollars)</option>
+  </select>
+</div>
 <div id="fedTip" class="hidden">
   <p id="tipTop"><strong><span id="tipYear"></span> Federal Budget</strong></p>
   <p class="tipInfo"><span id="tipVal"></span> billion dollars <span id="tipBal"></span> <span id="tipInf" class="hidden">(in 2015 dollars)</span></p>
@@ -105,6 +111,8 @@ function fedChart() {
 
 	var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .2);
+		
+	var xAxis = d3.svg.axis();
 
 	var yAxis = d3.svg.axis()
     .scale(y)
@@ -119,6 +127,8 @@ function fedChart() {
 	    .attr("height", height + margin.top + margin.bottom)
 	  .append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			
+	var dispData = "Budget Balance";
 	
 	d3.csv("{{ site.baseurl }}/data/fed_budgets.csv", type, function(error, data) {
 		x.domain(data.map(function(d) { return d.Year; }));
@@ -129,7 +139,7 @@ function fedChart() {
 		  .append("line")
 		    .attr("y1", y(0))
 		    .attr("y2", y(0))
-		    .attr("x2", width);
+				.attr("x2", width);
 		
 	  fedChart.append("g")
 	    .attr("class", "y axis")
@@ -178,15 +188,21 @@ function fedChart() {
 	          .text(d.Year);
 						
           d3.select("#fedTip").select("#tipVal")
-            .text(Math.abs(d["Budget Balance"]).toFixed(2));
+            .text(Math.abs(d[dispData]).toFixed(2));
 					
-          if (d["Budget Balance"] > 0) {
+          if (d[dispData] > 0) {
             d3.select("#fedTip").select("#tipBal")
               .text("surplus");
           } else {
             d3.select("#fedTip").select("#tipBal")
               .text("deficit");
           }
+					
+					if (dispData === "Budget Balance") {
+						d3.select("#fedTip").select("#tipInf").classed("hidden", true);
+					} else {
+						d3.select("#fedTip").select("#tipInf").classed("hidden", false);						
+					}
 					
 					d3.select("#fedTip").select("#tipParty")
 						.text(d.Party);
@@ -204,13 +220,65 @@ function fedChart() {
       .delay(function(d, i) { return i * 32})
       .attr("y", function(d) { return y(Math.max(0, d["Budget Balance"])); })
       .attr("height", function(d) { return Math.abs(y(d["Budget Balance"]) - y(0));});
+			
+		d3.select("#selectFed")
+			.on("change", function(d) {
+				if (this.options[this.selectedIndex].value === "budgetBal") {
+					y.domain(d3.extent(data, function(d) { return d["Budget Balance"]; })).nice();
+					
+			    fedBudgets.transition()
+			      .delay(function(d, i) { return i * 32})
+			      .attr("y", function(d) { return y(Math.max(0, d["Budget Balance"])); })
+			      .attr("height", function(d) { return Math.abs(y(d["Budget Balance"]) - y(0));});
+
+					d3.selectAll("g .x.axis").remove();
+					d3.selectAll("g .y.axis").remove();
+				
+					fedChart.append("g")
+					    .attr("class", "x axis")
+					  .append("line")
+					    .attr("y1", y(0))
+					    .attr("y2", y(0))
+							.attr("x2", width);
+	
+				  fedChart.append("g")
+				    .attr("class", "y axis")
+				    .call(yAxis);
+						
+					dispData = "Budget Balance";
+				} else {
+					y.domain(d3.extent(data, function(d) { return d["Budget Balance adjusted for inflation"]; })).nice();
+					
+			    fedBudgets.transition()
+			      .delay(function(d, i) { return i * 32})
+			      .attr("y", function(d) { return y(Math.max(0, d["Budget Balance adjusted for inflation"])); })
+			      .attr("height", function(d) { return Math.abs(y(d["Budget Balance adjusted for inflation"]) - y(0));});
+						
+						
+					d3.selectAll("g .x.axis").remove();
+					d3.selectAll("g .y.axis").remove();
+					
+					fedChart.append("g")
+					    .attr("class", "x axis")
+					  .append("line")
+					    .attr("y1", y(0))
+					    .attr("y2", y(0))
+							.attr("x2", width);
+		
+				  fedChart.append("g")
+				    .attr("class", "y axis")
+				    .call(yAxis);
+						
+					dispData = "Budget Balance adjusted for inflation";
+				}
+			})
 	});
 	
 	function type(d) {
 		//d.Year = format.parse(d.Year);
 		d.Year = + d.Year;
-		d["Budget Balance"] = +(d["Budget Balance"] / 1000);
-		d["Budget Balance adjusted for inflation"] = +d["Budget Balance adjusted for inflation"];
+		d["Budget Balance"] = (+d["Budget Balance"]) / 1000;
+		d["Budget Balance adjusted for inflation"] = (+d["Budget Balance adjusted for inflation"]) / 1000;
 		
 		return d;
 	}
