@@ -64,6 +64,10 @@ date:   2015-10-10 12:00:00
   margin: 0;
 }
 
+.hidden {
+	display: none;
+}
+
 </style>
 
 In what may be the last (no promises, though) in my series of budget charts, I show the federal budgets and the party that passed them.
