@@ -5,6 +5,9 @@ date:   2015-10-10 12:00:00
 ---
 
 <style>
+#fedChart .fedLegend {
+	font-size: 12px;
+}
 
 #fedChart svg:not(:nth-of-type(1)) {
   margin-top: 25px;
@@ -27,7 +30,7 @@ date:   2015-10-10 12:00:00
 }
 
 #fedChart .axis text {
-  font: 10px sans-serif;
+	font-size: 10px;
 }
 
 #fedChart .axis path,
@@ -131,20 +134,15 @@ function fedChart() {
 			
 	var dispData = "Budget Balance";
 	
+	var parties = d3.scale.ordinal()
+		.domain(["Liberal", "Progressive Conservative", "Conservative"])
+		.range(["#BF3513", "#00BEF2", "#1340BF"]);
+	
 	d3.csv("{{ site.baseurl }}/data/fed_budgets.csv", type, function(error, data) {
 		x.domain(data.map(function(d) { return d.Year; }));
 		y.domain(d3.extent(data, function(d) { return d["Budget Balance"]; })).nice();
 		
-		fedChart.append("g")
-		    .attr("class", "x axis")
-		  .append("line")
-		    .attr("y1", y(0))
-		    .attr("y2", y(0))
-				.attr("x2", width);
-		
-	  fedChart.append("g")
-	    .attr("class", "y axis")
-	    .call(yAxis);
+		drawAxes();
 		
 		var fedBudgets = fedChart.selectAll(".bar")
 		    .data(data)
@@ -222,6 +220,25 @@ function fedChart() {
       .attr("y", function(d) { return y(Math.max(0, d["Budget Balance"])); })
       .attr("height", function(d) { return Math.abs(y(d["Budget Balance"]) - y(0));});
 			
+	  var legend = fedChart.selectAll(".fedLegend")
+	      .data(parties.domain())
+	    .enter().append("g")
+				.attr("class", "fedLegend")
+	      .attr("transform", function(d, i) { return "translate(0," + i * -20 + ")"; });
+				
+	  legend.append("rect")
+	      .attr("x", width - 18)
+	      .attr("width", 18)
+	      .attr("height", 18)
+	      .style("fill", parties);
+
+	  legend.append("text")
+	      .attr("x", width - 24)
+	      .attr("y", 9)
+	      .attr("dy", ".35em")
+	      .style("text-anchor", "end")
+	      .text(function(d) { return d; });
+			
 		d3.select("#selectFed")
 			.on("change", function(d) {
 				if (this.options[this.selectedIndex].value === "budgetBal") {
@@ -235,16 +252,7 @@ function fedChart() {
 					d3.selectAll("#fedChart g .x.axis").remove();
 					d3.selectAll("#fedChart g .y.axis").remove();
 				
-					fedChart.append("g")
-					    .attr("class", "x axis")
-					  .append("line")
-					    .attr("y1", y(0))
-					    .attr("y2", y(0))
-							.attr("x2", width);
-	
-				  fedChart.append("g")
-				    .attr("class", "y axis")
-				    .call(yAxis);
+					drawAxes();
 						
 					dispData = "Budget Balance";
 				} else {
@@ -259,20 +267,30 @@ function fedChart() {
 					d3.selectAll("#fedChart g .x.axis").remove();
 					d3.selectAll("#fedChart g .y.axis").remove();
 					
-					fedChart.append("g")
-					    .attr("class", "x axis")
-					  .append("line")
-					    .attr("y1", y(0))
-					    .attr("y2", y(0))
-							.attr("x2", width);
-		
-				  fedChart.append("g")
-				    .attr("class", "y axis")
-				    .call(yAxis);
+					drawAxes();
 						
 					dispData = "Budget Balance adjusted for inflation";
 				}
-			})
+			});
+			
+		function drawAxes() {
+			fedChart.append("g")
+			    .attr("class", "x axis")
+			  .append("line")
+			    .attr("y1", y(0))
+			    .attr("y2", y(0))
+					.attr("x2", width);
+
+		  fedChart.append("g")
+			    .attr("class", "y axis")
+			    .call(yAxis)
+		    .append("text")
+		      .attr("transform", "rotate(-90)")
+		      .attr("y", 6)
+		      .attr("dy", ".71em")
+		      .style("text-anchor", "end")
+		      .text("Billions");
+		}	
 	});
 	
 	function type(d) {
@@ -283,5 +301,6 @@ function fedChart() {
 		
 		return d;
 	}
+	
 }
 </script>
