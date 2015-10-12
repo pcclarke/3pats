@@ -232,8 +232,8 @@ function fedChart() {
 			      .attr("y", function(d) { return y(Math.max(0, d["Budget Balance"])); })
 			      .attr("height", function(d) { return Math.abs(y(d["Budget Balance"]) - y(0));});
 
-					d3.selectAll("g .x.axis").remove();
-					d3.selectAll("g .y.axis").remove();
+					d3.selectAll("#fedChart g .x.axis").remove();
+					d3.selectAll("#fedChart g .y.axis").remove();
 				
 					fedChart.append("g")
 					    .attr("class", "x axis")
@@ -256,8 +256,8 @@ function fedChart() {
 			      .attr("height", function(d) { return Math.abs(y(d["Budget Balance adjusted for inflation"]) - y(0));});
 						
 						
-					d3.selectAll("g .x.axis").remove();
-					d3.selectAll("g .y.axis").remove();
+					d3.selectAll("#fedChart g .x.axis").remove();
+					d3.selectAll("#fedChart g .y.axis").remove();
 					
 					fedChart.append("g")
 					    .attr("class", "x axis")
