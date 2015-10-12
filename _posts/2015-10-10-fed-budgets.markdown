@@ -78,8 +78,9 @@ In what may be the last (no promises, though) in my series of budget charts, I s
 	<p class="tipInfo">Prime Minister: <span id="tipPM"></span></p>
 	<p class="tipInfo">Finance Minister: <span id="tipFin"></span></p>
 </div>
-
 <div id="fedChart"></div>
+
+Note that I really would have liked to include data from before 1968, but I could find virtually nothing about where to find said budgets. Another example of the [war on data](http://www.macleans.ca/news/canada/vanishing-canada-why-were-all-losers-in-ottawas-war-on-data/)?
 
 Sources:
 
