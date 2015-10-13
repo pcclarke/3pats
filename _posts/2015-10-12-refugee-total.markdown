@@ -18,6 +18,8 @@ date:   2015-10-12 12:00:00
 	<p class="tipInfo">Refugees: <span id="tipVal"></span></p>
 </div>
 
+Source: [Facts and figures 2014 – Immigration overview: Permanent residents](http://www.cic.gc.ca/english/resources/statistics/facts2014/permanent/08.asp)
+
 <style>
 
 	#refTotalChart {
