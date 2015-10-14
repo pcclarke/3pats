@@ -131,9 +131,9 @@ function otherChart() {
 		
 	var format = d3.time.format("%Y");
 	
-	var fedChart = d3.select("#otherChart")
+	var otherChart = d3.select("#otherChart")
 		.append("svg")
-		  .attr("class", "fedBudgets")
+		  .attr("class", "otherBudgets")
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	  .append("g")
@@ -167,7 +167,7 @@ function otherChart() {
 
 		drawAxes();
 		
-		var fedBudgets = fedChart.selectAll(".bar")
+		var otherBudgets = otherChart.selectAll(".bar")
 		    .data(data)
 		  .enter().append("rect")
 		    .attr("class", function(d) {
@@ -184,17 +184,17 @@ function otherChart() {
 		    .attr("width", x.rangeBand())
 		    .attr("height", function(d) { return 0; });
 
-    fedBudgets.transition()
+    otherBudgets.transition()
       .delay(function(d, i) { return i * 32})
       .attr("y", function(d) { return y(Math.max(0, d["Budget Balance"])); })
       .attr("height", function(d) { return Math.abs(y(d["Budget Balance"]) - y(0)); });
 		
-		fedChart.append("path")
+		otherChart.append("path")
       .datum(other)
       .attr("class", "line")
       .attr("d", line);
 		
-		fedChart.selectAll(".other")
+		otherChart.selectAll(".other")
 				.data(other)
 			.enter().append("circle")
 				.attr("class", "bar other")
@@ -236,7 +236,7 @@ function otherChart() {
 			d3.select("#otherTip").classed("hidden", false);
 		}
 			
-	  var legend = fedChart.selectAll(".fedLegend")
+	  var legend = otherChart.selectAll(".fedLegend")
 	      .data(parties.domain())
 	    .enter().append("g")
 				.attr("class", "fedLegend")
@@ -256,14 +256,14 @@ function otherChart() {
 	      .text(function(d) { return d; });
 			
 		function drawAxes() {
-			fedChart.append("g")
+			otherChart.append("g")
 			    .attr("class", "x axis")
 			  .append("line")
 			    .attr("y1", y(0))
 			    .attr("y2", y(0))
 					.attr("x2", width);
 
-		  fedChart.append("g")
+		  otherChart.append("g")
 			    .attr("class", "y axis")
 			    .call(yAxis)
 		    .append("text")
