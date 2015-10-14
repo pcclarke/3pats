@@ -35,6 +35,10 @@ Source: [Description for Chart 2 - Proportion of employees paid at the minimum w
 	fill: #000000 !important;
 }
 
+#minWageChart .barCan {
+	fill: red;
+}
+
 #minWageChart .axis text {
   font-size: 10px;
 }
@@ -139,13 +143,15 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
       .attr("class", "y axis")
       .call(yAxis);
 
-  minChart.selectAll(".bar")
+  var minWages = minChart.selectAll(".bar")
       .data(data)
     .enter().append("rect")
-      .attr("class", "bar")
-			.attr("x", function(d) { return 0; })
+      .attr("class", function(d) {
+      	return (d.Province === "Canada") ? "barCan" : "bar";
+      })
+			.attr("x", function(d) { return x(0); })
       .attr("y", function(d) { return y(d.Province); })   
-      .attr("width", function(d) { return x(d.percent); })
+      .attr("width", function(d) { return x(0); })
       .attr("height", y.rangeBand())
 		.on("mouseover", function(d) {
 			d3.select(this).classed("barSel", true);
@@ -159,6 +165,10 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
 			d3.select(this).classed("barSel", false);
 			d3.select("#minTip").classed("hidden", true);
 		});
+		
+		minWages.transition()
+			.delay(function(d, i) { return i * 8; })
+			.attr("width", function(d) {return x(d.percent); });
 		
 		function showTooltip(d) {
 	    var xPos = coordinates[0] + 10;
