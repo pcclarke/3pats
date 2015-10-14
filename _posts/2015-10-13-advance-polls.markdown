@@ -4,12 +4,12 @@ title:  "Advance polling turnout 36–42nd elections"
 date:   2015-10-13 12:00:00
 ---
 
-This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually just have a voting week rather than election day.
+This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
 
 <div id="advTip" class="hidden">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
 	<p class="tipInfo">Year: <span id="tipYear"></span></p>
-	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span></p>
+	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span class="hidden" id="tipEst">(Estimated)</span></p>
 </div>
 <div id="advChart"></div>
 
@@ -28,8 +28,12 @@ Sources:
   fill: #808080;
 }
 
+#advChart .barEst {
+	fill: #CCCCCC;
+}
+
 #advChart .barSel {
-	fill: #000000;
+	fill: #000000 !important;
 }
 
 #advChart .axis text {
@@ -51,7 +55,7 @@ Sources:
   border: 1px solid black;
   background-color: white;
   position: absolute;
-  width: 225px;
+  width: 250px;
   height: auto;
   padding: 5px;
   pointer-events: none;
@@ -116,6 +120,8 @@ var advChart = d3.select("#advChart").append("svg")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+var turnoutFormat = d3.format(",");
 
 d3.csv("{{ site.baseurl }}/data/adv_polls.csv", type, function(error, data) {
 	data.sort(function(a, b) { return a.Year - b.Year; });
@@ -130,28 +136,33 @@ d3.csv("{{ site.baseurl }}/data/adv_polls.csv", type, function(error, data) {
 
   advChart.append("g")
       .attr("class", "y axis")
-      .call(yAxis);
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Voters");
 
   advChart.selectAll(".bar")
       .data(data)
     .enter().append("rect")
-      .attr("class", "bar")
+      .attr("class", function(d) {
+      	return (d.Year < 2015) ? "bar" : "barEst";
+      })
       .attr("x", function(d) { return x(d.Election); })
       .attr("y", function(d) { return y(d.Turnout); })
       .attr("height", function(d) { return height - y(d.Turnout); })
       .attr("width", x.rangeBand())
 		.on("mouseover", function(d) {
-			d3.select(this).classed("bar", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		})
 		.on("mousedown", function(d) {
-			d3.select(this).classed("bar", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		})
 		.on("mouseout", function(d) {
-			d3.select(this).classed("bar", true);
 			d3.select(this).classed("barSel", false);
 			d3.select("#advTip").classed("hidden", true);
 		});
@@ -173,7 +184,9 @@ d3.csv("{{ site.baseurl }}/data/adv_polls.csv", type, function(error, data) {
 				.text(d.Year);
 				
 			d3.select("#advTip").select("#tipTurnout")
-				.text(d.Turnout);
+				.text(turnoutFormat(d.Turnout));
+
+			d3.select("#tipEst").classed("hidden", (d.Year < 2015) ? true : false);
 				
 			d3.select("#advTip").classed("hidden", false);
 		}
