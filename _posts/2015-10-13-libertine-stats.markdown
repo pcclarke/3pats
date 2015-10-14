@@ -4,16 +4,16 @@ title:  "Libertine Numbers"
 date:   2015-10-13 20:00:00
 ---
 
-Today, this flyer arrived in my mailbox:
+Today, this flyer arrived in my mailbox from the Liberal party in Burnaby North – Seymour for Terry Beech:
 ![Thanks, Terry Beech!]({{ site.baseurl }}/img/2015/10/13/lib_flyer.jpg)
 
-Now I'm not a supporter of raising the minimum wage – I don't think it shouldn't be set by the federal government – but I'm sure that more than 1% of Canadian workers are on minimum wage. Or rather, that more than 1% of the workforce would be affected by raising the minimum wage to $15. 
+Now I'm not a supporter of raising the minimum wage – I don't think it should be set by the federal government – but I'm sure that more than one percent of Canadian workers are on minimum wage. So I would think that more than one percent of workers would be affected by raising the minimum wage to $15.
 
-Here's how many workers were on minimum wage in 2014:
+Here's the percentage of workers on minimum wage in 2014 for the provinces and Canada as a whole:
 
 <div id="minTip" class="hidden">
 	<p id="tipTop"><strong><span id="tipProv"></span></strong></p>
-	<p class="tipInfo"><span id="tipPercent"></span>% of workers on minimum wage</p>
+	<p class="tipInfo"><span id="tipPercent"></span> of workers on minimum wage</p>
 </div>
 <div id="minWageChart"></div>
 
@@ -104,10 +104,14 @@ var x = d3.scale.linear()
 		
 var y = d3.scale.ordinal()
     .rangeRoundBands([0, height], .1);
+		
+var formatPercent = d3.format("%"),
+		formatPercentDeci = d3.format(".1%");
 
 var xAxis = d3.svg.axis()
     .scale(x)
-    .orient("bottom");
+    .orient("bottom")
+		.tickFormat(formatPercent);
 
 var yAxis = d3.svg.axis()
     .scale(y)
@@ -118,8 +122,6 @@ var minChart = d3.select("#minWageChart").append("svg")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		
-var turnoutFormat = d3.format(",");
 
 d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, data) {
 	
@@ -170,7 +172,7 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
 		    .text(d.Province);
 				
 			d3.select("#minTip").select("#tipPercent")
-				.text(turnoutFormat(d.percent));
+				.text(formatPercentDeci(d.percent));
 
 			d3.select("#minTip").classed("hidden", false);
 		}
