@@ -21,6 +21,8 @@ Maybe they were supposed to send this flyer to Alberta, because that's much more
 
 Also, where are they getting the Conservatives' eight straight deficits from? I count six deficits [just going by the fiscal years for the budgets]({% post_url 2015-10-10-fed-budgets %}) or seven [if you include the two budgets in 2011](http://www.budget.gc.ca/pdfarch/index-eng.html). Maybe I'm just misreading it and they mean fiscal updates instead of budgets.
 
+UPDATE: Must be an [old flyer](http://politics.theglobeandmail.com/2015/09/07/ask-the-globe-how-many-deficits-has-the-conservative-government-run/), based on earlier forecasts of a budget deficit. And I don't understand how budget years work.
+
 Source: [Description for Chart 2 - Proportion of employees paid at the minimum wage rate by province, 2014](http://www.statcan.gc.ca/pub/11-630-x/2015006/c-g/desc2-eng.htm)
 
 <style>
