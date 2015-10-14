@@ -7,7 +7,7 @@ date:   2015-10-13 20:00:00
 Today, this flyer arrived in my mailbox from the Liberal party in Burnaby North – Seymour for Terry Beech:
 ![Thanks, Terry Beech!]({{ site.baseurl }}/img/2015/10/13/lib_flyer.jpg)
 
-Now I'm not a supporter of raising the minimum wage – I don't think it should be set by the federal government – but I'm sure that more than one percent of Canadian workers are on minimum wage. So I would think that more than one percent of workers would be affected by raising the minimum wage to $15.
+Now I'm not a supporter of raising the minimum wage – for starters, I don't think it should be set by the federal government – but I'm sure that more than one percent of Canadian workers are on minimum wage. So I would think that more than one percent of workers would be affected by raising the minimum wage to $15.
 
 Here's the percentage of workers on minimum wage in 2014 for the provinces and Canada as a whole:
 
@@ -17,9 +17,9 @@ Here's the percentage of workers on minimum wage in 2014 for the provinces and C
 </div>
 <div id="minWageChart"></div>
 
-Maybe they were thinking of Alberta?
+Maybe they were supposed to send this flyer to Alberta, because that's much more than one percent everywhere else.
 
-Also, where are they getting the eight straight deficits from? I count six deficits [just going by the fiscal years for the budgets]({% post_url 2015-10-10-fed-budgets %}) or seven [if you include the two budgets in 2011](http://www.budget.gc.ca/pdfarch/index-eng.html). Maybe they meant of fiscal updates instead?
+Also, where are they getting the Conservatives' eight straight deficits from? I count six deficits [just going by the fiscal years for the budgets]({% post_url 2015-10-10-fed-budgets %}) or seven [if you include the two budgets in 2011](http://www.budget.gc.ca/pdfarch/index-eng.html). Maybe I'm just misreading it and they mean fiscal updates instead of budgets.
 
 Source: [Description for Chart 2 - Proportion of employees paid at the minimum wage rate by province, 2014](http://www.statcan.gc.ca/pub/11-630-x/2015006/c-g/desc2-eng.htm)
 
