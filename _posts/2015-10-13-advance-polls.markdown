@@ -29,7 +29,7 @@ Sources:
 }
 
 #advChart .barEst {
-	fill: #CCCCCC;
+	fill: red;
 }
 
 #advChart .barSel {

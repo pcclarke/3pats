@@ -35,6 +35,10 @@ Source: [Description for Chart 2 - Proportion of employees paid at the minimum w
 	fill: #000000 !important;
 }
 
+#minWageChart .barCan {
+	fill: red;
+}
+
 #minWageChart .axis text {
   font-size: 10px;
 }
@@ -142,7 +146,9 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
   var minWages = minChart.selectAll(".bar")
       .data(data)
     .enter().append("rect")
-      .attr("class", "bar")
+      .attr("class", function(d) {
+      	return (d.Province === "Canada") ? "barCan" : "bar";
+      })
 			.attr("x", function(d) { return x(0); })
       .attr("y", function(d) { return y(d.Province); })   
       .attr("width", function(d) { return x(0); })
