@@ -139,13 +139,13 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
       .attr("class", "y axis")
       .call(yAxis);
 
-  minChart.selectAll(".bar")
+  var minWages = minChart.selectAll(".bar")
       .data(data)
     .enter().append("rect")
       .attr("class", "bar")
-			.attr("x", function(d) { return 0; })
+			.attr("x", function(d) { return x(0); })
       .attr("y", function(d) { return y(d.Province); })   
-      .attr("width", function(d) { return x(d.percent); })
+      .attr("width", function(d) { return x(0); })
       .attr("height", y.rangeBand())
 		.on("mouseover", function(d) {
 			d3.select(this).classed("barSel", true);
@@ -159,6 +159,10 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
 			d3.select(this).classed("barSel", false);
 			d3.select("#minTip").classed("hidden", true);
 		});
+		
+		minWages.transition()
+			.delay(function(d, i) { return i * 8; })
+			.attr("width", function(d) {return x(d.percent); });
 		
 		function showTooltip(d) {
 	    var xPos = coordinates[0] + 10;
