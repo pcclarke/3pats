@@ -111,6 +111,8 @@ var advChart = d3.select("#advChart").append("svg")
 		
 var turnoutFormat = d3.format(",");
 
+var selection;
+
 d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error, data) {
 	data.sort(function(a, b) { return a.Year - b.Year; });
 	
@@ -136,22 +138,26 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
       .data(data)
     .enter().append("rect")
       .attr("class", function(d) {
-      	return (d.Year < 2015) ? "bar" : "barEst";
+				if (d.Year < 2015) {
+					return "bar";
+				} else {
+					d3.select(this).classed("barSel", true);
+					return "barEst barSel";
+				}
       })
       .attr("x", function(d) { return x(d.Election); })
       .attr("y", function(d) { return height; })
       .attr("height", function(d) { return 0; })
       .attr("width", x.rangeBand())
 		.on("mouseover", function(d) {
+			d3.selectAll(".barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		})
 		.on("mousedown", function(d) {
+			d3.selectAll(".barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).classed("barSel", false);
 		});
 		
 		advPolls.transition()
