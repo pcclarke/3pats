@@ -83,16 +83,6 @@ Sources:
 
 advChart();
 
-var coordinates = [0, 0];
-
-var body = d3.select("body")
-  .on("mousemove", function() {
-    coordinates = d3.mouse(this);
-  })
-  .on("mousedown", function() {
-    coordinates = d3.mouse(this);
-  });
-
 function advChart() {
 
 var margin = {top: 20, right: 30, bottom: 30, left: 70},
@@ -162,7 +152,6 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
 		})
 		.on("mouseout", function(d) {
 			d3.select(this).classed("barSel", false);
-			d3.select("#advTip").classed("hidden", true);
 		});
 		
 		advPolls.transition()
@@ -190,8 +179,6 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
 				.text(turnoutFormat(d.Turnout));
 
 			d3.select("#tipEst").classed("hidden", (d.Year < 2015) ? true : false);
-				
-			d3.select("#advTip").classed("hidden", false);
 		}
 });
 
