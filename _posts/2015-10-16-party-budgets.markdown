@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Party Balances Compared"
+title:  "Party Budget Balances Compared"
 date:   2015-10-16 12:00:00
 ---
 
@@ -12,7 +12,7 @@ date:   2015-10-16 12:00:00
 
 * * *
 
-And to follow up the previous post, here are the different budgets compared. The Greens sure are optimistic.
+And to follow up the previous post, here are the different budget balances compared on the same chart. The Greens sure are optimistic.
 
 Sources:
 
