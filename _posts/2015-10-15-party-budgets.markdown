@@ -17,7 +17,7 @@ Here's a comparison of the different party budget balances from their costing pl
 Sources:
 
 - [Liberal Costing Plan](http://www.liberal.ca/costing-plan/)
-- [NDP Sensitivity Analysis](http://xfer.ndp.ca/2015/2015-Full-Platform-EN.pdf) (PDF)
+- [NDP Balanced Fiscal Plan](http://xfer.ndp.ca/2015/2015-Full-Platform-EN.pdf) (PDF)
 - [Conservative Costing Plan](http://www.conservative.ca/media/plan/costing-plan.pdf) (PDF)
 - [Green Budget Overview](http://www.greenparty.ca/en/budget)
 
@@ -115,7 +115,6 @@ function partyBalanceChart() {
           .data(data)
         .enter().append("rect")
           .attr("class", function(d) { 
-						console.log(d.Year);
 						if (bud === "NDP" && d.Year == 2017) {
 							return d[bud] < 0 ? "bar sel negative" : "bar sel positive"; 
 						} else {
