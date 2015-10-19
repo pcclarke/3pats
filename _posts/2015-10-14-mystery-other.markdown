@@ -196,7 +196,7 @@ function otherChart() {
 				.attr("class", "bar other")
 				.attr("r", 3)
 				.attr("cx", function(d) { return x(d.Year) + 6; })
-				.attr("cy", function(d) { console.log(d.Value); return y(d.Value/1000); })
+				.attr("cy", function(d) { return y(d.Value/1000); })
 			.on("mouseover", function(d) {
 				d3.select(this).classed("sel", true);
 				showTooltip(d);

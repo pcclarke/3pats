@@ -8,7 +8,7 @@ date:   2015-10-13 12:00:00
 <div id="advTip">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
 	<p class="tipInfo">Year: <span id="tipYear"></span></p>
-	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span class="hidden" id="tipEst">(Estimated)</span></p>
+	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span id="tipEst">(Estimated)</span></p>
 </div>
 
 * * * * *
