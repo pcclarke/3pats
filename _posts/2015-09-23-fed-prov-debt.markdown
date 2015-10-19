@@ -1,68 +1,70 @@
 ---
 layout: post
-title:  "Federal and Provincial Budget Balances"
-date:   2015-09-22 12:00:00
+title:  "Federal and Provincial Debt"
+date:   2015-09-23 12:00:00
 ---
 
-Here's an overview of the budget balances for the federal and provincial governments, to give some context to the federal government's recently announced budget surplus. You can select from three options:
+In part 2 of what has now become budget week, I'm following up yesterday's budget charts with debt charts. Once again, I'm comparing data between the federal government and provinces using data collected by the Royal Bank of Canada.
 
-1. *The budget balance.* Each government has its own accounting practices, so they aren't exactly comparable. I am using numbers from the Royal Bank of Canada, who has made decisions on what to include and exclude for me.
-2. *The budget balance relative to GDP*. This is the percentage of Canada's or the province's GDP in the budget balance. Or in other words, it's the budget balance divided by that government's GDP.
-3. *The budget balance adjusted for inflation*. The budget balance in 2015 dollars, to account for past inflation.
+1. *Net debt*. As with the budget balances, debt is not exactly comparable between jurisdictions. These charts should just give you a general idea of the different debt patterns between governments.
+2. *Net debt relative to GDP*. Shows the debt as a percentage of the GDP for that jurisdiction at that year.
+3. *Net debt per capita*. The net debt per person in that jurisdiction. That is, the net debt divided by the number of people living in that area. I'm not sure if any distinction is made between residents and citizens when calculating per person.
+4. *Net debt adjusted for inflation*. The net debt, adjusted for 2015 dollars to compensate for inflation.
 
-<div id="budgetTip" class="hidden">
-  <p id="tipTop"><strong><span id="tipNum"></span> Budget</strong></p>
-  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span></p>
+<div id="debtTip" class="hidden">
+  <p id="tipTop"><strong><span id="tipNum"></span></strong></p>
+  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span> <span id="tipCap" class="hidden">per capita</span> <span id="tipInf" class="hidden">(in 2015 dollars)</span></p>
   <p class="tipInfo hidden" id="tipFore">(projected)</p>
 </div>
 <div>
-  <select id="selectBudget">
-    <option value="budget_balances" selected="selected">Budget balances</option>
-    <option value="budget_balances_gdp">Budget balances relative to GDP</option>
-    <option value="budget_balances_inf">Budget balances adjusted for inflation</option>
+  <select id="selectDebt">
+    <option value="net_debt" selected="selected">Net debt</option>
+    <option value="net_debt_gdp">Net debt relative to GDP</option>
+    <option value="net_debt_capita">Net debt per capita</option>
+    <option value="net_debt_inf">Net debt adjusted for inflation</option>
   </select>
 </div>
-<div id="budgetChart"></div>
+<div id="debtChart"></div>
 
 Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for September 15, 2015](http://www.rbc.com/economics/economic-reports/provincial-economic-forecasts.html), with the inflation adjustments courtesy of the [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
 
 <style>
-#budgetChart {
+#debtChart {
   height: 1100px;
 }
 
-#budgetChart svg:not(:nth-of-type(1)) {
+#debtChart svg:not(:nth-of-type(1)) {
   margin-top: 25px;
 }
 
-#budgetChart .bar.positive {
+#debtChart .bar.positive {
   fill: black;
 }
 
-#budgetChart .bar.negative {
+#debtChart .bar.negative {
   fill: brown;
 }
 
-#budgetChart .bar.forepositive {
+#debtChart .bar.forepositive {
   fill: #808080;
 }
 
-#budgetChart .bar.forenegative {
+#debtChart .bar.forenegative {
   fill: #FF5656;
 }
 
-#budgetChart .axis text {
+#debtChart .axis text {
   font: 10px sans-serif;
 }
 
-#budgetChart .axis path,
-#budgetChart .axis line {
+#debtChart .axis path,
+#debtChart .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-#selectBudget {
+#selectDebt {
   font-family: Lora, Georgia, serif;
   font-size: 20px;
   padding: 5px 15px;
@@ -72,7 +74,7 @@ Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for
   display: none;
 }
 
-#budgetTip {
+#debtTip {
   border: 1px solid black;
   background-color: white;
   position: absolute;
@@ -82,16 +84,16 @@ Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for
   pointer-events: none;
 }
 
-#budgetTip strong {
+#debtTip strong {
   font-weight: bold;
 }
 
-#budgetTip #tipTop {
+#debtTip #tipTop {
   font-size: 16px;
   margin-bottom: 10px !important;
 }
 
-#budgetTip .tipInfo {
+#debtTip .tipInfo {
   font-size: 12px;
   margin: 0;
 }
@@ -99,7 +101,7 @@ Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-budgetChart();
+debtChart();
 
 var coordinates = [0, 0];
 
@@ -111,11 +113,11 @@ var body = d3.select("body")
     coordinates = d3.mouse(this);
   });
 
-function budgetChart() {
-var sel = document.getElementById('selectBudget');
-budgetDraw(sel.options[sel.selectedIndex].value);
+function debtChart() {
+var sel = document.getElementById('selectDebt');
+debtDraw(sel.options[sel.selectedIndex].value);
 
-function budgetDraw(kind) {
+function debtDraw(kind) {
   d3.csv("{{ site.baseurl }}/data/" + kind + ".csv", type, function(error, data) {
 
     d3.keys(data[0]).filter(function(key) { return key !== "Year"; }).forEach(function(bud) {
@@ -134,24 +136,26 @@ function budgetDraw(kind) {
           .scale(y)
           .orient("left");
 
-      var budgetChart = d3.select("#budgetChart").append("svg")
-        .attr("class", "budgetDebt")
+      var budgetChart = d3.select("#debtChart").append("svg")
+        .attr("class", "fedProvDebt")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     	
       x.domain(data.map(function(d) { return d.Year; }));
-      y.domain(d3.extent(data, function(d) { return d[bud]; })).nice();
+      //y.domain(d3.extent(data, function(d) { return d[bud]; })).nice();
+      y.domain([d3.max(data, function(d) { return d[bud]; }), 
+        d3.min(data, function(d) { return d[bud] > 0 ? 0 : d[bud]; })]);
 
       var budgets = budgetChart.selectAll(".bar")
           .data(data)
         .enter().append("rect")
           .attr("class", function(d) {
             if(checkForecast(d.Year, bud)) {
-              return d[bud] < 0 ? "bar forenegative" : "bar forepositive"; 
+              return d[bud] > 0 ? "bar forenegative" : "bar forepositive"; 
             } else {
-              return d[bud] < 0 ? "bar negative" : "bar positive"; 
+              return d[bud] > 0 ? "bar negative" : "bar positive"; 
             }
           })
           .attr("x", function(d) { return x(d.Year); })
@@ -165,13 +169,13 @@ function budgetDraw(kind) {
             showTooltip(d, i);
           })
           .on("mouseout", function(d) {
-            d3.select("#budgetTip").classed("hidden", true);
+            d3.select("#debtTip").classed("hidden", true);
           });
 
       budgets.transition()
         .delay(function(d, i) { return i * 32})
-        .attr("y", function(d) { return y(Math.max(0, d[bud])); })
-        .attr("height", function(d) { return Math.abs(y(d[bud]) - y(0));});
+        .attr("y", function(d) { return y(Math.min(0, d[bud])); })
+        .attr("height", function(d) { return Math.abs(y(0) - y(d[bud]));});
 
       function showTooltip(d) {
         var xPos = coordinates[0] + 10;
@@ -180,47 +184,59 @@ function budgetDraw(kind) {
         }
         var yPos = coordinates[1];
 
-        d3.select("#budgetTip")
+        d3.select("#debtTip")
           .style("left", xPos + "px")
           .style("top", yPos + "px")
           .select("#tipNum")
           .text(d.Year + " " + bud);
 
         if (bud === "Canada") {
-          d3.select("#budgetTip").select("#tipNum")
+          d3.select("#debtTip").select("#tipNum")
             .text(d.Year + " Federal ");
         }
 
-        if (kind !== "budget_balances_gdp") {
+        if (kind !== "net_debt_gdp") {
           if (Math.abs(d[bud]) > 1000) {
-            d3.select("#budgetTip").select("#tipVal")
+            d3.select("#debtTip").select("#tipVal")
               .text(Math.abs(d[bud]/1000).toFixed(2) + " billion dollars ");
           } else {
-            d3.select("#budgetTip").select("#tipVal")
+            d3.select("#debtTip").select("#tipVal")
               .text(Math.abs(d[bud]) + " million dollars ");
           }
 
-          if (d[bud] > 0) {
-            d3.select("#budgetTip").select("#tipBal")
-              .text("surplus");
+          if (d[bud] < 0) {
+            d3.select("#debtTip").select("#tipBal")
+              .text("excess");
           } else {
-            d3.select("#budgetTip").select("#tipBal")
-              .text("deficit");
+            d3.select("#debtTip").select("#tipBal")
+              .text("debt");
           }
         } else {
-          d3.select("#budgetTip").select("#tipVal")
-            .text(d[bud] + "%");
-          d3.select("#budgetTip").select("#tipBal")
+          d3.select("#debtTip").select("#tipVal")
+            .text(Math.abs(d[bud]) + "% of GDP");
+          d3.select("#debtTip").select("#tipBal")
             .text("");
         }
 
-        if (checkForecast(d.Year, bud)) {
-          d3.select("#budgetTip").select("#tipFore").classed("hidden", false);
+        if (kind === "net_debt_capita") {
+          d3.select("#debtTip").select("#tipCap").classed("hidden", false);
         } else {
-          d3.select("#budgetTip").select("#tipFore").classed("hidden", true);
+          d3.select("#debtTip").select("#tipCap").classed("hidden", true);
         }
 
-        d3.select("#budgetTip").classed("hidden", false);
+        if (kind === "net_debt_inf") {
+          d3.select("#debtTip").select("#tipInf").classed("hidden", false);
+        } else {
+          d3.select("#debtTip").select("#tipInf").classed("hidden", true);
+        }
+
+        if (checkForecast(d.Year, bud)) {
+          d3.select("#debtTip").select("#tipFore").classed("hidden", false);
+        } else {
+          d3.select("#debtTip").select("#tipFore").classed("hidden", true);
+        }
+
+        d3.select("#debtTip").classed("hidden", false);
       }
 
       function checkForecast(year, province) {
@@ -266,13 +282,13 @@ function type(d) {
   return d;
 }
 
-d3.select("#selectBudget")
+d3.select("#selectDebt")
   .on("change", selected);
 
 function selected() {
-  d3.selectAll(".budgetDebt")
+  d3.selectAll(".fedProvDebt")
     .remove();
-  budgetDraw(this.options[this.selectedIndex].value);
+  debtDraw(this.options[this.selectedIndex].value);
 }
 
 }
