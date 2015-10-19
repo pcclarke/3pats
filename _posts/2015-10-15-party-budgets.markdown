@@ -44,7 +44,7 @@ Sources:
 }
 
 #partyBalanceChart .axis text {
-  font: 10px sans-serif;
+  font-size: 10px;
 }
 
 #partyBalanceChart .axis path,
