@@ -63,12 +63,8 @@ Sources:
   pointer-events: none;
 }
 
-#advTip strong {
-  font-weight: bold;
-}
-
 #advTip #tipTop {
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 10px !important;
 }
 

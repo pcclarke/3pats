@@ -78,12 +78,8 @@ Source: [Department of Finance, Fiscal Reference Tables September 2015](http://w
   pointer-events: none;
 }
 
-#otherTip strong {
-  font-weight: bold;
-}
-
 #otherTip #tipTop {
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 10px !important;
 }
 

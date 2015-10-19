@@ -64,12 +64,8 @@ Source: [Description for Chart 2 - Proportion of employees paid at the minimum w
   pointer-events: none;
 }
 
-#minTip strong {
-  font-weight: bold;
-}
-
 #minTip #tipTop {
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 10px !important;
 }
 
