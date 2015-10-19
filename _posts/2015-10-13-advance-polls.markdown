@@ -1,25 +1,30 @@
 ---
 layout: post
-title:  "Advance polling turnout 36–42nd elections"
+title:  "Advance polling turnout 35–42nd elections"
 date:   2015-10-13 12:00:00
 ---
 
-This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
-
-<div id="advTip" class="hidden">
+<div id="advChart"></div>
+<div id="advTip">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
 	<p class="tipInfo">Year: <span id="tipYear"></span></p>
 	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span class="hidden" id="tipEst">(Estimated)</span></p>
 </div>
-<div id="advChart"></div>
+
+* * * * *
+
+This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
+
+*Update* 2015-10-18: Now includes data for 35th election and latest data for 42nd election.
 
 Sources:
 
-- [Elections Canada says 3.6 million votes cast during advance polls](http://www.cbc.ca/news/politics/elections-canada-says-3-6-million-votes-cast-during-advance-polls-1.3269393)
+- [Elections Canada: Estimate of Turnout at Advance Polls Now Available](http://www.elections.ca/content.aspx?section=med&document=oct1415&dir=pre&lang=e)
 - [Report on the Evaluations of the 41st General Election of May 2, 2011](http://www.elections.ca/content.aspx?section=res&dir=rec/eval/pes2011/ege&document=p1&lang=e)
 - [Thirty-Eighth General Election 2004 Official Voting Results](http://www.elections.ca/scripts/OVR2004/default.html)
 - [Report of the Chief Electoral Officer of Canada on the 37th General Election Held on November 27, 2000](http://www.elections.ca/content.aspx?section=res&dir=rep/off/sta&document=stat13&lang=e#a)
 - [Thirty-sixth General Election 1997: Official Voting Results: Synopsis](http://www.elections.ca/content.aspx?section=res&dir=rep/off/dec3097&document=res_table05&lang=e)
+- Thirty-fifth general election, 1993: official voting results
 
 
 <style>
@@ -52,12 +57,9 @@ Sources:
 }
 
 #advTip {
-  border: 1px solid black;
   background-color: white;
-  position: absolute;
-  width: 250px;
-  height: auto;
-  padding: 5px;
+	display: block;
+	margin-bottom: 15px;
   pointer-events: none;
 }
 
@@ -123,7 +125,7 @@ var advChart = d3.select("#advChart").append("svg")
 		
 var turnoutFormat = d3.format(",");
 
-d3.csv("{{ site.baseurl }}/data/adv_polls.csv", type, function(error, data) {
+d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error, data) {
 	data.sort(function(a, b) { return a.Year - b.Year; });
 	
   x.domain(data.map(function(d) { return d.Election; }));
@@ -171,18 +173,18 @@ d3.csv("{{ site.baseurl }}/data/adv_polls.csv", type, function(error, data) {
 			.delay(function(d, i) { return i * 8; })
 			.attr("y", function(d) { return y(d.Turnout); })
 			.attr("height", function(d) {return height - y(d.Turnout); });
+			
+	  d3.select("#advTip").select("#tipNum")
+	    .text(data[data.length - 1]["Election"]);
+			
+		d3.select("#advTip").select("#tipYear")
+			.text(data[data.length - 1]["Year"]);
+			
+		d3.select("#advTip").select("#tipTurnout")
+			.text(turnoutFormat(data[data.length - 1]["Turnout"]));
 		
 		function showTooltip(d) {
-	    var xPos = coordinates[0] + 10;
-	    if (d.Year > 2011) {
-	      xPos = coordinates[0] - 250;
-	    }
-	    var yPos = coordinates[1];
-			
-		  d3.select("#advTip")
-		    .style("left", xPos + "px")
-		    .style("top", yPos + "px")
-		    .select("#tipNum")
+		  d3.select("#advTip").select("#tipNum")
 		    .text(d.Election);
 				
 			d3.select("#advTip").select("#tipYear")
