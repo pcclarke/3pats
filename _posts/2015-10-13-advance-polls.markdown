@@ -4,16 +4,16 @@ title:  "Advance polling turnout 35–42nd elections"
 date:   2015-10-13 12:00:00
 ---
 
-<div id="advTip" class="hidden">
+<div id="advChart"></div>
+<div id="advTip">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
 	<p class="tipInfo">Year: <span id="tipYear"></span></p>
 	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span class="hidden" id="tipEst">(Estimated)</span></p>
 </div>
-<div id="advChart"></div>
-
-This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
 
 * * * * *
+
+This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
 
 *Update* 2015-10-18: Now includes data for 35th election and latest data for 42nd election.
 
@@ -57,12 +57,9 @@ Sources:
 }
 
 #advTip {
-  border: 1px solid black;
   background-color: white;
-  position: absolute;
-  width: 250px;
-  height: auto;
-  padding: 5px;
+	display: block;
+	margin-bottom: 15px;
   pointer-events: none;
 }
 
@@ -176,18 +173,18 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
 			.delay(function(d, i) { return i * 8; })
 			.attr("y", function(d) { return y(d.Turnout); })
 			.attr("height", function(d) {return height - y(d.Turnout); });
+			
+	  d3.select("#advTip").select("#tipNum")
+	    .text(data[data.length - 1]["Election"]);
+			
+		d3.select("#advTip").select("#tipYear")
+			.text(data[data.length - 1]["Year"]);
+			
+		d3.select("#advTip").select("#tipTurnout")
+			.text(turnoutFormat(data[data.length - 1]["Turnout"]));
 		
 		function showTooltip(d) {
-	    var xPos = coordinates[0] + 10;
-	    if (d.Year > 2011) {
-	      xPos = coordinates[0] - 250;
-	    }
-	    var yPos = coordinates[1];
-			
-		  d3.select("#advTip")
-		    .style("left", xPos + "px")
-		    .style("top", yPos + "px")
-		    .select("#tipNum")
+		  d3.select("#advTip").select("#tipNum")
 		    .text(d.Election);
 				
 			d3.select("#advTip").select("#tipYear")
