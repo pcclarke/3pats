@@ -57,7 +57,6 @@ Sources:
 }
 
 #advTip {
-  background-color: white;
 	display: block;
 	margin-bottom: 15px;
   pointer-events: none;
@@ -150,12 +149,12 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
       .attr("height", function(d) { return 0; })
       .attr("width", x.rangeBand())
 		.on("mouseover", function(d) {
-			d3.selectAll(".barSel").classed("barSel", false);
+			d3.selectAll("#advChart .barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		})
 		.on("mousedown", function(d) {
-			d3.selectAll(".barSel").classed("barSel", false);
+			d3.selectAll("#advChart .barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		});
