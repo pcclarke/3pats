@@ -8,7 +8,7 @@ date:   2015-10-13 12:00:00
 <div id="advTip">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
 	<p class="tipInfo">Year: <span id="tipYear"></span></p>
-	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span class="hidden" id="tipEst">(Estimated)</span></p>
+	<p class="tipInfo">Advance polling turnout: <span id="tipTurnout"></span> voters <span id="tipEst">(Estimated)</span></p>
 </div>
 
 * * * * *
@@ -57,7 +57,6 @@ Sources:
 }
 
 #advTip {
-  background-color: white;
 	display: block;
 	margin-bottom: 15px;
   pointer-events: none;
@@ -82,16 +81,6 @@ Sources:
 <script>
 
 advChart();
-
-var coordinates = [0, 0];
-
-var body = d3.select("body")
-  .on("mousemove", function() {
-    coordinates = d3.mouse(this);
-  })
-  .on("mousedown", function() {
-    coordinates = d3.mouse(this);
-  });
 
 function advChart() {
 
@@ -121,6 +110,8 @@ var advChart = d3.select("#advChart").append("svg")
 		
 var turnoutFormat = d3.format(",");
 
+var selection;
+
 d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error, data) {
 	data.sort(function(a, b) { return a.Year - b.Year; });
 	
@@ -146,23 +137,26 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
       .data(data)
     .enter().append("rect")
       .attr("class", function(d) {
-      	return (d.Year < 2015) ? "bar" : "barEst";
+				if (d.Year < 2015) {
+					return "bar";
+				} else {
+					d3.select(this).classed("barSel", true);
+					return "barEst barSel";
+				}
       })
       .attr("x", function(d) { return x(d.Election); })
       .attr("y", function(d) { return height; })
       .attr("height", function(d) { return 0; })
       .attr("width", x.rangeBand())
 		.on("mouseover", function(d) {
+			d3.selectAll("#advChart .barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		})
 		.on("mousedown", function(d) {
+			d3.selectAll("#advChart .barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).classed("barSel", false);
-			d3.select("#advTip").classed("hidden", true);
 		});
 		
 		advPolls.transition()
@@ -190,8 +184,6 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/adv_polls.csv", type, function(error,
 				.text(turnoutFormat(d.Turnout));
 
 			d3.select("#tipEst").classed("hidden", (d.Year < 2015) ? true : false);
-				
-			d3.select("#advTip").classed("hidden", false);
 		}
 });
 

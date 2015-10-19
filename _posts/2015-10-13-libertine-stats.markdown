@@ -11,11 +11,15 @@ Now I'm not a supporter of raising the minimum wage – for starters, I don't th
 
 Here's the percentage of workers on minimum wage in 2014 for the provinces and Canada as a whole:
 
-<div id="minTip" class="hidden">
+* * *
+
+<div id="minWageChart"></div>
+<div id="minTip">
 	<p id="tipTop"><strong><span id="tipProv"></span></strong></p>
 	<p class="tipInfo"><span id="tipPercent"></span> of workers on minimum wage</p>
 </div>
-<div id="minWageChart"></div>
+
+* * *
 
 Maybe they were supposed to send this flyer to Alberta, because that's much more than one percent everywhere else.
 
@@ -55,12 +59,8 @@ Source: [Description for Chart 2 - Proportion of employees paid at the minimum w
 }
 
 #minTip {
-  border: 1px solid black;
-  background-color: white;
-  position: absolute;
-  width: 180px;
-  height: auto;
-  padding: 5px;
+	display: block;
+	margin-bottom: 15px;
   pointer-events: none;
 }
 
@@ -84,16 +84,6 @@ Source: [Description for Chart 2 - Proportion of employees paid at the minimum w
 <script>
 
 minChart();
-
-var coordinates = [0, 0];
-
-var body = d3.select("body")
-  .on("mousemove", function() {
-    coordinates = d3.mouse(this);
-  })
-  .on("mousedown", function() {
-    coordinates = d3.mouse(this);
-  });
 
 function minChart() {
 
@@ -143,46 +133,39 @@ d3.csv("{{ site.baseurl }}/data/2015/10/13/min_wage.csv", type, function(error, 
       .data(data)
     .enter().append("rect")
       .attr("class", function(d) {
-      	return (d.Province === "Canada") ? "barCan" : "bar";
+      	return (d.Province === "Canada") ? "barCan barSel" : "bar";
       })
 			.attr("x", function(d) { return x(0); })
       .attr("y", function(d) { return y(d.Province); })   
       .attr("width", function(d) { return x(0); })
       .attr("height", y.rangeBand())
 		.on("mouseover", function(d) {
+			d3.selectAll("#minWageChart .barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
 		})
 		.on("mousedown", function(d) {
+			d3.selectAll("#minWageChart .barSel").classed("barSel", false);
 			d3.select(this).classed("barSel", true);
 			showTooltip(d);
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).classed("barSel", false);
-			d3.select("#minTip").classed("hidden", true);
 		});
 		
 		minWages.transition()
 			.delay(function(d, i) { return i * 8; })
 			.attr("width", function(d) {return x(d.percent); });
+			
+	  d3.select("#minTip").select("#tipProv")
+	    .text(data[1]["Province"]);
+			
+		d3.select("#minTip").select("#tipPercent")
+			.text(formatPercentDeci(data[1]["percent"]));
 		
 		function showTooltip(d) {
-	    var xPos = coordinates[0] + 10;
-	    if (d.percent > 7) {
-	      xPos = coordinates[0] - 250;
-	    }
-	    var yPos = coordinates[1];
-			
-		  d3.select("#minTip")
-		    .style("left", xPos + "px")
-		    .style("top", yPos + "px")
-		    .select("#tipProv")
+		  d3.select("#minTip").select("#tipProv")
 		    .text(d.Province);
 				
 			d3.select("#minTip").select("#tipPercent")
 				.text(formatPercentDeci(d.percent));
-
-			d3.select("#minTip").classed("hidden", false);
 		}
 });
 
