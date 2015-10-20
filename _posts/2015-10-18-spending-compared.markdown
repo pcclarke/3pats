@@ -142,8 +142,6 @@ function partyBals() {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   d3.csv("{{ site.baseurl }}/data/2015/10/18/total_spending.csv", type, function(error, data) {
-		
-		console.log(data);
     x.domain(d3.extent(years));
     y.domain([d3.min(data, function(c) { 
         return d3.min(c.values, function(d) { return d.value; }); 
@@ -223,7 +221,6 @@ function partyBals() {
   });
 
   function type(d, i) {
-		console.log(d);
     if (!i) years = Object.keys(d).map(yearFormat.parse).filter(Number);
     var budget = {
       name: d.Party,

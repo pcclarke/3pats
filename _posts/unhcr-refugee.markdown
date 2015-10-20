@@ -1,86 +1,79 @@
 ---
 layout: post
 title:  "UNHCR Refugees in Canada"
-date:   2015-10-14 12:00:00
+date:   2015-10-14 22:00:00
 ---
-
-An alternative source for refugees
 
 <div id="unchrChart"></div>
 
+An alternative source for refugees
+
+
+<style>
+
+#unchrChart .graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+#unchrChart .land {
+  fill: #222;
+}
+
+#unchrChart .boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
 <script>
 
 unhcr();
 
 function unhcr() {
 
-var n = 50, // number of layers
-    m = 10, // number of samples per layer
-    stack = d3.layout.stack().offset("wiggle"),
-    layers0 = stack(d3.range(n).map(function() { return bumpLayer(m); })),
-    layers1 = stack(d3.range(n).map(function() { return bumpLayer(m); }));
+var width = 960,
+    height = 480;
 
-		console.log(layers0);
+var projection = d3.geo.equirectangular()
+    .scale(153)
+    .translate([width / 2, height / 2])
+    .precision(.1);
 
-var width = 740,
-    height = 400;
+var path = d3.geo.path()
+    .projection(projection);
 
-var x = d3.scale.linear()
-    .domain([0, m - 1])
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .domain([0, d3.max(layers0.concat(layers1), function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); })])
-    .range([height, 0]);
-
-var color = d3.scale.linear()
-    .range(["#aad", "#556"]);
-
-var area = d3.svg.area()
-    .x(function(d) { return x(d.x); })
-    .y0(function(d) { return y(d.y0); })
-    .y1(function(d) { return y(d.y0 + d.y); });
+var graticule = d3.geo.graticule();
 
 var svg = d3.select("#unchrChart").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-svg.selectAll("path")
-    .data(layers0)
-  .enter().append("path")
-    .attr("d", area)
-    .style("fill", function() { return color(Math.random()); });
+svg.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", path);
 
-function transition() {
-  d3.selectAll("path")
-      .data(function() {
-        var d = layers1;
-        layers1 = layers0;
-        return layers0 = d;
-      })
-    .transition()
-      .duration(2500)
-      .attr("d", area);
-}
+d3.json("{{ site.baseurl }}/data/2015/10/14/world-50m.json", function(error, world) {
+  if (error) throw error;
 
-// Inspired by Lee Byron's test data generator.
-function bumpLayer(n) {
+  svg.insert("path", ".graticule")
+      .datum(topojson.feature(world, world.objects.land))
+      .attr("class", "land")
+      .attr("d", path);
 
-  function bump(a) {
-    var x = 1 / (.1 + Math.random()),
-        y = 2 * Math.random() - .5,
-        z = 10 / (.1 + Math.random());
-    for (var i = 0; i < n; i++) {
-      var w = (i / n - y) * z;
-      a[i] += x * Math.exp(-w * w);
-    }
-  }
+  svg.insert("path", ".graticule")
+      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+      .attr("class", "boundary")
+      .attr("d", path);
+});
 
-  var a = [], i;
-  for (i = 0; i < n; ++i) a[i] = 0;
-  for (i = 0; i < 5; ++i) bump(a);
-  return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
-}
+d3.select(self.frameElement).style("height", height + "px");
 
 }
 

@@ -21,7 +21,7 @@ date:   2015-10-17 12:00:00
 
 It's absolutely remarkable how different the party costing plans are for new spending... plus how absolutely massive the Liberals' Canada Child Benefit and the Greens' Carbon Dividend is.
 
-Note: The Green party includes some spending cuts on in their total for "Spending Increases", which is why the total is higher here.
+Note: The Green party includes some spending cuts in their total for "Spending Increases", which is why the total is higher here.
 
 Sources:
 
