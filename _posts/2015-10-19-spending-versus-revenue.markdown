@@ -19,7 +19,7 @@ date:   2015-10-19 12:00:00
 
 * * *
 
-The Liberals, Greens, and NDP – but not the Conservatives – all claim that they will find new sources of revenue by raising taxes and cutting various spending programs. But as with their spending plans, the numbers vary widely by party plan.
+The Liberals, Greens, and NDP – but not the Conservatives – all claim that they will find new sources of revenue by raising taxes and cutting various spending programs. But as with their spending plans, the numbers vary widely by party plan. The Liberals plan to spend far more than raise new revenues, the Greens plan to raise far more more than they will increase spending, and the NDP are somewhere in between.
 
 The chart above compares their planned new spending versus new revenue. It does not include the expected budget revenue or spending, which would be in addition to this spending and revenue.
 
