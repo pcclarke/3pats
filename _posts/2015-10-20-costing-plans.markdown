@@ -92,6 +92,8 @@ var width = 740,
 		
 var numFormat = d3.format(",");
 
+var selYear = "2016-17";
+
 var partition = d3.layout.partition()
     .sort(null)
     .size([2 * Math.PI, radius * radius])
@@ -105,6 +107,8 @@ var arc = d3.svg.arc()
 
 drawCosting("liberal");
 
+
+
 function drawCosting(kind) {
 
 	var svg = d3.select("#costingChart").append("svg")
@@ -117,8 +121,8 @@ function drawCosting(kind) {
 	d3.json("{{ site.baseurl }}/data/2015/10/20/" + kind.toLowerCase() + "_costing.json", function(error, root) {
 	  if (error) throw error;
 	
-		var selected = "2016-17";
-		var value = function(d) { return d["2016-17"]; };
+		console.log(selected);
+		var value = function(d) { return d[selYear]; };
 		var highlight = -1;
 
 	  var path = svg.datum(root).selectAll("path")
@@ -148,8 +152,8 @@ function drawCosting(kind) {
 		}
 
 	  d3.selectAll("input").on("change", function change() {
-			selected = this.value;
-	    var value = function(d) { return d[selected]; };
+			selYear = this.value;
+	    var value = function(d) { return d[selYear]; };
 
 		  path
 			    .data(partition.value(value).nodes)
@@ -159,7 +163,7 @@ function drawCosting(kind) {
 				
 			if (highlight !== -1) {
 			  d3.select("#costingTip").select("#tipVal")
-			    .text(numFormat(highlight[selected]) + " million dollars");
+			    .text(numFormat(highlight[selYear]) + " million dollars");
 			}
 	  });
 	});
