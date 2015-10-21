@@ -35,6 +35,8 @@ Just for posterity, let's go over the party costing plans once again. This time,
 
 Guess which party wrote which – except the Conservative one of course.
 
+Note: The Green party includes some spending cuts in their total for "Spending Increases", which is why the total is higher here.
+
 Sources:
 
 - [Liberal Costing Plan](http://www.liberal.ca/costing-plan/)
@@ -90,7 +92,7 @@ var width = 740,
     radius = Math.min(width, height) / 2,
     color = d3.scale.category20c();
 		
-var numFormat = d3.format(",");
+var numFormat = d3.format(",.1f");
 
 var selYear = "2016-17";
 
@@ -107,10 +109,7 @@ var arc = d3.svg.arc()
 
 drawCosting("liberal");
 
-
-
 function drawCosting(kind) {
-
 	var svg = d3.select("#costingChart").append("svg")
 		.attr("class", "costingSvg")
 	    .attr("width", width)
@@ -128,7 +127,7 @@ function drawCosting(kind) {
 	  var path = svg.datum(root).selectAll("path")
 	      .data(partition.value(value).nodes)
 	    .enter().append("path")
-	      .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
+	      //.attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
 	      .attr("d", arc)
 	      .style("stroke", "#fff")
 	      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
@@ -168,13 +167,11 @@ function drawCosting(kind) {
 	  });
 	});
 
-	// Stash the old values for transition.
 	function stash(d) {
 	  d.x0 = d.x;
 	  d.dx0 = d.dx;
 	}
 
-	// Interpolate the arcs in data space.
 	function arcTween(a) {
 	  var i = d3.interpolate({x: a.x0, dx: a.dx0}, a);
 	  return function(t) {
@@ -199,7 +196,6 @@ function drawCosting(kind) {
 	    .text("");
 	  drawCosting(this.options[this.selectedIndex].value);
 	}
-
 }
 
 }

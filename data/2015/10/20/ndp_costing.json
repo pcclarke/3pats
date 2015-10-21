@@ -1,0 +1,326 @@
+{
+ "name": "NDP New Spending",
+ "children": [
+  {
+   "name": "Health and Seniors' Care",
+   "children": [
+	  {
+		 "name": "Renewing Public Health Care in Canada",
+		 "children": [
+		 	{"name": "Build Health and Community Care", "2016-17": 0, "2017-18": 100, "2018-19": 100, "2019-20": 100},
+		 	{"name": "Recruit 7,000 More Doctors, Nurses and Other Providers", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50}
+		 ]
+	  },
+		{
+			"name": "Working towards Universal Public Drug Coverage",
+			"children": [
+				{"name": "Provide Universal Prescription Drug Coverage", "2016-17": 0, "2017-18": 300, "2018-19": 785, "2019-20": 1550},
+				{"name": "Ensure Pan-Canadian Coordination for Better Prescription Drug Prices", "2016-17": 5, "2017-18": 10, "2018-19": 25, "2019-20": 40}
+			]
+		},
+		{
+			"name": "Taking a Preventative Approach to Health Care",
+			"children": [
+				{"name": "Improve Urban Indigenous Health Outcomes", "2016-17": 15, "2017-18": 20, "2018-19": 40, "2019-20": 45},
+				{"name": "Establish a National Diabetes Strategy", "2016-17": 5, "2017-18": 5, "2018-19": 10, "2019-20": 10},
+				{"name": "Increase Grants to Community-Based Health Research", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+				{"name": "Stronger Supports to Quit Smoking", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+				{"name": "Introduce a Mental Health Innovation Fund for Children and Youth", "2016-17": 25, "2017-18": 25, "2018-19": 25, "2019-20": 25},
+				{"name": "Address Suicide in High-Risk Communities", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+			]
+		},
+		{
+			"name": "Expanding Care for Seniors",
+			"children": [
+				{"name": "Improve Seniors’ Care (e.g. better home care and more nursing home beds)", "2016-17": 225, "2017-18": 225, "2018-19": 525, "2019-20": 650},
+				{"name": "Introduce a National Alzheimer’s and Dementia Strategy", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10}
+			]
+		}
+   ]
+  },
+  {
+   "name": "Helping Families Get Ahead",
+   "children": [
+		 {
+			 "name": "Childcare and Family Benefits",
+			 "children": [
+			 	{"name": "Launch a National Childcare Plan", "2016-17": 595, "2017-18": 595, "2018-19": 1865, "2019-20": 2540}
+			 ]
+		 },
+		 {
+			 "name": "Making Life More Affordable by Protecting Consumers and Small Businesses",
+			 "children": [
+			 	{"name": "Establish a Gasoline Ombudsperson", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2}
+			 ]
+		 },
+		 {
+			 "name": "An Inclusive Country",
+			 "children": [
+			 	{"name": "Aid Syrian Refugees", "2016-17": 64, "2017-18": 64, "2018-19": 64, "2019-20": 64},
+			 	{"name": "Improve Immigration Processing Times", "2016-17": 20, "2017-18": 20, "2018-19": 15, "2019-20": 10},
+			 	{"name": "Reunite Families", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+			 	{"name": "Restore the Interim Federal Health Care Program for Refugees", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+			 	{"name": "Restore Unspent Funding to the Foreign Credential Recognition Program", "2016-17": 5, "2017-18": 5, "2018-19": 10, "2019-20": 10},
+			 	{"name": "Establish an Immigration Ombudsperson", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3}
+			 ]
+		 }
+   ]
+  },
+  {
+   "name": "Jobs and Infrastructure",
+   "children": [
+		 {
+			 "name": "Reducing Taxes for Small Business",
+			 "children": [
+			 	{"name": "Reduce the Small Business Tax Rate (2 percentage points over 2 years)", "2016-17": 375, "2017-18": 525, "2018-19": 225, "2019-20": 0}
+			 ]
+		 },
+		 {
+			 "name": "Promoting Investment in the Manufacturing Sector and Innovation",
+			 "children": [
+			 	{"name": "Introduce an Innovation Tax Credit", "2016-17": 40, "2017-18": 40, "2018-19": 40, "2019-20": 40},
+			 	{"name": "Restore the Tax Credit for Labour Sponsored Venture Capital Corporations", "2016-17": 110, "2017-18": 150, "2018-19": 150, "2019-20": 150},
+			 	{"name": "Strengthen the Automotive Sector", "2016-17": 25, "2017-18": 50, "2018-19": 50, "2019-20": 75},
+			 	{"name": "Support the Aerospace Sector", "2016-17": 25, "2017-18": 50, "2018-19": 50, "2019-20": 75}
+			 ]
+		 },
+		 {
+			 "name": "Supporting a Diverse Rural Economy",
+			 "children": [
+			 	{"name": "Boost Regional Economic Development", "2016-17": 10, "2017-18": 15, "2018-19": 25, "2019-20": 39},
+			 	{"name": "Support Forest Product Manufacturing, Innovation and Promotion", "2016-17": 40, "2017-18": 30, "2018-19": 35, "2019-20": 0},
+			 	{"name": "Extend the Mining Exploration Tax Credit", "2016-17": 45, "2017-18": 35, "2018-19": 35, "2019-20": 35},
+			 	{"name": "Invest in the Ring of Fire (Financing costs)", "2016-17": 40, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+		    {"name": "Enhance Destination Canada (Tourism)", "2016-17": 5, "2017-18": 10, "2018-19": 15, "2019-20": 0},
+		    {"name": "Introduce a Microbrewery Tax Credit", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2},
+		    {"name": "Public Agriculture Research and Innovation", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+		    {"name": "Support Young Farmers", "2016-17": 10, "2017-18": 25, "2018-19": 25, "2019-20": 25},
+		    {"name": "Enhance the Capacity of the Canadian Food Inspection Agency", "2016-17": 20, "2017-18": 25, "2018-19": 30, "2019-20": 35}
+			 ]
+		 },
+		 {
+			 "name": "Supporting Home Retrofits and Affordable Housing",
+			 "children": [
+			 	{"name": "Introduce a Home Energy Retrofit Program", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+			 	{"name": "Introduce Incentives for Affordable Rental Housing Construction", "2016-17": 500, "2017-18": 0, "2018-19": 0, "2019-20": 0},
+			 	{"name": "Boost Support for Homelessness Initiatives", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+			 	{"name": "Restore Funding and Reinvest in Affordable Housing", "2016-17": 430, "2017-18": 500, "2018-19": 575, "2019-20": 640}
+			 ]
+		 },
+		 {
+			 "name": "Building Needed Infrastructure",
+			 "children": [
+			 	{"name": "Implement the Better Transit Plan", "2016-17": 420, "2017-18": 550, "2018-19": 500, "2019-20": 300},
+			 	{"name": "Close the Municipal Infrastructure Gap", "2016-17": 420, "2017-18": 800, "2018-19": 1000, "2019-20": 1500},
+			 	{"name": "Invest in Critical National Bridge Infrastructure", "2016-17": 0, "2017-18": 0, "2018-19": 80, "2019-20": 80},
+			 	{"name": "Improve Rail Safety Infrastructure, Inspections and Accountability", "2016-17": 20, "2017-18": 80, "2018-19": 5, "2019-20": 5},
+			 	{"name": "Invest in Northern Roads, Bridges and Ports", "2016-17": 40, "2017-18": 70, "2018-19": 90, "2019-20": 0},
+			 	{"name": "Infrastructure Apprenticeships", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+			 ]
+		 },
+		 {
+			 "name": "A Cleaner Future, a Greener Economy",
+			 "children": [
+				 {"name": "Improve Disaster Mitigation Infrastructure", "2016-17": 120, "2017-18": 130, "2018-19": 150, "2019-20": 0},
+				 {"name": "Improve Water Infrastructure in Small Communities", "2016-17": 100, "2017-18": 100, "2018-19": 0, "2019-20": 0},
+				 {"name": "Improve Passenger Rail Infrastructure", "2016-17": 60, "2017-18": 60, "2018-19": 90, "2019-20": 90},
+				 {"name": "Reinvest in the Green Municipal Fund", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 0},
+				 {"name": "Strengthen Northern and Remote Community Energy Security", "2016-17": 25, "2017-18": 25, "2018-19": 25, "2019-20": 25},
+				 {"name": "Roll Out Electric Car Charging Stations", "2016-17": 12, "2017-18": 0, "2018-19": 0, "2019-20": 0},
+				 {"name": "Manage Green Bond Investments in Sustainable Development", "2016-17": 15, "2017-18": 27, "2018-19": 37, "2019-20": 45},
+				 {"name": "Strengthen Disaster Relief Preparation and Training", "2016-17": 9, "2017-18": 9, "2018-19": 9, "2019-20": 9}
+			 ]
+		 }
+   ]
+  },
+  {
+   "name": "Opportunities for Young Canadians",
+   "children": [
+		 {
+			 "name": "Affordable, Accessible Post-Secondary Education",
+			 "children": [
+			 	{"name": "Increase Support for the Canada Student Grants Program", "2016-17": 25, "2017-18": 50, "2018-19": 75, "2019-20": 100},
+			 	{"name": "Phase in Interest-Free Student Loans", "2016-17": 90, "2017-18": 176, "2018-19": 280, "2019-20": 386}
+			 ]
+		 },
+		 {
+			 "name": "Jobs, Training and Opportunity for the Future",
+			 "children": [
+			 	{"name": "Create Job Opportunities for Young Canadians", "2016-17": 25, "2017-18": 25, "2018-19": 50, "2019-20": 100}
+			 ]
+		 }
+   ]
+  },
+  {
+   "name": "Help Where it's Needed Most",
+   "children": [
+		 {
+		 	"name": "Protecting the Most Vulnerable",
+			"children": [
+				{"name": "Create a National Council on Poverty Elimination", "2016-17": 1, "2017-18": 2, "2018-19": 3, "2019-20": 3},
+				{"name": "Increase the Working Income Tax Benefit", "2016-17": 200, "2017-18": 200, "2018-19": 200, "2019-20": 200},
+				{"name": "Boost the National Child Benefit Supplement", "2016-17": 300, "2017-18": 300, "2018-19": 300, "2019-20": 300}
+			]
+		},
+		{
+			"name": "Strengthening Retirement Security",
+			"children": [
+				{"name": "Increase the Guaranteed Income Supplement", "2016-17": 50, "2017-18": 100, "2018-19": 200, "2019-20": 400}
+			]
+		},
+		{
+			"name": "Ending Violence Against Women",
+			"children": [
+				{"name": "Establish a National Action Plan to End Violence Against Women", "2016-17": 0, "2017-18": 1, "2018-19": 2, "2019-20": 5},
+				{"name": "Restore the Shelter Enhancement Program", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10}
+			]
+		},
+		{
+			"name": "Equal Pay for Equal Work",
+			"children": [
+				{"name": "Take Pro-Active Steps to Ensure Pay Equity", "2016-17": 2, "2017-18": 4, "2018-19": 5, "2019-20": 5}
+			]
+		},
+		{
+			"name": "Respecting Northerners",
+			"children": [
+				{"name": "Index the Northern Deduction", "2016-17": 0, "2017-18": 4, "2018-19": 7, "2019-20": 11},
+				{"name": "Fix Nutrition North", "2016-17": 5, "2017-18": 7, "2018-19": 10, "2019-20": 10}
+			]
+		},
+		{
+			"name": "Ensuring Low-Income Youth Can Participate in Sports",
+			"children": [
+				{"name": "Encourage Youth Participation in Sports Leagues", "2016-17": 4, "2017-18": 6, "2018-19": 8, "2019-20": 10},
+				{"name": "Tackle Concussions in Youth Sports", "2016-17": 0, "2017-18": 1, "2018-19": 2, "2019-20": 2}
+			]
+		}
+   ]
+  },
+  {
+   "name": "Supporting Indigenous Communities",
+   "children": [
+		 {
+			 "name": "Establishing a Nation to Nation Relationship",
+			 "children": [
+			 	{"name": "Call an Inquiry into the Missing and Murdered Indigenous Women", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+			 	{"name": "Support the National Centre for Truth and Reconciliation", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2}
+			 ]
+		 },
+		 {
+			 "name": "Closing the Education Gap",
+			 "children": [
+			 	{"name": "Work Towards Closing the Education Gap", "2016-17": 375, "2017-18": 450, "2018-19": 450, "2019-20": 530}
+			 ]
+		 },
+		 {
+			 "name": "Strengthening Indigenous Communities",
+			 "children": [
+			 	{"name": "Improve Critical Infrastructure", "2016-17": 200, "2017-18": 100, "2018-19": 50, "2019-20": 25},
+				{"name": "Establish a National Indigenous Languages Revitalization Fund", "2016-17": 15, "2017-18": 15, "2018-19": 15, "2019-20": 15},
+				{"name": "Create a National Indigenous Languages Institute", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2}
+			 ]
+		 }
+   ]
+  },
+	{
+		"name": "Safe and Secure Canada",
+		"children": [
+			{
+				"name": "Making Our Communities Safer",
+				"children": [
+					{"name": "Strengthen Crime Prevention", "2016-17": 2, "2017-18": 7, "2018-19": 9, "2019-20": 12},
+					{"name": "Increase Access to Rehabilitation Programs and Mental Health Treatment in Prison", "2016-17": 0, "2017-18": 3, "2018-19": 3, "2019-20": 4},
+					{"name": "Increase Support to the Canada Border Services Agency", "2016-17": 0, "2017-18": 8, "2018-19": 10, "2019-20": 12},
+					{"name": "Increase Support for Canadian Police Officers", "2016-17": 25, "2017-18": 50, "2018-19": 75, "2019-20": 100},
+					{"name": "Implement a National Anti-Bullying Strategy", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+					{"name": "Establish a Hero’s Benefit", "2016-17": 5, "2017-18": 5, "2018-19": 10, "2019-20": 10}
+				]
+			},
+			{
+				"name": "Fighting Terrorism While Protecting Personal Liberties",
+				"children": [
+					{"name": "Restore the Inspector General of CSIS", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+					{"name": "Fight Against Radicalization", "2016-17": 5, "2017-18": 5, "2018-19": 7, "2019-20": 8}
+				]
+			},
+			{
+				"name": "Canadian Forces in the 21st Century",
+				"children": [
+					{"name": "Provide Psychologists in Uniform as Part of Deployable Mental Health Teams", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2},
+					{"name": "Create an Office of the Inspector General for the Department of National Defence", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+					{"name": "Improve our Search and Rescue Systems", "2016-17": 7, "2017-18": 7, "2018-19": 7, "2019-20": 7}
+				]
+			},
+			{
+				"name": "Treating Our Veterans with Respect",
+				"children": [
+					{"name": "Reverse the Cuts to Long-term Care for Veterans", "2016-17": 15.5, "2017-18": 15.5, "2018-19": 15.5, "2019-20": 15.5},
+					{"name": "Restore the Last Post Fund", "2016-17": 4, "2017-18": 4, "2018-19": 4, "2019-20": 4},
+					{"name": "Boost Survivors’ Pensions, the Retirement Income Security Benefit and the Permanent Impairment Allowance", "2016-17": 40, "2017-18": 45, "2018-19": 45, "2019-20": 50},
+					{"name": "Enhance PTSD Support", "2016-17": 20, "2017-18": 35, "2018-19": 50, "2019-20": 60},
+					{"name": "Reopen Veterans Affairs Offices", "2016-17": 6, "2017-18": 6, "2018-19": 7, "2019-20": 7},
+					{"name": "Launch an Agent Orange Inquiry", "2016-17": 0, "2017-18": 5, "2018-19": 0, "2019-20": 0}
+				]
+			},
+			{
+				"name": "Restoring Canada’s Place in the World",
+				"children": [
+					{"name": "Increase Foreign Assistance", "2016-17": 50, "2017-18": 100, "2018-19": 150, "2019-20": 200}
+				]
+			}
+		]
+	},
+	{
+		"name": "Stronger Communities, Stronger Democracy",
+		"children": [
+			{
+				"name": "Investing in the Arts",
+				"children": [
+					{"name": "Restore Funding to the CBC", "2016-17": 100, "2017-18": 115, "2018-19": 115, "2019-20": 115},
+					{"name": "Increase Support to the Canada Council for the Arts, Telefilm Canada and the National Film Board", "2016-17": 4, "2017-18": 7, "2018-19": 21, "2019-20": 28},
+					{"name": "Introduce a Digital Fund for the Arts", "2016-17": 3, "2017-18": 7, "2018-19": 0, "2019-20": 0},
+					{"name": "Implement Income Averaging for Artists and Cultural Workers", "2016-17": 0, "2017-18": 0, "2018-19": 10, "2019-20": 10},
+					{"name": "Restore International Cultural Agents", "2016-17": 0, "2017-18": 1, "2018-19": 2, "2019-20": 5},
+					{"name": "Restore the National Archival Development Program", "2016-17": 1.7, "2017-18": 1.7, "2018-19": 1.7, "2019-20": 1.7}
+				]
+			},
+			{
+				"name": "Moving Forward on Women’s Equality",
+				"children": [
+					{"name": "Advance the Mandate of Status of Women Canada", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+				]
+			},
+			{
+				"name": "A Transparent Government that Works for Canadians",
+				"children": [
+					{"name": "Restore the Court Challenges Program", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+					{"name": "Ensure Fair Wage Compliance", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1}
+				]
+			},
+			{
+				"name": "Digital and Privacy",
+				"children": [
+					{"name": "Work towards Closing the Digital Divide", "2016-17": 10, "2017-18": 30, "2018-19": 30, "2019-20": 30}
+				]
+			},
+			{
+				"name": "Putting Evidence First",
+				"children": [
+					{"name": "Establish a Scientific Advisory Council", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+					{"name": "Restore the Long-Form Census", "2016-17": 25, "2017-18": 5, "2018-19": 0, "2019-20": 0},
+					{"name": "Create the Office of the Parliamentary Science Officer", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+					{"name": "Increase Grants Council Funding", "2016-17": 0, "2017-18": 10, "2018-19": 20, "2019-20": 25},
+					{"name": "Expand the Power and Independence of the Parliamentary Budget Officer", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1}
+				]
+			},
+			{
+				"name": "Respecting Our Official Languages",
+				"children": [
+					{"name": "Index Funds for the Official Languages Roadmap", "2016-17": 0, "2017-18": 5, "2018-19": 10, "2019-20": 15}
+				]
+			}
+		]
+	}
+ ]
+}
