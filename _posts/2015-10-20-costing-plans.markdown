@@ -7,6 +7,8 @@ date:   2015-10-20 12:00:00
 <form>
   <label><input type="radio" name="mode" value="2016-17" checked> 2016-17</label>
   <label><input type="radio" name="mode" value="2017-18"> 2017-18</label>
+	<label><input type="radio" name="mode" value="2018-19"> 2018-19</label>
+	<label><input type="radio" name="mode" value="2019-20"> 2019-20</label>
 </form>
 <div>
   <select id="selectCosting">
@@ -53,14 +55,38 @@ Sources:
 	width: 200px;
 }
 
+#costingChart .sel {
+	fill: #000000 !important;
+}
+
+#costingTip {
+	display: block;
+	min-height: 50px;
+	margin-bottom: 15px;
+  pointer-events: none;
+	text-align: center;
+}
+
+#costingTip #tipTop {
+  font-size: 24px;
+  margin-bottom: 10px !important;
+}
+
+#costingTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
 </style>
 
 <script>
 
 var width = 740,
-    height = 700,
+    height = 800,
     radius = Math.min(width, height) / 2,
     color = d3.scale.category20c();
+		
+var numFormat = d3.format(",");
 
 var svg = d3.select("#costingChart").append("svg")
     .attr("width", width)
@@ -76,7 +102,7 @@ var partition = d3.layout.partition()
 var arc = d3.svg.arc()
     .startAngle(function(d) { return d.x; })
     .endAngle(function(d) { return d.x + d.dx; })
-    .innerRadius(function(d) { return Math.sqrt(d.y); })
+    .innerRadius(function(d) { return Math.sqrt(d.y / 2); })
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 		
 var kind = "liberal";
@@ -84,7 +110,9 @@ var kind = "liberal";
 d3.json("{{ site.baseurl }}/data/2015/10/20/" + kind.toLowerCase() + "_costing.json", function(error, root) {
   if (error) throw error;
 	
+	var selected = "2016-17";
 	var value = function(d) { return d["2016-17"]; };
+	var highlight = -1;
 
   var path = svg.datum(root).selectAll("path")
       .data(partition.value(value).nodes)
@@ -94,19 +122,39 @@ d3.json("{{ site.baseurl }}/data/2015/10/20/" + kind.toLowerCase() + "_costing.j
       .style("stroke", "#fff")
       .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
       .style("fill-rule", "evenodd")
-      .each(stash);
+      .each(stash)
+		.on("mouseover", function(d) {
+			showTooltip(d, this);
+		})
+		.on("mousedown", function(d) {
+			showTooltip(d, this);
+		});
+		
+	function showTooltip(d, obj) {
+		highlight = d;
+		d3.selectAll("#costingChart .sel").classed("sel", false);
+		d3.select(obj).classed("sel", true);
+	  d3.select("#costingTip").select("#tipBudget")
+	    .text(d.name);
+	  d3.select("#costingTip").select("#tipVal")
+	    .text(numFormat(d.value) + " million dollars");
+	}
 
-  /*d3.selectAll("input").on("change", function change() {
-    var value = this.value === "count"
-        ? function() { return 1; }
-        : function(d) { return d.size; };
+  d3.selectAll("input").on("change", function change() {
+		selected = this.value;
+    var value = function(d) { return d[selected]; };
 
 	  path
 		    .data(partition.value(value).nodes)
 		  .transition()
 		    .duration(1500)
 		    .attrTween("d", arcTween);
-  });*/
+				
+		if (highlight !== -1) {
+		  d3.select("#costingTip").select("#tipVal")
+		    .text(numFormat(highlight[selected]) + " million dollars");
+		}
+  });
 });
 
 // Stash the old values for transition.
