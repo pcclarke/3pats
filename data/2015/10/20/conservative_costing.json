@@ -1,0 +1,99 @@
+{
+ "name": "Conservative New Spending",
+ "children": [
+  {
+   "name": "Our Conservative Plan for a Stronger Economy",
+   "children": [
+    {"name": "Advanced Manufacturing Hub", "2016-17": 6, "2017-18": 6, "2018-19": 6, "2019-20": 6},
+		{"name": "Manufacturing Technology Demonstration Program", "2016-17": 0, "2017-18": 20, "2018-19": 20, "2019-20": 20},
+		{"name": "Automotive Innovation Fund", "2016-17": 0, "2017-18": 0, "2018-19": 100, "2019-20": 100},
+		{"name": "Apprentice Job Creation Tax Credit", "2016-17": 60, "2017-18": 60, "2018-19": 60, "2019-20": 60},
+		{"name": "Skilled Trades Job Experience Program", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+		{"name": "Foreign Credential Recognition Loans", "2016-17": 8, "2017-18": 8, "2018-19": 8, "2019-20": 8},
+		{"name": "Agri-Innovation Fund", "2016-17": 33, "2017-18": 33, "2018-19": 33, "2019-20": 0},
+		{"name": "Lobster Branding", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 0},
+		{"name": "Lobster Biomass Research", "2016-17": 1.6, "2017-18": 1.6, "2018-19": 1.6, "2019-20": 0},
+		{"name": "Forestry Promotion", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+		{"name": "Mineral Exploration Tax Credit", "2016-17": 45, "2017-18": 45, "2018-19": 45, "2019-20": 45},
+		{"name": "Enhanced Mineral Exploration Tax Credit", "2016-17": 15, "2017-18": 15, "2018-19": 15, "2019-20": 15},
+		{"name": "Quebec Maritime Prosperity Initiative", "2016-17": 19, "2017-18": 19, "2018-19": 19, "2019-20": 0},
+		{"name": "Rural Broadband", "2016-17": 0, "2017-18": 20, "2018-19": 30, "2019-20": 50},
+		{"name": "Nutrition North", "2016-17": 8, "2017-18": 8, "2018-19": 8, "2019-20": 8},
+		{"name": "Wood Buffalo Highway", "2016-17": 0.5, "2017-18": 1, "2018-19": 2, "2019-20": 6.4}
+   ]
+  },
+  {
+   "name": "Our Conservative Plan for Hard-Working Families and Seniors",
+   "children": [
+		 {"name": "First-Time Home Buyers' Plan", "2016-17": 0, "2017-18": 30, "2018-19": 30, "2019-20": 30},
+		 {"name": "Home Renovation Tax Credit", "2016-17": 185, "2017-18": 740, "2018-19": 925, "2019-20": 1480},
+		 {"name": "Data on Foreign Speculation in Real Estate", "2016-17": 0.5, "2017-18": 0.5, "2018-19": 0.5, "2019-20": 0.5},
+		 {"name": "Single Seniors Tax Credit", "2016-17": 23, "2017-18": 117, "2018-19": 214, "2019-20": 315},
+		 {"name": "Registered Disability Savings Plan", "2016-17": 0, "2017-18": 35, "2018-19": 40, "2019-20": 45},
+		 {"name": "Registered Education Savings Plan", "2016-17": 0, "2017-18": 45, "2018-19": 47, "2019-20": 50},
+		 {"name": "Adoption Expense Tax Credit", "2016-17": 4, "2017-18": 4, "2018-19": 4, "2019-20": 4},
+		 {"name": "Maternity/Parental Benefit reform", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2}
+   ]
+  },
+  {
+   "name": "Our Conservative Plan for a More Secure Canada",
+   "children": [
+		 {"name": "Kanishka Project", "2016-17": 2, "2017-18": 2, "2018-19": 2, "2019-20": 2},
+		 {"name": "Office of Religious Freedom", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+		 {"name": "Child, Early, and Forced Marriage", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+		 {"name": "Financial Task Action Force - Ukraine", "2016-17": 1.5, "2017-18": 1.5, "2018-19": 1.5, "2019-20": 1.5},
+		 {"name": "Digital Freedom Fund", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+		 {"name": "Special Operation Forces", "2016-17": 10, "2017-18": 15, "2018-19": 20, "2019-20": 30},
+		 {"name": "Canadian Reservists", "2016-17": 0, "2017-18": 20, "2018-19": 40, "2019-20": 105},
+		 {"name": "College Militaire Royal de St Jean", "2016-17": 0, "2017-18": 4, "2018-19": 4, "2019-20": 4},
+		 {"name": "HMCS Discovery", "2016-17": 0, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+		 {"name": "Canadian Patrol Craft - Great Lakes", "2016-17": 0, "2017-18": 10, "2018-19": 20, "2019-20": 30},
+		 {"name": "Canadian Junior Rangers", "2016-17": 2.5, "2017-18": 2.5, "2018-19": 2.5, "2019-20": 2.5}
+   ]
+  },
+  {
+   "name": "Our Conservative Plan for Safe Streets",
+   "children": [
+    {"name": "National Anti-Drug Strategy", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+    {"name": "Youth Gang Prevention Fund", "2016-17": 2.5, "2017-18": 2.5, "2018-19": 2.5, "2019-20": 2.5},
+    {"name": "Online Counterfeit", "2016-17": 2.5, "2017-18": 2.5, "2018-19": 2.5, "2019-20": 2.5},
+    {"name": "Habitat for Humanity/CORCAN", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+    {"name": "Protecting Children and Victims", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+    {"name": "National Action Plan to Combat Human Trafficking", "2016-17": 12, "2017-18": 12, "2018-19": 12, "2019-20": 12},
+    {"name": "RCMP Integrated Teams and Tipline", "2016-17": 11.5, "2017-18": 11.5, "2018-19": 11.5, "2019-20": 11.5}
+   ]
+  },
+  {
+   "name": "Our Conservative Plan for Strong Communities",
+   "children": [
+    {"name": "Earning Loss Benefit Reform", "2016-17": 9, "2017-18": 9, "2018-19": 9, "2019-20": 9},
+    {"name": "Tax Credit for Service Club Memberships", "2016-17": 0, "2017-18": 30, "2018-19": 30, "2019-20": 30},
+    {"name": "Maple Leaf Designation", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+    {"name": "Diefenbaker Home", "2016-17": 0.3, "2017-18": 0.1, "2018-19": 0.1, "2019-20": 0.1},
+    {"name": "Local Museums Program", "2016-17": 5, "2017-18": 5, "2018-19": 10, "2019-20": 15},
+    {"name": "Palliative Care Research", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+    {"name": "Brain Canada Research Fund", "2016-17": 0, "2017-18": 15, "2018-19": 15, "2019-20": 15},
+    {"name": "Canadian Partnership against Cancer", "2016-17": 0, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+    {"name": "BC Cancer Prevention Research Centre", "2016-17": 4, "2017-18": 4, "2018-19": 4, "2019-20": 0},
+    {"name": "Terry Fox Research Institute", "2016-17": 5, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+    {"name": "Derelict Boats Fund", "2016-17": 1, "2017-18": 1, "2018-19": 1, "2019-20": 1},
+    {"name": "Tug Boat Capacity on the West Coast", "2016-17": 0, "2017-18": 8, "2018-19": 10, "2019-20": 12},
+    {"name": "Wildlife Conservation and Enhancement Program", "2016-17": 0, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+    {"name": "Tourism Funding for Angling, Hunting, and Snowmobiling", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3},
+    {"name": "Pacific Salmon Conservation", "2016-17": 0, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+    {"name": "Strait of Georgia Marine Conservation Area", "2016-17": 3.5, "2017-18": 3.5, "2018-19": 3.5, "2019-20": 3.5},
+    {"name": "Aboriginal Language Programming", "2016-17": 2.5, "2017-18": 2.5, "2018-19": 2.5, "2019-20": 2.5},
+    {"name": "Citizenship \"Surge\" Funding", "2016-17": 5.7, "2017-18": 5.7, "2018-19": 0, "2019-20": 0}
+   ]
+  },
+  {
+   "name": "Trans-Pacific Partnership Implementation",
+   "children": [
+    {"name": "Quota Value Guarantee Program", "2016-17": 0, "2017-18": 150, "2018-19": 150, "2019-20": 150},
+    {"name": "Income Guarantee Program", "2016-17": 0, "2017-18": 36, "2018-19": 50, "2019-20": 69},
+    {"name": "Processor Modernization and Marketing Fund", "2016-17": 49, "2017-18": 70, "2018-19": 103, "2019-20": 103},
+    {"name": "Agri-Marketing Program", "2016-17": 3, "2017-18": 3, "2018-19": 3, "2019-20": 3}
+   ]
+  }
+ ]
+}

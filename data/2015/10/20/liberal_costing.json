@@ -1,0 +1,119 @@
+{
+ "name": "Liberal New Spending",
+ "children": [
+  {
+   "name": "Tax cuts and benefits",
+   "children": [
+    {"name": "Canada Child Benefit", "2016-17": 21725, "2017-18": 22160, "2018-19": 26747, "2019-20": 27293},
+		{"name": "Middle class tax cut", "2016-17": 2780, "2017-18": 2925, "2018-19": 3000, "2019-20": 3050},
+		{"name": "10 precent boost to GIS for single seniors", "2016-17": 720, "2017-18": 760, "2018-19": 800, "2019-20": 840},
+		{"name": "Index OAS/GIS to Seniors Price Index", "2016-17": 55, "2017-18": 105, "2018-19": 160, "2019-20": 210},
+		{"name": "GST rebate for new rental housing construction", "2016-17": 125, "2017-18": 130, "2018-19": 130, "2019-20": 135},
+		{"name": "Enhanced flexibility RRSP Home Buyer's Plan", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+   ]
+  },
+  {
+   "name": "Infrastructure",
+   "children": [
+		 {"name": "Public transit infrastructure", "2016-17": 1675, "2017-18": 1675, "2018-19": 1150, "2019-20": 1150},
+		 {"name": "Social infrastructure", "2016-17": 1675, "2017-18": 1675, "2018-19": 1150, "2019-20": 1150},
+		 {"name": "Green infrastructure", "2016-17": 1675, "2017-18": 1675, "2018-19": 1150, "2019-20": 1150}
+   ]
+  },
+  {
+   "name": "Employment Insurance",
+   "children": [
+		 {"name": "End new and re-entering worker EI-discrimination", "2016-17": 138, "2017-18": 550, "2018-19": 560, "2019-20": 570},
+		 {"name": "Reduce waiting period to one week", "2016-17": 175, "2017-18": 700, "2018-19": 725, "2019-20": 750},
+		 {"name": "More flexible parental leave", "2016-17": 30, "2017-18": 125, "2018-19": 125, "2019-20": 130},
+		 {"name": "Better access to compassionate care", "2016-17": 48, "2017-18": 190, "2018-19": 195, "2019-20": 200},
+		 {"name": "Increase LMDA training funding", "2016-17": 125, "2017-18": 500, "2018-19": 500, "2019-20": 500},
+		 {"name": "Reverse 2012 EI changes", "2016-17": 8, "2017-18": 35, "2018-19": 35, "2019-20": 35}
+   ]
+  },
+  {
+   "name": "Jobs and training",
+   "children": [
+    {"name": "Increased Canada Student Grant", "2016-17": 750, "2017-18": 800, "2018-19": 825, "2019-20": 850},
+    {"name": "Youth jobs strategy", "2016-17": 455, "2017-18": 455, "2018-19": 435, "2019-20": 125},
+    {"name": "Jobs and innovation", "2016-17": 300, "2017-18": 300, "2018-19": 300, "2019-20": 125},
+    {"name": "New training investment", "2016-17": 200, "2017-18": 200, "2018-19": 200, "2019-20": 200},
+    {"name": "Restore Labour Sponsored Venture Capital Corporations tax credit", "2016-17": 115, "2017-18": 160, "2018-19": 165, "2019-20": 165},
+    {"name": "Increase Repayment Assistance Plan threshold to $25,000", "2016-17": 115, "2017-18": 119, "2018-19": 122, "2019-20": 129},
+    {"name": "Agriculture innovation and safety", "2016-17": 85, "2017-18": 85, "2018-19": 85, "2019-20": 85},
+    {"name": "Teacher tax benefit", "2016-17": 60, "2017-18": 60, "2018-19": 60, "2019-20": 60},
+    {"name": "Aboriginal skills and employment training", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+    {"name": "Building trades training equipment", "2016-17": 25, "2017-18": 25, "2018-19": 25, "2019-20": 25}
+   ]
+  },
+  {
+   "name": "Health",
+   "children": [
+    {"name": "New Health Accord - Home care", "2016-17": 400, "2017-18": 650, "2018-19": 900, "2019-20": 1000},
+    {"name": "Public health healthy kids campaign (vaccinations, concussions)", "2016-17": 15, "2017-18": 15, "2018-19": 0, "2019-20": 0}
+   ]
+  },
+  {
+   "name": "Environment and Economy",
+   "children": [
+    {"name": "Low Carbon Economy Trust", "2016-17": 0, "2017-18": 1000, "2018-19": 1000, "2019-20": 0},
+    {"name": "Resource sector clean-tech strategies", "2016-17": 200, "2017-18": 200, "2018-19": 200, "2019-20": 200},
+    {"name": "Clean-tech production", "2016-17": 100, "2017-18": 100, "2018-19": 100, "2019-20": 100},
+    {"name": "National Parks programming and science", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+    {"name": "Water science and monitoring", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+    {"name": "Free entry to National Parks in 2017", "2016-17": 15, "2017-18": 45, "2018-19": 0, "2019-20": 0}
+   ]
+  },
+  {
+   "name": "Arts and culture",
+   "children": [
+    {"name": "Renewed investment in CBC/Radio-Canada", "2016-17": 75, "2017-18": 150, "2018-19": 150, "2019-20": 150},
+    {"name": "Export promotion of arts", "2016-17": 10, "2017-18": 25, "2018-19": 25, "2019-20": 25},
+    {"name": "Investment in NFB/Telefilm", "2016-17": 10, "2017-18": 25, "2018-19": 25, "2019-20": 25},
+    {"name": "Double funding for Canada Council for the Arts", "2016-17": 90, "2017-18": 180, "2018-19": 180, "2019-20": 180}
+   ]
+  },
+  {
+   "name": "Indigenous Peoples",
+   "children": [
+    {"name": "New education partnership with First Nations", "2016-17": 100, "2017-18": 200, "2018-19": 300, "2019-20": 300},
+    {"name": "First Nations education infrastructure", "2016-17": 100, "2017-18": 300, "2018-19": 100, "2019-20": 0},
+    {"name": "Increase to post-secondary student support program", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+    {"name": "Public inquiry into missing and murdered Indigenous women and girls", "2016-17": 20, "2017-18": 20, "2018-19": 0, "2019-20": 0},
+    {"name": "Métis Economic Development Strategy", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+   ]
+  },
+  {
+   "name": "Veterans",
+   "children": [
+    {"name": "Expanded Permanent Impairment Allowance", "2016-17": 25, "2017-18": 25, "2018-19": 25, "2019-20": 25},
+    {"name": "Increase Earnings Loss Benefit", "2016-17": 38, "2017-18": 42, "2018-19": 44, "2019-20": 46},
+    {"name": "New Veterans Education Benefit", "2016-17": 80, "2017-18": 80, "2018-19": 80, "2019-20": 80},
+    {"name": "Re-open nine VAC offices", "2016-17": 7, "2017-18": 7, "2018-19": 7, "2019-20": 7},
+    {"name": "Increase the Last Post Fund by 50 percent", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5},
+    {"name": "Support for veterans and their families", "2016-17": 100, "2017-18": 100, "2018-19": 100, "2019-20": 100},
+    {"name": "Veterans' care Centres of Excellence", "2016-17": 20, "2017-18": 0, "2018-19": 0, "2019-20": 0},
+    {"name": "Expand Veterans' Affairs service staff", "2016-17": 50, "2017-18": 50, "2018-19": 50, "2019-20": 50}
+   ]
+  },
+  {
+   "name": "Strengthening Communities",
+   "children": [
+    {"name": "Guns and gangs police task forces", "2016-17": 100, "2017-18": 100, "2018-19": 100, "2019-20": 100},
+    {"name": "Community Heroes Fund", "2016-17": 10, "2017-18": 10, "2018-19": 10, "2019-20": 10},
+    {"name": "Investment in Nutrition North", "2016-17": 10, "2017-18": 10, "2018-19": 11, "2019-20": 11},
+    {"name": "Search and rescue", "2016-17": 10, "2017-18": 10, "2018-19": 12, "2019-20": 12},
+    {"name": "Greater enforcement resources for CRA", "2016-17": 20, "2017-18": 20, "2018-19": 20, "2019-20": 20},
+    {"name": "Court Challenges Program", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+   ]
+  },
+  {
+   "name": "Immigration",
+   "children": [
+    {"name": "Reduce application processing time", "2016-17": 25, "2017-18": 50, "2018-19": 50, "2019-20": 50},
+    {"name": "Eliminate assessment fee for caregivers", "2016-17": 8, "2017-18": 8, "2018-19": 8, "2019-20": 8},
+    {"name": "25,000 Syrian refugee intake", "2016-17": 100, "2017-18": 50, "2018-19": 0, "2019-20": 0}
+   ]
+  }
+ ]
+}

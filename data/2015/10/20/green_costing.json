@@ -1,0 +1,82 @@
+{
+ "name": "Green New Spending",
+ "children": [
+  {
+   "name": "Climate Money to Consumers",
+   "children": [
+    {"name": "Carbon Dividend", "2016-17": 22452, "2017-18": 22120, "2018-19": 21793, "2019-20": 21471},
+		{"name": "Increase EcoEnergy home energy retrofit grants by 50%", "2016-17": 600, "2017-18": 600, "2018-19": 600, "2019-20": 600},
+		{"name": "National solar roof program", "2016-17": 180, "2017-18": 180, "2018-19": 180, "2019-20": 180},
+		{"name": "Electric Vehicle Rebate Program for Consumers", "2016-17": 5, "2017-18": 5, "2018-19": 5, "2019-20": 5}
+   ]
+  },
+  {
+   "name": "National Sustainable Jobs Plan",
+   "children": [
+		 {"name": "New Infrastructure Spending ", "2016-17": 6400, "2017-18": 6400, "2018-19": 6400, "2019-20": 6400},
+		 {"name": "Green Technology Commercialization Grant", "2016-17": 1000, "2017-18": 1000, "2018-19": 1000, "2019-20": 1000},
+		 {"name": "Electrical grid upgrades", "2016-17": 1000, "2017-18": 1000, "2018-19": 1000, "2019-20": 1000},
+		 {"name": "Reinvest in national rail systems", "2016-17": 700, "2017-18": 720, "2018-19": 742, "2019-20": 764},
+		 {"name": "Energy retrofit for municipal, university, schools and hospitals", "2016-17": 200, "2017-18": 200, "2018-19": 200, "2019-20": 200},
+		 {"name": "Energy retrofit for low income housing", "2016-17": 150, "2017-18": 150, "2018-19": 150, "2019-20": 150},
+		 {"name": "Retraining of forestry workers and reforestation", "2016-17": 95, "2017-18": 95, "2018-19": 0, "2019-20": 0}
+   ]
+  },
+  {
+   "name": "Canadian Sustainable Generations Fund",
+   "children": [
+		 {"name": "Free Post-secondary Tuition for Domestic Students", "2016-17": 2500, "2017-18": 3125, "2018-19": 3906, "2019-20": 4883},
+		 {"name": "Municipal youth employment program", "2016-17": 1000, "2017-18": 1000, "2018-19": 1000, "2019-20": 1000},
+		 {"name": "Student Debt Relief", "2016-17": 2500, "2017-18": 1500, "2018-19": 1500, "2019-20": 1000},
+		 {"name": "Increase post secondary education bursaries", "2016-17": 400, "2017-18": 400, "2018-19": 400, "2019-20": 400}
+   ]
+  },
+  {
+   "name": "Families and Children",
+   "children": [
+    {"name": "Invest in early childhood education", "2016-17": 700, "2017-18": 1000, "2018-19": 1000, "2019-20": 1000},
+    {"name": "Dental coverage for low income youth", "2016-17": 1134, "2017-18": 1055, "2018-19": 981, "2019-20": 913},
+    {"name": "Healthy food programs", "2016-17": 750, "2017-18": 850, "2018-19": 900, "2019-20": 950}
+   ]
+  },
+  {
+   "name": "Housing",
+   "children": [
+    {"name": "Establish a national affordable housing program", "2016-17": 834, "2017-18": 1267, "2018-19": 1330, "2019-20": 1397},
+    {"name": "First Nations education, safe drinking water and improved housing", "2016-17": 800, "2017-18": 800, "2018-19": 800, "2019-20": 800}
+   ]
+  },
+  {
+   "name": "Healthcare",
+   "children": [
+    {"name": "Invest in national pharmacare", "2016-17": 300, "2017-18": 300, "2018-19": 300, "2019-20": 300},
+    {"name": "Dementia, mental health, and addictions programs", "2016-17": 43, "2017-18": 43, "2018-19": 43, "2019-20": 43}
+   ]
+  },
+  {
+   "name": "CBC - Radio Canada",
+   "children": [
+    {"name": "Provide stable base-funding for the CBC", "2016-17": 315, "2017-18": 315, "2018-19": 315, "2019-20": 315}
+   ]
+  },
+  {
+   "name": "Military and Veterans",
+   "children": [
+    {"name": "Restore funding to Veteran Affairs", "2016-17": 200, "2017-18": 200, "2018-19": 200, "2019-20": 200}
+   ]
+  },
+  {
+   "name": "Science",
+   "children": [
+    {"name": "Restore scientific capacity to the federal government", "2016-17": 75, "2017-18": 75, "2018-19": 75, "2019-20": 75},
+    {"name": "Invest in wild fisheries and rivers", "2016-17": 24, "2017-18": 24, "2018-19": 24, "2019-20": 24}
+   ]
+  },
+  {
+   "name": "Finding Hidden Money",
+   "children": [
+    {"name": "Invest in resources to prosecute white collar crime", "2016-17": 180, "2017-18": 180, "2018-19": 180, "2019-20": 180}
+	 ]
+  }
+ ]
+}
