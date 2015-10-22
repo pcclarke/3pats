@@ -169,7 +169,7 @@ var refline = share.selectAll(".refline")
 
 refline.append("path")
   .attr("class", "line")
-		.attr("d", function(d) { console.log(d); return line(d.values); });
+		.attr("d", function(d) { return line(d.values); });
 		
 	function showTooltip(d, obj) {
 		d3.selectAll("#unhcrShare .sel").classed("sel", false);
