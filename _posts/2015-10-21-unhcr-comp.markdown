@@ -152,7 +152,6 @@ function unhcrChart() {
         .attr("d", function(d) { d.line = this; return line(d.values); })
 				.attr("class", function(d) {
 					if (d.name === "Syrian Arab Rep.") {
-						console.log("syria");
 						return "data syria";
 					} else {
 						return "data";
