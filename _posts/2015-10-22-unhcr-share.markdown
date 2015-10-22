@@ -36,6 +36,14 @@ Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
 	fill: #000000 !important;
 }
 
+#unhcrShare .line {
+  fill: none;
+  stroke: rgba(200, 200, 200, 0.2);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 0.5px;
+}
+
 #unhcrShareTip {
 	display: block;
 	min-height: 50px;
@@ -88,7 +96,11 @@ var x = d3.time.scale()
 var y = d3.scale.linear()
     .range([height, 0]);
 
-var color = d3.scale.category20();
+var color = d3.scale.ordinal()
+		.range(d3.range(194).map(d3.scale.linear()
+      .domain([0, 193])
+      .range(["#005a32", "#c7e9c0"])
+      .interpolate(d3.interpolateLab)));
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -102,8 +114,10 @@ var area = d3.svg.area()
     .x(function(d) { return x(d.date); })
     .y0(function(d) { return y(d.y0); })
     .y1(function(d) { return y(d.y0 + d.y); });
-		
 
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.y0 + d.y); });
 
 var stack = d3.layout.stack()
     .values(function(d) { return d.values; });
@@ -128,8 +142,6 @@ d3.csv("{{ site.baseurl }}/data/2015/10/22/unhcr_refugees_t.csv", type, function
       })
     };
   }));
-	
-	console.log(refugees);
 
   x.domain(d3.extent(data, function(d) { return d.Year; }));
 	y.domain([0, 200000]);
@@ -144,12 +156,20 @@ d3.csv("{{ site.baseurl }}/data/2015/10/22/unhcr_refugees_t.csv", type, function
     .attr("d", function(d) { return area(d.values); })
     .style("fill", function(d) { return color(d.name); })
 		.on("mouseover", function(d) {
-			console.log(d);
 			showTooltip(d, this);
 		})
 		.on("mousedown", function(d) {
 			showTooltip(d, this);
 		});
+		
+var refline = share.selectAll(".refline")
+    .data(refugees)
+  .enter().append("g")
+    .attr("class", "refline");
+
+refline.append("path")
+  .attr("class", "line")
+		.attr("d", function(d) { return line(d.values); });
 		
 	function showTooltip(d, obj) {
 		d3.selectAll("#unhcrShare .sel").classed("sel", false);
