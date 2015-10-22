@@ -120,7 +120,6 @@ function drawCosting(kind) {
 	d3.json("{{ site.baseurl }}/data/2015/10/20/" + kind.toLowerCase() + "_costing.json", function(error, root) {
 	  if (error) throw error;
 	
-		console.log(selected);
 		var value = function(d) { return d[selYear]; };
 		var highlight = -1;
 
