@@ -62,10 +62,26 @@ An alternative source for refugees
   fill: #ddd;
 }
 
+#unchrChart .sel {
+  fill: #000 !important;
+}
+
 #unchrChart .boundary {
   fill: none;
   stroke: #fff;
 	stroke-width: 0.5px;
+}
+
+#unhcrSparkline {
+	border: 1px solid #000;
+	margin: 0 auto;
+	width: 420px;
+}
+
+#unhcrSparkline .line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
 }
 
 </style>
@@ -82,6 +98,7 @@ unhcrMap();
 
 function unhcrMap() {
 
+// Map
 var parseDate = d3.time.format("%Y-%m-%d").parse,
     formatDate = d3.time.format("%x");
 
@@ -98,8 +115,24 @@ var color = d3.scale.quantize()
 
 var path = d3.geo.path()
     .projection(projection);
+
+// Sparkline
+var margin = {top: 2, right: 10, bottom: 2, left: 10},
+    sWidth = 100 - margin.left - margin.right,
+    sHeight = 25 - margin.top - margin.bottom;
 		
-drawMap("2002");
+var x = d3.scale.linear()
+		.domain([0, 13])
+    .range([0, sWidth]);
+
+var y = d3.scale.linear()
+    .range([sHeight, 0]);
+		
+var line = d3.svg.line()
+    .x(function(d, i) { console.log(d); return x(i); })
+    .y(function(d) { return y(d); });
+		
+drawMap("1994");
 
 function drawMap(year) {
 	var svg = d3.select("#unchrChart").append("svg")
@@ -134,7 +167,7 @@ function drawMap(year) {
 	      .key(function(d) { return d.id; })
 	      .sortValues(function(a, b) { return a[year] - b[year]; })
 	      .map(refugees, d3.map);
-
+				
 	  var country = svg.insert("g", ".graticule")
 	      .attr("class", "land")
 	    .selectAll("path")
@@ -147,30 +180,56 @@ function drawMap(year) {
 	    .append("title")
 	      .text("Canada");*/
 
-	  country.filter(function(d) { return refugeesById.has(d.id); })
-	      .style("fill", function(d) { 
-					if (refugeesById.get(d.id)[0][year] > 0) {
-						return color(refugeesById.get(d.id)[0][year]); 
-					} else {
-						return "#DDDDDD";
-					}
-				})
+	  country.filter(function(d) { return refugeesById.has(d.id) && refugeesById.get(d.id)[0][year] > 0; })
+	      .style("fill", function(d) { return color(refugeesById.get(d.id)[0][year]); })
 				.on("mouseover", function(d) {
-					console.log(d);
-					d3.select("#unhcrSparkline").text(d.id);
+					showTooltip(d, this);
 				})
 	    .append("title")
 	      .text(function(d) {
 	        var refugees = refugeesById.get(d.id);
 	        return refugees[0].name + "\n" + refugees.map(function(d) { return d[year]; }).join("\n");
-	      })
-				;
+	      });
+				
+		function showTooltip(d, obj) {
+			d3.selectAll("#unchrChart .sel").classed("sel", false);
+			d3.select(obj).classed("sel", true);
+			d3.selectAll(".spark").remove();
+			
+			var sparkLine = d3.select("#unhcrSparkline").append("svg")
+					.attr("class", "spark")
+			    .attr("width", sWidth + margin.left + margin.right)
+			    .attr("height", sHeight + margin.top + margin.bottom)
+			  .append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+					
+			var data = [];
+					
+					var i = 1994;
+					while (i < 2015) {
+						var poof = refugeesById.get(d.id);
+						data.push(poof[0][i]);
+						i++;
+					}
+					
+			y.domain([d3.min(data), d3.max(data)]);
+			
+			sparkLine.append("path")
+			      .datum(data)
+			      .attr("class", "line")
+			      .attr("d", line);
+						
+		  /* d3.select("#unhcrSparkline").text(d.id);
+			d3.select("#costingTip").select("#tipBudget")
+		    .text(d.name);
+		  d3.select("#costingTip").select("#tipVal")
+		    .text(numFormat(d.value) + " million dollars");*/
+		}
 
 	  svg.insert("path", ".graticule")
 	      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
 	      .attr("class", "boundary")
-	      .attr("d", path)
-				;
+	      .attr("d", path);
 	}
 
 	function type(d) {
