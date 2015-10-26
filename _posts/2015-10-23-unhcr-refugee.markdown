@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "UNHCR Refugees in Canada"
+title:  "UNHCR Refugees in Canada, Mapped"
 date:   2015-10-23 22:00:00
 ---
 
@@ -10,23 +10,6 @@ An alternative source for refugees
 
 
 <style>
-
-/*#unchrChart .graticule {
-  fill: none;
-  stroke: #777;
-  stroke-width: .5px;
-  stroke-opacity: .5;
-}
-
-#unchrChart .land {
-  fill: #222;
-}
-
-#unchrChart .boundary {
-  fill: none;
-  stroke: #fff;
-  stroke-width: .5px;
-}*/
 
 #unchrChart {
   background: #fcfcfa;
@@ -72,14 +55,12 @@ var projection = d3.geo.naturalEarth()
     .precision(.1);
 
 var color = d3.scale.quantize()
-    .domain([0, 27732])
     .range(colorbrewer.Reds[9]);
 
 var path = d3.geo.path()
     .projection(projection);
 
 var svg = d3.select("#unchrChart").append("svg")
-		.attr("class", "Reds")
     .attr("width", width)
     .attr("height", height);
 
@@ -98,17 +79,19 @@ svg.append("use")
 
 queue()
     .defer(d3.json, "{{ site.baseurl }}/data/world-50m.json")
-    .defer(d3.csv, "{{ site.baseurl }}/data/2015/10/23/unhcr_1994.csv", type)
+    .defer(d3.csv, "{{ site.baseurl }}/data/2015/10/23/unhcr_ids.csv", type)
     .await(ready);
+		
+var year = "2002";
 
 function ready(error, world, refugees) {
   if (error) throw error;
-	
-	var quantize = d3.scale.quantize().domain([0, 30000]).range(d3.range(0, 9));
+		
+		color.domain([0, d3.max(refugees, function(d) { return d[year]; })]);
 
   var refugeesById = d3.nest()
       .key(function(d) { return d.id; })
-      .sortValues(function(a, b) { return a.refugees - b.refugees; })
+      .sortValues(function(a, b) { return a[year] - b[year]; })
       .map(refugees, d3.map);
 
   var country = svg.insert("g", ".graticule")
@@ -120,18 +103,23 @@ function ready(error, world, refugees) {
 			
 			console.log(refugeesById);
 
-  country.filter(function(d) { return d.id === 124; })
+  /*country.filter(function(d) { return d.id === 124; })
       .style("fill", "#000000")
     .append("title")
-      .text("Canada");
+      .text("Canada");*/
 
   country.filter(function(d) { return refugeesById.has(d.id); })
-      .style("fill", function(d) { return color(refugeesById.get(d.id)[0].refugees); })
-			//.attr("class", function(d) { console.log(quantize(refugeesById.get(d.id)[0].refugees)); return "q" + quantize(refugeesById.get(d.id)[0].refugees) + "-9"; })
+      .style("fill", function(d) { 
+				if (refugeesById.get(d.id)[0][year] > 0) {
+					return color(refugeesById.get(d.id)[0][year]); 
+				} else {
+					return "#DDDDDD";
+				}
+			})
     .append("title")
       .text(function(d) {
         var refugees = refugeesById.get(d.id);
-        return refugees[0].name + "\n" + refugees.map(function(d) { return d.refugees; }).join("\n");
+        return refugees[0].name + "\n" + refugees.map(function(d) { return d[year]; }).join("\n");
       });
 
   svg.insert("path", ".graticule")
@@ -142,54 +130,15 @@ function ready(error, world, refugees) {
 
 function type(d) {
   d.id = +d.id;
-  d.refugees = +d.refugees;
+	var i = 1994;
+	while (i < 2015) {
+	  d[i] = +d[i];
+		i++;
+	}
   return d;
 }
 
 d3.select(self.frameElement).style("height", height + "px");
 
-/*unhcr();
-
-function unhcr() {
-
-var width = 960,
-    height = 480;
-
-var projection = d3.geo.equirectangular()
-    .scale(153)
-    .translate([width / 2, height / 2])
-    .precision(.1);
-
-var path = d3.geo.path()
-    .projection(projection);
-
-var graticule = d3.geo.graticule();
-
-var svg = d3.select("#unchrChart").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-svg.append("path")
-    .datum(graticule)
-    .attr("class", "graticule")
-    .attr("d", path);
-
-d3.json("{{ site.baseurl }}/data/2015/10/14/world-50m.json", function(error, world) {
-  if (error) throw error;
-
-  svg.insert("path", ".graticule")
-      .datum(topojson.feature(world, world.objects.land))
-      .attr("class", "land")
-      .attr("d", path);
-
-  svg.insert("path", ".graticule")
-      .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-      .attr("class", "boundary")
-      .attr("d", path);
-});
-
-d3.select(self.frameElement).style("height", height + "px");
-
-}*/
 
 </script>
