@@ -18,7 +18,7 @@ An alternative source for refugees
 #unchrChart .stroke {
   fill: none;
   stroke: #000;
-  stroke-width: 3px;
+  stroke-width: 1px;
 }
 
 #unchrChart .fill {
@@ -32,6 +32,7 @@ An alternative source for refugees
 #unchrChart .boundary {
   fill: none;
   stroke: #fff;
+	stroke-width: 0.5px;
 }
 
 </style>
@@ -42,6 +43,7 @@ An alternative source for refugees
 <script src="{{ site.baseurl }}/js/colorbrewer.js"></script>
 
 <script>
+// Leaning heavily on http://bl.ocks.org/mbostock/5912673
 
 var parseDate = d3.time.format("%Y-%m-%d").parse,
     formatDate = d3.time.format("%x");
@@ -101,14 +103,12 @@ function ready(error, world, refugees) {
     .enter().append("path")
       .attr("d", path);
 			
-			console.log(refugeesById);
-
   /*country.filter(function(d) { return d.id === 124; })
       .style("fill", "#000000")
     .append("title")
       .text("Canada");*/
 
-  country.filter(function(d) { return refugeesById.has(d.id); })
+  country.filter(function(d) { console.log(refugeesById.has(d.id) + " " + d.id); return refugeesById.has(d.id); })
       .style("fill", function(d) { 
 				if (refugeesById.get(d.id)[0][year] > 0) {
 					return color(refugeesById.get(d.id)[0][year]); 
