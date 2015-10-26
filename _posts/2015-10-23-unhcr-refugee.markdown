@@ -56,6 +56,7 @@ An alternative source for refugees
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/0.2.9/d3.geo.projection.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+<script src="{{ site.baseurl }}/js/colorbrewer.js"></script>
 
 <script>
 
@@ -70,16 +71,15 @@ var projection = d3.geo.naturalEarth()
     .translate([width / 2, height / 2])
     .precision(.1);
 
-var color = d3.scale.linear()
-    .domain([0, 30000])
-    .range(["#fff5f0", "#67000d"])
-    .clamp(true)
-    .interpolate(d3.interpolateHcl);
+var color = d3.scale.quantize()
+    .domain([0, 27732])
+    .range(colorbrewer.Reds[9]);
 
 var path = d3.geo.path()
     .projection(projection);
 
 var svg = d3.select("#unchrChart").append("svg")
+		.attr("class", "Reds")
     .attr("width", width)
     .attr("height", height);
 
@@ -103,6 +103,8 @@ queue()
 
 function ready(error, world, refugees) {
   if (error) throw error;
+	
+	var quantize = d3.scale.quantize().domain([0, 30000]).range(d3.range(0, 9));
 
   var refugeesById = d3.nest()
       .key(function(d) { return d.id; })
@@ -125,6 +127,7 @@ function ready(error, world, refugees) {
 
   country.filter(function(d) { return refugeesById.has(d.id); })
       .style("fill", function(d) { return color(refugeesById.get(d.id)[0].refugees); })
+			//.attr("class", function(d) { console.log(quantize(refugeesById.get(d.id)[0].refugees)); return "q" + quantize(refugeesById.get(d.id)[0].refugees) + "-9"; })
     .append("title")
       .text(function(d) {
         var refugees = refugeesById.get(d.id);
