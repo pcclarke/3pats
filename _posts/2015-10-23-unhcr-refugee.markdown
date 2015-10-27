@@ -30,10 +30,17 @@ date:   2015-10-23 22:00:00
   </select>
 </div>
 <div id="unchrChart"></div>
-<div id="unhcrSparkline"></div>
+<div id="sparkGroup" class="hidden">
+	<strong><span id="mapCountry"></span></strong> <div id="unhcrSparkline"></div><span id="sparkValue"></span>
+</div>
 
-An alternative source for refugees
+* * *
 
+And finally, here is the UNHCR data mapped.
+
+Note that the colour scheme is relative to each year. The darkest red is the country with the most refugees living in Canada for that year. But a dark red in one year is not the same as a dark red in another year; there were twice as many refugees from Poland in 1994 as from Afghanistan in 2001.
+
+Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
 
 <style>
 
@@ -72,16 +79,42 @@ An alternative source for refugees
 	stroke-width: 0.5px;
 }
 
+#sparkGroup {
+	clear: both;
+	height: 40px;
+	margin-bottom: 25px;
+}
+
 #unhcrSparkline {
-	border: 1px solid #000;
-	margin: 0 auto;
-	width: 420px;
+	border: 1px solid #CCC;
+	display: inline-block;
+	height: 25px;
+	width: 102px;
 }
 
 #unhcrSparkline .line {
   fill: none;
   stroke: red;
   stroke-width: 1.5px;
+}
+
+#sparkGroup {
+	margin: 0 auto;
+	width: 600px;
+}
+
+#sparkValue {
+	display: inline-block;
+	padding: 5px;
+}
+
+#mapCountry {
+	font-size: 24px;
+	margin-right: 10px;
+}
+
+.hidden {
+	display: none;
 }
 
 </style>
@@ -117,7 +150,7 @@ var path = d3.geo.path()
     .projection(projection);
 
 // Sparkline
-var margin = {top: 2, right: 10, bottom: 2, left: 10},
+var margin = {top: 1, right: 1, bottom: 1, left: 1},
     sWidth = 100 - margin.left - margin.right,
     sHeight = 25 - margin.top - margin.bottom;
 		
@@ -129,8 +162,10 @@ var y = d3.scale.linear()
     .range([sHeight, 0]);
 		
 var line = d3.svg.line()
-    .x(function(d, i) { console.log(d); return x(i); })
+    .x(function(d, i) { return x(i); })
     .y(function(d) { return y(d); });
+		
+var numFormat = d3.format(",.0");
 		
 drawMap("1994");
 
@@ -184,12 +219,7 @@ function drawMap(year) {
 	      .style("fill", function(d) { return color(refugeesById.get(d.id)[0][year]); })
 				.on("mouseover", function(d) {
 					showTooltip(d, this);
-				})
-	    .append("title")
-	      .text(function(d) {
-	        var refugees = refugeesById.get(d.id);
-	        return refugees[0].name + "\n" + refugees.map(function(d) { return d[year]; }).join("\n");
-	      });
+				});
 				
 		function showTooltip(d, obj) {
 			d3.selectAll("#unchrChart .sel").classed("sel", false);
@@ -219,11 +249,17 @@ function drawMap(year) {
 			      .attr("class", "line")
 			      .attr("d", line);
 						
-		  /* d3.select("#unhcrSparkline").text(d.id);
-			d3.select("#costingTip").select("#tipBudget")
-		    .text(d.name);
-		  d3.select("#costingTip").select("#tipVal")
-		    .text(numFormat(d.value) + " million dollars");*/
+			sparkLine.append("circle")
+						.attr("r", 3)
+						.attr("cx", x(year - 1994))
+						.attr("cy", y(data[year - 1994]));
+			
+			d3.select("#sparkValue")
+      	.text(numFormat(refugeesById.get(d.id).map(function(e) { return e[year]; })));
+			d3.select("#mapCountry")
+				.text(refugeesById.get(d.id)[0].name);
+				
+			d3.select("#sparkGroup").classed("hidden", false);
 		}
 
 	  svg.insert("path", ".graticule")
@@ -250,8 +286,9 @@ d3.select("#selectUnhcr")
 
 function selected() {
 	d3.selectAll(".unhcrMap").remove();
-  drawMap(this.options[this.selectedIndex].value);
+	d3.select("#sparkGroup").classed("hidden", true);
 	
+  drawMap(this.options[this.selectedIndex].value);
 }
 
 }
