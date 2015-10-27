@@ -75,7 +75,7 @@ Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
 
 #unchrChart .boundary {
   fill: none;
-  stroke: #fff;
+  stroke: #CCC;
 	stroke-width: 0.5px;
 }
 
