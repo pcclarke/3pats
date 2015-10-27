@@ -155,7 +155,7 @@ var margin = {top: 1, right: 1, bottom: 1, left: 1},
     sHeight = 25 - margin.top - margin.bottom;
 		
 var x = d3.scale.linear()
-		.domain([0, 13])
+		.domain([0, 20])
     .range([0, sWidth]);
 
 var y = d3.scale.linear()
