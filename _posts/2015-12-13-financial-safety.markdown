@@ -1,9 +1,14 @@
 ---
 layout: post
-title:  "Financial Safety Nets Redesign"
+title:  "Spiders Should be Squished"
 date:   2015-12-13 12:00:00
 ---
 
+<div id="safetyTip" class="hidden">
+  <p id="tipTop"><span id="tipTitle"></span></p>
+  <p class="tipInfo"><span id="tipText1"></span></p>
+</div>
+<div id="shareChart"></div>
 <div id="safetyChart"></div>
 
 <style>
@@ -24,6 +29,8 @@ svg {
   stroke-width: 2px;
   stroke-linejoin: round;
   stroke-opacity: 0.6;
+  cursor: pointer;
+  -webkit-transition: stroke 125ms linear;
 }
 
 .axis .title {
@@ -36,12 +43,17 @@ svg {
 .axis path {
   fill: none;
   stroke: #bdbdbd;
-  stroke-width: 0.5px;
+  stroke-width: 1px;
   shape-rendering: crispEdges;
 }
 
 .label {
   -webkit-transition: fill 125ms linear;
+  cursor: pointer;
+}
+
+.label:hover {
+  font-weight: bold;
 }
 
 .active .label:not(.inactive) {
@@ -58,6 +70,42 @@ svg {
   stroke-width: 1px;
 }
 
+/* Tooltip */
+.hidden {
+  display: none;
+}
+
+#safetyTip {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  width: 225px;
+  height: auto;
+  padding: 10px;
+  pointer-events: none;
+}
+
+#safetyTip strong {
+  font-weight: bold;
+}
+
+#safetyTip #tipTop {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+#safetyTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
 </style>
 
 <script src="{{ site.baseurl }}/js/colorbrewer.js"></script>
@@ -66,75 +114,102 @@ svg {
 
 // Based on http://bl.ocks.org/mbostock/3709000
 
-var margin = {top: 180, right: 80, bottom: 20, left: 120},
+var margin = {top: 100, right: 70, bottom: 20, left: 110},
     width = 740 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
+
+var format = d3.format("%");
+
+var coordinates = [0, 0];
+var body = d3.select("body")
+    .on("mousemove", function() {
+      coordinates = d3.mouse(this);
+    })
+    .on("mousedown", function() {
+      coordinates = d3.mouse(this);
+    });
 
 var dimensions = [
   {
     name: "Name",
     scale: d3.scale.ordinal().rangePoints([0, height]),
-    type: String
+    type: String,
+    desc: ""
   },
+  /* Private pension assets */
   {
-    name: "RRSPs, RRIFs, LIRAs and other",
+    name: "Retirement savings",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: "Includes Registered Retirement Savings Plans (RRSPs), Registered Retirement Income Funds (RRIFs), Locked-in Retirement Accounts (LIRAs), Deferred Profit Sharing Plans (DPSPs), annuities and other miscellaneous pension assets"
   },
   {
     name: "EPPs",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: "Employer-sponsored Registered Pension Plans"
+  },
+  /* Financial assets, non pension */
+  {
+    name: "Cash deposits",
+    scale: d3.scale.linear().range([height, 0]),
+    type: Number,
+    desc: "Deposits in financial institutions. In 2012, this category includes Treasury Bills"
   },
   {
-    name: "Deposits in financial institutions",
+    name: "Investment funds",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
-  },
-  {
-    name: "Mutual & investment funds, income trusts",
-    scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: "Mutual funds, investment funds and income trusts"
   },
   {
     name: "Stocks",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: ""
   },
   {
     name: "Bonds",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: "Includes saving and other"
   },
   {
     name: "TFSA",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: "Tax Free Saving Accounts"
   },
   {
     name: "Other financial assets",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: "Includes Registered Education Savings Plans (RESPs), treasury bills (1999 and 2005 only) mortgage-backed securities, money held in trust, money owed to the respondent and other miscellaneous financial assets, including shares of privately held companies"
   },
+  /* Non-financial assets */
   {
     name: "Principal residence",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: ""
   },
   {
     name: "Other real estate",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: ""
   },
   {
     name: "Vehicles",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: ""
   },
   {
     name: "Equity in business",
     scale: d3.scale.linear().range([height, 0]),
-    type: Number
+    type: Number,
+    desc: ""
   }
 ];
 
@@ -222,7 +297,13 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
 
   dimension.append("g")
       .attr("class", "axis")
-      .each(function(d) { d3.select(this).call(yAxis.scale(d.scale)); })
+      .each(function(d) { 
+        if (d.name === "Name") { 
+          d3.select(this).call(yAxis.scale(d.scale));
+        } else {
+          d3.select(this).call(yAxis.scale(d.scale).tickFormat(format));
+        }
+      })
     .append("text")
       .attr("class", "title")
       .attr("text-anchor", "start")
@@ -234,28 +315,55 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
           return "";
         } else {
           return d.name; 
-        }});
+        }})
+      .on("mouseover", function(d) {
+        var xPos = coordinates[0] + 15;
+        if (x(d.name) > width / 2) {
+          xPos = coordinates[0] - 250;
+        }
+        var yPos = coordinates[1];
+        d3.select("#safetyTip")
+          .style("left", xPos + "px")
+          .style("top", yPos + "px");
+
+        d3.select("#safetyTip")
+          .select("#tipTitle").text(d.name);
+        d3.select("#safetyTip")
+          .select("#tipText1").text(d.desc);
+
+        d3.select("#safetyTip").classed("hidden", false);
+      })
+      .on("mouseout", function(d) {
+        d3.select("#safetyTip").classed("hidden", true);
+      });
 
   // Rebind the axis data to simplify mouseover.
   svg.select(".axis").selectAll("text:not(.title)")
       .attr("class", "label")
       .data(data, function(d) { return d.Name || d; });
 
-  var projection = svg.selectAll(".axis text,.background path,.foreground path")
-      .on("click", function(d) {
-        if (d3.select(this).classed("inactive")) {
-         // svg.classed("active", false);
-          projection.filter(function(p) { return p === d; })
-            .classed("inactive", false);
-        } else {
-         // svg.classed("active", true);
-          projection.filter(function(p) { return p === d; })
-            .classed("inactive", true);
-        }
-        //d3.select(this).classed("inactive", !d3.select(this).classed("inactive"));
-      });
+
+
+  var projection = svg.selectAll(".axis .label,.background path,.foreground path")
+      .on("click", click);
       //.on("mouseover", mouseover)
       //.on("mouseout", mouseout);
+
+  projection.classed("inactive", true);
+  svg.classed("active", true);
+  projection.filter(function(d) { return d.Name.substr(-4) === "2012"; })
+    .classed("inactive", false);
+
+  function click(d) {
+    if (d3.select(this).classed("inactive")) {
+        projection.filter(function(p) { return p === d; })
+          .classed("inactive", false);
+      } else {
+        
+        projection.filter(function(p) { return p === d; })
+          .classed("inactive", true);
+      }
+  }
 
   function mouseover(d) {
     console.log(d);
