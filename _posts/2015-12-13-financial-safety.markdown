@@ -8,7 +8,7 @@ date:   2015-12-13 12:00:00
   <p id="tipTop"><span id="tipTitle"></span></p>
   <p class="tipInfo"><span id="tipText1"></span></p>
 </div>
-<div id="shareChart"></div>
+<label><input id="setBase" data-key="axes" type="checkbox" name="axes">Set all axes to 0-100%</label>
 <div id="safetyChart"></div>
 
 <style>
@@ -119,6 +119,8 @@ var margin = {top: 100, right: 70, bottom: 20, left: 110},
     height = 600 - margin.top - margin.bottom;
 
 var format = d3.format("%");
+
+var base = 1;
 
 var coordinates = [0, 0];
 var body = d3.select("body")
@@ -234,7 +236,8 @@ var line = d3.svg.line()
     .defined(function(d) { return !isNaN(d[1]); });
 
 var yAxis = d3.svg.axis()
-    .orient("left");
+    .orient("left")
+    .ticks(5);
 
 var svg = d3.select("#safetyChart").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -253,7 +256,7 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
 
   dimensions.forEach(function(dimension) {
     dimension.scale.domain(dimension.type === Number
-        ? d3.extent(data, function(d) { return +d[dimension.name]; })
+        ? d3.extent(data, function(d) { return +d[dimension.name]; }) /*[0, 1]*/ 
         : data.map(function(d) { return d[dimension.name]; }).reverse());
   });
 
@@ -297,9 +300,11 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
 
   dimension.append("g")
       .attr("class", "axis")
-      .each(function(d) { 
+      .each(function(d, i) { 
         if (d.name === "Name") { 
           d3.select(this).call(yAxis.scale(d.scale));
+        /*} else if (i >= 2) {
+          d3.select(this).call(yAxis.scale(d.scale).tickFormat(""));*/
         } else {
           d3.select(this).call(yAxis.scale(d.scale).tickFormat(format));
         }
@@ -342,12 +347,8 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
       .attr("class", "label")
       .data(data, function(d) { return d.Name || d; });
 
-
-
   var projection = svg.selectAll(".axis .label,.background path,.foreground path")
       .on("click", click);
-      //.on("mouseover", mouseover)
-      //.on("mouseout", mouseout);
 
   projection.classed("inactive", true);
   svg.classed("active", true);
@@ -358,6 +359,7 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
     if (d3.select(this).classed("inactive")) {
         projection.filter(function(p) { return p === d; })
           .classed("inactive", false);
+        projection.filter(function(p) { return p === d; }).each(moveToFront);
       } else {
         
         projection.filter(function(p) { return p === d; })
@@ -365,22 +367,104 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
       }
   }
 
-  function mouseover(d) {
-    console.log(d);
-    svg.classed("active", true);
-    projection.classed("inactive", function(p) { return p !== d; });
-    projection.classed("selected", function(p) { return p === d; });
-    projection.filter(function(p) { return p === d; }).each(moveToFront);
-  }
-
-  function mouseout(d) {
-    svg.classed("active", false);
-    projection.classed("inactive", false);
-  }
-
   function moveToFront() {
     this.parentNode.appendChild(this);
   }
+
+  var checkbox = d3.selectAll("#setBase")
+    .datum(function() { return this.getAttribute("data-key"); })
+    .on("click", function(d) {
+      if (base == 1) {
+        dimensions.forEach(function(dimension) {
+          dimension.scale.domain(dimension.type === Number
+              ? [0, 1] 
+              : data.map(function(d) { return d[dimension.name]; }).reverse());
+        });
+
+        base = 0;
+      } else {
+        dimensions.forEach(function(dimension) {
+          dimension.scale.domain(dimension.type === Number
+              ? d3.extent(data, function(d) { return +d[dimension.name]; }) 
+              : data.map(function(d) { return d[dimension.name]; }).reverse());
+        });
+
+        base = 1;
+      }
+
+      dimension.selectAll("g").remove();
+      yAxis = d3.svg.axis()
+        .orient("left")
+        .ticks(5);
+      
+      dimension.append("g")
+      .attr("class", "axis")
+      .each(function(d, i) { 
+        if (d.name === "Name") { 
+          d3.select(this).call(yAxis.scale(d.scale));
+        /*} else if (i >= 2) {
+          d3.select(this).call(yAxis.scale(d.scale).tickFormat(""));*/
+        } else {
+          d3.select(this).call(yAxis.scale(d.scale).tickFormat(format));
+        }
+      })
+    .append("text")
+      .attr("class", "title")
+      .attr("text-anchor", "start")
+      .attr("y", -3)
+      .attr("x", 3)
+      .attr("transform", "rotate(-45)")
+      .text(function(d) { 
+        if (d.name === "Name") {
+          return "";
+        } else {
+          return d.name; 
+        }})
+      .on("mouseover", function(d) {
+        var xPos = coordinates[0] + 15;
+        if (x(d.name) > width / 2) {
+          xPos = coordinates[0] - 250;
+        }
+        var yPos = coordinates[1];
+        d3.select("#safetyTip")
+          .style("left", xPos + "px")
+          .style("top", yPos + "px");
+
+        d3.select("#safetyTip")
+          .select("#tipTitle").text(d.name);
+        d3.select("#safetyTip")
+          .select("#tipText1").text(d.desc);
+
+        d3.select("#safetyTip").classed("hidden", false);
+      })
+      .on("mouseout", function(d) {
+        d3.select("#safetyTip").classed("hidden", true);
+      });
+
+      // Rebind the axis data to simplify mouseover.
+      svg.select(".axis").selectAll("text:not(.title)")
+          .attr("class", "label")
+          .data(data, function(d) { return d.Name || d; });
+
+      projection = svg.selectAll(".axis .label,.background path,.foreground path")
+        .on("click", click);
+          projection.classed("inactive", true);
+      svg.classed("active", true);
+      projection.filter(function(d) { return d.Name.substr(-4) === "2012"; })
+        .classed("inactive", false);
+        
+
+      background.transition()
+        .duration(2000)
+        .attr("d", draw);
+
+      foreground.transition()
+        .delay(function(d, i) {
+          return i * 200;
+        })
+        .duration(1000)
+        .attr("d", draw);
+    });
 });
 
 function drawInit(d) {
