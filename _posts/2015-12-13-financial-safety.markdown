@@ -6,8 +6,10 @@ date:   2015-12-13 12:00:00
 
 <div id="safetyTip" class="hidden">
   <p id="tipTop"><span id="tipTitle"></span></p>
+  <p class="tipInfo hidden" id="tipWarning">Data unavailable or too unreliable to be published</span></p>
   <p class="tipInfo"><span id="tipText1"></span></p>
 </div>
+<p class="safetyTitle"><strong>Ownership of financial assets by household income quintile</strong></p>
 <div id="safetyChart"></div>
 <label><input id="setBase" data-key="axes" type="checkbox" name="axes">Set all axes to 0-100%</label>
 
@@ -15,7 +17,7 @@ date:   2015-12-13 12:00:00
 
 Blah blah blah
 
-Source: [Statistics Canada](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=2050003&&pattern=&stByVal=1&p1=1&p2=-1&tabMode=dataTable&csid=)
+Source: [Statistics Canada CANSIM Table 205-0003](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=2050003&&pattern=&stByVal=1&p1=1&p2=-1&tabMode=dataTable&csid=)
 
 <style>
 
@@ -74,6 +76,14 @@ svg {
   stroke: #ccc;
   stroke-opacity: .5;
   stroke-width: 1px;
+}
+
+.dataPoint.inactive {
+  fill: #ccc;
+}
+
+.safetyTitle {
+  text-align: center;
 }
 
 /* Tooltip */
@@ -302,18 +312,88 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
       .duration(1000)
       .attr("d", draw);
 
-  /*dimensions.forEach(function(dimension) {
-    console.log(dimension);
-    svg.append("g")
+  var circles = [];
+  var circle;
+  dimensions.filter(function(d) { return d.name !== "Name"; }).forEach(function(dimension) {
+    circle = svg.append("g")
       .selectAll("circle")
       .data(data)
       .enter()
       .append("circle")
       .attr("class", "dataPoint")
-      .attr("cx", x(dimension.name))
+      .attr("cx", 0)
       .attr("cy", function(d) { return dimension.scale(d[dimension.name]); })
-      .attr("r", 2);
-  });*/
+      .attr("r", 2)
+      .attr("fill", function(d) {
+        if (d[dimension.name] == 0) {
+          return "white";
+        }
+
+        if (d.Name.substr(0,6) === "Lowest") {
+          return colourReds(d.Name.substr(-4));
+        } else if (d.Name.substr(0,6) === "Second") {
+          return colourBlues(d.Name.substr(-4));
+        } else if (d.Name.substr(0,6) === "Middle") {
+          return colourOranges(d.Name.substr(-4));
+        } else {
+          return colourPurples(d.Name.substr(-4));
+        }
+      })
+      .on("mouseover", function(d) {
+        console.log(d);
+        var xPos = coordinates[0] + 15;
+        if (x(dimension.name) > width / 2) {
+          xPos = coordinates[0] - 250;
+        }
+        var yPos = coordinates[1];
+        d3.select("#safetyTip")
+          .style("left", xPos + "px")
+          .style("top", yPos + "px");
+
+        d3.select("#safetyTip")
+          .select("#tipTitle").text(d.Name + " " + dimension.name);
+        d3.select("#safetyTip")
+          .select("#tipText1").text(format(d[dimension.name]));
+        if (d[dimension.name] == 0) {
+          d3.select("#safetyTip")
+            .select("#tipWarning").classed("hidden", false);
+          d3.select("#safetyTip")
+            .select("#tipText1").classed("hidden", true);
+        }
+
+        d3.select("#safetyTip").classed("hidden", false);
+      })
+      .on("mouseout", function(d) {
+        d3.select("#safetyTip").classed("hidden", true);
+        d3.select("#safetyTip")
+            .select("#tipWarning").classed("hidden", true);
+        d3.select("#safetyTip")
+          .select("#tipText1").classed("hidden", false);
+      });
+
+    circles.push(circle);
+  });
+
+  function colourCheck(d) {
+    if (d.Name.substr(0,6) === "Lowest") {
+      return colourReds(d.Name.substr(-4));
+    } else if (d.Name.substr(0,6) === "Second") {
+      return colourBlues(d.Name.substr(-4));
+    } else if (d.Name.substr(0,6) === "Middle") {
+      return colourOranges(d.Name.substr(-4));
+    } else {
+      return colourPurples(d.Name.substr(-4));
+    }
+  }
+
+  dimensions.filter(function(d) { return d.name !== "Name"; }).forEach(function(dimension, i) {
+    circles[i].transition()
+      .delay(function(d, l) {
+        return l * 200;
+      })
+      .duration(1000)
+      .attr("cx", x(dimension.name));
+  });
 
   dimension.append("g")
       .attr("class", "axis")
@@ -364,7 +444,7 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
       .attr("class", "label")
       .data(data, function(d) { return d.Name || d; });
 
-  var projection = svg.selectAll(".axis .label,.background path,.foreground path")
+  var projection = svg.selectAll(".axis .label,.background path,.foreground path, .dataPoint")
       .on("click", click);
 
   projection.classed("inactive", true);
@@ -376,6 +456,7 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
 
   function click(d) {
     if (d3.select(this).classed("inactive")) {
+        console.log(d);
         projection.filter(function(p) { return p === d; })
           .classed("inactive", false);
         projection.filter(function(p) { return p === d; }).each(moveToFront);
@@ -466,7 +547,7 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
             .attr("class", "label")
             .data(data, function(d) { return d.Name || d; });
 
-      projection = svg.selectAll(".axis .label,.background path,.foreground path")
+      projection = svg.selectAll(".axis .label,.background path,.foreground path, .dataPoint")
         .on("click", click);
           projection.classed("inactive", true);
       svg.classed("active", true);
@@ -484,6 +565,15 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
         })
         .duration(1000)
         .attr("d", draw);
+
+      dimensions.filter(function(d) { return d.name !== "Name"; }).forEach(function(dimension, i) {
+        circles[i].transition()
+          .delay(function(d, l) {
+            return l * 200;
+          })
+          .duration(1000)
+          .attr("cy", function(d) { return dimension.scale(d[dimension.name]); });
+      });
     });
 });
 
