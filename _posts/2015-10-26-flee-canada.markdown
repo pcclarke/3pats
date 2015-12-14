@@ -5,7 +5,7 @@ date:   2015-10-26 12:00:00
 ---
 
 <div id="cdnRefChart"></div>
-<div id="unhcrTip">
+<div id="cdnRefTip">
   <p id="tipTop"><strong><span id="tipCountry"></span></strong></p>
 	<p class="tipInfo"><span id="tipRefugees"></span></p>
 </div>
@@ -42,20 +42,20 @@ Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
 	display: none;
 }
 
-#unhcrTip {
+#cdnRefTip {
 	display: block;
 	min-height: 50px;
 	margin-bottom: 15px;
 	text-align: center;
 }
 
-#unhcrTip #tipTop {
+#cdnRefTip #tipTop {
   font-size: 24px;
   margin-bottom: 5px !important;
 
 }
 
-#unhcrTip .tipInfo {
+#cdnRefTip .tipInfo {
 	font-size: 12px;
 	margin: 0;
 }
@@ -152,9 +152,9 @@ d3.csv("{{ site.baseurl }}/data/2015/10/26/flee_canada.csv", type, function(erro
   function showTooltip(d, obj) {
 			d3.selectAll("#cdnRefChart .sel").classed("sel", false);
 			d3.select(obj).classed("sel", true);
-		  d3.select("#unhcrTip").select("#tipCountry")
+		  d3.select("#cdnRefTip").select("#tipCountry")
 		    .text(d.name);
-		  d3.select("#unhcrTip").select("#tipRefugees")
+		  d3.select("#cdnRefTip").select("#tipRefugees")
 		    .text((d.y1 - d.y0) + " refugees");
   }
 
