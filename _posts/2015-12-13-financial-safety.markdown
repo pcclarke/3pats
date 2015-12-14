@@ -8,8 +8,14 @@ date:   2015-12-13 12:00:00
   <p id="tipTop"><span id="tipTitle"></span></p>
   <p class="tipInfo"><span id="tipText1"></span></p>
 </div>
-<label><input id="setBase" data-key="axes" type="checkbox" name="axes">Set all axes to 0-100%</label>
 <div id="safetyChart"></div>
+<label><input id="setBase" data-key="axes" type="checkbox" name="axes">Set all axes to 0-100%</label>
+
+* * *
+
+Blah blah blah
+
+Source: [Statistics Canada](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=2050003&&pattern=&stByVal=1&p1=1&p2=-1&tabMode=dataTable&csid=)
 
 <style>
 
@@ -217,16 +223,16 @@ var dimensions = [
 
 var colourReds = d3.scale.ordinal()
     .domain(["1999", "2005", "2012"])
-    .range(["#e31a1c", "#e31a1c", "#e31a1c"]);
+    .range(["#e31a1c", "#630B0C", "#C91719"]);
 var colourBlues = d3.scale.ordinal()
     .domain(["1999", "2005", "2012"])
-    .range(["#1f78b4", "#1f78b4", "#1f78b4"]);
+    .range(["#1f78b4", "#092334", "#1B679A"]);
 var colourPurples = d3.scale.ordinal()
     .domain(["1999", "2005", "2012"])
-    .range(["#33a02c", "#33a02c", "#33a02c"]);
+    .range(["#33a02c", "#1F601A", "#37AD30"]);
 var colourOranges = d3.scale.ordinal()
     .domain(["1999", "2005", "2012"])
-    .range(["#ff7f00", "#ff7f00", "#ff7f00"]);
+    .range(["#ff7f00", "#7F3F00", "#BF5F00"]);
 
 var x = d3.scale.ordinal()
     .domain(dimensions.map(function(d) { return d.name; }))
@@ -287,9 +293,7 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
         } else {
           return colourPurples(d.Name.substr(-4));
         }
-      })
-      .classed("inactive", function(d) { return d.Name.substr(-4) !== "2012"; })
-      ;
+      });
 
   foreground.transition()
       .delay(function(d, i) {
@@ -297,6 +301,19 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
       })
       .duration(1000)
       .attr("d", draw);
+
+  /*dimensions.forEach(function(dimension) {
+    console.log(dimension);
+    svg.append("g")
+      .selectAll("circle")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("class", "dataPoint")
+      .attr("cx", x(dimension.name))
+      .attr("cy", function(d) { return dimension.scale(d[dimension.name]); })
+      .attr("r", 2);
+  });*/
 
   dimension.append("g")
       .attr("class", "axis")
@@ -355,15 +372,18 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
   projection.filter(function(d) { return d.Name.substr(-4) === "2012"; })
     .classed("inactive", false);
 
+  var selected = ["Lowest quintile 2012", "Second quintile 2012", "Middle quintile 2012", "Fourth quintile 2012"];
+
   function click(d) {
     if (d3.select(this).classed("inactive")) {
         projection.filter(function(p) { return p === d; })
           .classed("inactive", false);
         projection.filter(function(p) { return p === d; }).each(moveToFront);
+        selected.push(d.Name);
       } else {
-        
         projection.filter(function(p) { return p === d; })
           .classed("inactive", true);
+        selected.splice(selected.indexOf(d.Name), 1);
       }
   }
 
@@ -408,51 +428,51 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
           d3.select(this).call(yAxis.scale(d.scale).tickFormat(format));
         }
       })
-    .append("text")
-      .attr("class", "title")
-      .attr("text-anchor", "start")
-      .attr("y", -3)
-      .attr("x", 3)
-      .attr("transform", "rotate(-45)")
-      .text(function(d) { 
-        if (d.name === "Name") {
-          return "";
-        } else {
-          return d.name; 
-        }})
-      .on("mouseover", function(d) {
-        var xPos = coordinates[0] + 15;
-        if (x(d.name) > width / 2) {
-          xPos = coordinates[0] - 250;
-        }
-        var yPos = coordinates[1];
-        d3.select("#safetyTip")
-          .style("left", xPos + "px")
-          .style("top", yPos + "px");
+      .append("text")
+        .attr("class", "title")
+        .attr("text-anchor", "start")
+        .attr("y", -3)
+        .attr("x", 3)
+        .attr("transform", "rotate(-45)")
+        .text(function(d) { 
+          if (d.name === "Name") {
+            return "";
+          } else {
+            return d.name; 
+          }})
+        .on("mouseover", function(d) {
+          var xPos = coordinates[0] + 15;
+          if (x(d.name) > width / 2) {
+            xPos = coordinates[0] - 250;
+          }
+          var yPos = coordinates[1];
+          d3.select("#safetyTip")
+            .style("left", xPos + "px")
+            .style("top", yPos + "px");
 
-        d3.select("#safetyTip")
-          .select("#tipTitle").text(d.name);
-        d3.select("#safetyTip")
-          .select("#tipText1").text(d.desc);
+          d3.select("#safetyTip")
+            .select("#tipTitle").text(d.name);
+          d3.select("#safetyTip")
+            .select("#tipText1").text(d.desc);
 
-        d3.select("#safetyTip").classed("hidden", false);
-      })
-      .on("mouseout", function(d) {
-        d3.select("#safetyTip").classed("hidden", true);
-      });
+          d3.select("#safetyTip").classed("hidden", false);
+        })
+        .on("mouseout", function(d) {
+          d3.select("#safetyTip").classed("hidden", true);
+        });
 
-      // Rebind the axis data to simplify mouseover.
-      svg.select(".axis").selectAll("text:not(.title)")
-          .attr("class", "label")
-          .data(data, function(d) { return d.Name || d; });
+        // Rebind the axis data to simplify mouseover.
+        svg.select(".axis").selectAll("text:not(.title)")
+            .attr("class", "label")
+            .data(data, function(d) { return d.Name || d; });
 
       projection = svg.selectAll(".axis .label,.background path,.foreground path")
         .on("click", click);
           projection.classed("inactive", true);
       svg.classed("active", true);
-      projection.filter(function(d) { return d.Name.substr(-4) === "2012"; })
+      projection.filter(function(d) { return selected.indexOf(d.Name) !== -1; })
         .classed("inactive", false);
-        
+
 
       background.transition()
         .duration(2000)
