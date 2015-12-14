@@ -15,7 +15,9 @@ date:   2015-12-13 12:00:00
 
 * * *
 
-Blah blah blah
+Maclean's recently put out a [set of 50 charts](http://www.macleans.ca/economy/economicanalysis/the-most-important-charts-for-the-canadian-economy-in-2016/), which were culled from a variety of experts and academics for what they think will be the most important chart for 2016. While the charts are pretty interesting for their data, their design is about what you might expect from non-designers. 
+
+There is one particularly egregious [spider chart](http://www.macleans.ca/wp-content/uploads/2015/11/RObson.jpeg) (described fully in the previous link) that stands as a good reminder of why spider (or radar) charts are a bad idea: it's really hard to compare the values on different axes. Although the spider chart does show that households in the top income quintile own more of each asset, I think it would be nice to be able to compare them. Hence, the above redesign into a parallel coordinates chart. I didn't have access to the data used in the spider chart, so I worked off the original report cited, the [2012 Survey of Financial Security](http://www.statcan.gc.ca/daily-quotidien/150127/dq150127d-eng.htm). And since I was throwing in the kitchen sink already, I also included data for the previous years plus the oddly missing third quintile.
 
 Source: [Statistics Canada CANSIM Table 205-0003](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=2050003&&pattern=&stByVal=1&p1=1&p2=-1&tabMode=dataTable&csid=)
 
@@ -340,7 +342,6 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
         }
       })
       .on("mouseover", function(d) {
-        console.log(d);
         var xPos = coordinates[0] + 15;
         if (x(dimension.name) > width / 2) {
           xPos = coordinates[0] - 250;
@@ -456,7 +457,6 @@ d3.csv("{{ site.baseurl }}/data/2015/12/finsafety.csv", function(error, data) {
 
   function click(d) {
     if (d3.select(this).classed("inactive")) {
-        console.log(d);
         projection.filter(function(p) { return p === d; })
           .classed("inactive", false);
         projection.filter(function(p) { return p === d; }).each(moveToFront);
