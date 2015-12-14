@@ -6,7 +6,7 @@ date:   2015-10-26 12:00:00
 
 <div id="cdnRefChart"></div>
 <div id="unhcrTip">
-  <p id="tipTop"><strong><span id="tipCountry"></span> <span id="tipYear"></span></strong></p>
+  <p id="tipTop"><strong><span id="tipCountry"></span></strong></p>
 	<p class="tipInfo"><span id="tipRefugees"></span></p>
 </div>
 
@@ -100,8 +100,6 @@ var svg = d3.select("#cdnRefChart").append("svg")
 d3.csv("{{ site.baseurl }}/data/2015/10/26/flee_canada.csv", type, function(error, data) {
 	if (error) throw error;
 	
-	console.log(data);
-	
 	color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Year"; }));
 
   data.forEach(function(d) {
@@ -152,13 +150,10 @@ d3.csv("{{ site.baseurl }}/data/2015/10/26/flee_canada.csv", type, function(erro
 			});
 
   function showTooltip(d, obj) {
-		console.log(d);
 			d3.selectAll("#cdnRefChart .sel").classed("sel", false);
 			d3.select(obj).classed("sel", true);
 		  d3.select("#unhcrTip").select("#tipCountry")
 		    .text(d.name);
-		  //d3.select("#unhcrTip").select("#tipYear")
-		    //.text(d.Year.getFullYear());
 		  d3.select("#unhcrTip").select("#tipRefugees")
 		    .text((d.y1 - d.y0) + " refugees");
   }
