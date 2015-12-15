@@ -1,0 +1,333 @@
+---
+layout: post
+title:  "That shrinking feeling"
+date:   2015-12-14 12:00:00
+---
+
+* * *
+
+<div id="shrinkTip" class="hidden">
+  <p id="tipTop"><span id="tipTitle"></span></p>
+  <p class="tipInfo"><span id="tipText1"></span></p>
+</div>
+<p class="shrinkTitle">Total expenditure as a share of GDP, 1933-2014</p>
+<p class="shrinkSubTitle">All governments combined</p>
+<div id="shrinkChart"></div>
+
+* * *
+
+After my [last attempt]({% post_url 2015-12-13-financial-safety %}) at redesigning one of the [50 Maclean's charts](http://www.macleans.ca/economy/economicanalysis/the-most-important-charts-for-the-canadian-economy-in-2016/) wasn't much of an improvement, I didn't think I'd try again. But the chart from Kevin Milligan on the shrinking share of government expenditures is pretty interesting... and really, really ugly. No harm in polishing it up, right?
+
+Sources:
+
+- [Historical Statistics of Canada: Government Finance](http://www.statcan.gc.ca/pub/11-516-x/sectionh/4057752-eng.htm#1), [Historical Statistics of Canada: Section F: Gross National Product, the Capital Stock, and Productivity](http://www.statcan.gc.ca/pub/11-516-x/sectionf/4057751-eng.htm)
+- [Statistics Canada: CANSIM Table 380-0506](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800506&&pattern=&stByVal=1&p1=1&p2=50&tabMode=dataTable&csid=), [Statistics Canada: CANSIM Table 380-0501](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800501&pattern=&tabMode=dataTable&srchLan=-1&p1=-1&p2=9)
+- [Statistics Canada: CANSIM Table 380-0080](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800080&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=), [Statistics Canada: CANSIM Table 380-0064](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800064&pattern=&tabMode=dataTable&srchLan=-1&p1=-1&p2=9)
+
+<style>
+
+#shrinkChart text {
+  font-size: 10px;
+}
+
+#shrinkChart .axis path,
+#shrinkChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.shrinkTitle {
+	font-size: 1.5em;
+	margin-bottom: 0;
+  text-align: center;
+}
+
+.shrinkSubTitle {
+	font-style: italic;
+	text-align: center;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke-linecap: "round";
+  stroke-width: 1.5px;
+}
+
+.histLine {
+	stroke: #FF4D4C;
+}
+
+.sna1968Line {
+	stroke: #FF0000;
+}
+
+.snaModernLine {
+	stroke: #7F2626;
+}
+
+.histCircle {
+	fill: #FF4D4C;
+}
+
+.sna1968Circle {
+	fill: #FF0000;
+}
+
+.snaModernCircle {
+	fill: #7F2626;
+}
+
+/* Tooltip */
+.hidden {
+  display: none;
+}
+
+#shrinkTip {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  width: 225px;
+  height: auto;
+  padding: 10px;
+  pointer-events: none;
+}
+
+#shrinkTip strong {
+  font-weight: bold;
+}
+
+#shrinkTip #tipTop {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+#shrinkTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+
+<script>
+
+shrinkChart();
+
+var coordinates = [0, 0];
+var body = d3.select("body")
+    .on("mousemove", function() {
+      coordinates = d3.mouse(this);
+    })
+    .on("mousedown", function() {
+      coordinates = d3.mouse(this);
+    });
+
+function shrinkChart() {
+
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 740 - margin.left - margin.right,
+	    height = 300 - margin.top - margin.bottom;
+
+	var parseDate = d3.time.format("%Y").parse;
+	var percentFormat = d3.format("%");
+
+	var dataSources = ["Historical Statistics of Canada", "1968 System of National Accounts", "Modern System of National Accounts"];
+	var dataColours = ["#FF4D4C", "#FF0000", "#7F2626"];
+
+	var x = d3.time.scale()
+	    .range([0, width]);
+
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .tickFormat(percentFormat);
+
+	var lineTop = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(1); });
+
+	var lineBottom = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(0); });
+
+	var line = d3.svg.line()
+	    .x(function(d) { return x(d.year); })
+	    .y(function(d) { return y(d.gdpShare); });
+
+	var svg = d3.select("#shrinkChart").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	queue()
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2015/12/share_historical.csv", type)
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2015/12/share_1968.csv", type)
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2015/12/share_modern.csv", type)
+	  .await(ready);
+
+	function ready (error, historical, sna1968, snaModern) {
+	  if (error) throw error;
+
+	  x.domain([d3.min(historical, function(d) { return d.year; }), 
+	  	d3.max(snaModern, function(d) { return d.year; })]);
+	  y.domain([d3.min(sna1968, function(d) { return d.gdpShare; }), 
+	  	d3.max(snaModern, function(d) { return d.gdpShare; })]);
+
+	  console.log(y.domain());
+
+	  svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	  svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis)
+	    .append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("% Share of GDP");
+
+	  var histLine = svg.append("path")
+		    .datum(historical)
+		    .attr("class", "line histLine")
+		    .attr("d", lineTop);
+
+	  var sna1968Line = svg.append("path")
+		    .datum(sna1968)
+		    .attr("class", "line sna1968Line")
+		    .attr("d", lineBottom);
+
+	  var snaModernLine = svg.append("path")
+		    .datum(snaModern)
+		    .attr("class", "line snaModernLine")
+		    .attr("d", lineTop);
+
+		var histCircles = svg.selectAll("histCircles")
+			.data(historical)
+			.enter()
+			.append("circle")
+			.attr("class", "histCircle")
+			.attr("cx", function(d) { return x(d.year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[0]); })
+			.on("mouseout", function(d) { d3.select("#shrinkTip").classed("hidden", true); });
+
+		var sna1968Circles = svg.selectAll("sna1968Circles")
+			.data(sna1968)
+			.enter()
+			.append("circle")
+			.attr("class", "sna1968Circle")
+			.attr("cx", function(d) { return x(d.year); })
+			.attr("cy", function(d) { return y(0); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[1]); })
+			.on("mouseout", function(d) { d3.select("#shrinkTip").classed("hidden", true); });
+
+		var snaModernCircles = svg.selectAll("snaModernCircles")
+			.data(snaModern)
+			.enter()
+			.append("circle")
+			.attr("class", "snaModernCircle")
+			.attr("cx", function(d) { return x(d.year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[2]); })
+			.on("mouseout", function(d) { d3.select("#shrinkTip").classed("hidden", true); });
+
+		function showTooltip(d, source) {
+			var xPos = coordinates[0] + 15;
+        if (x(d.year) > width / 2) {
+          xPos = coordinates[0] - 250;
+        }
+        var yPos = coordinates[1];
+        d3.select("#shrinkTip")
+          .style("left", xPos + "px")
+          .style("top", yPos + "px");
+
+				d3.select("#shrinkTip")
+          .select("#tipTitle").text(source + " – " + d.year.getFullYear());
+        d3.select("#shrinkTip")
+          .select("#tipText1").text(percentFormat(d.gdpShare));
+
+        d3.select("#shrinkTip").classed("hidden", false);
+		}
+
+		histLine.transition()
+			.duration(1000)
+			.attr("d", line);
+
+		sna1968Line.transition()
+			.duration(1000)
+			.attr("d", line);
+
+		snaModernLine.transition()
+			.duration(1000)
+			.attr("d", line);
+
+		histCircles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.gdpShare); });
+
+		sna1968Circles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.gdpShare); });
+
+		snaModernCircles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.gdpShare); });
+
+	var legend = svg.selectAll(".legend")
+		  .data(dataSources)
+		.enter().append("g")
+		  .attr("class", "legend")
+		  .attr("transform", function(d, i) { return "translate(0," + (height - 80 + (i * 20)) + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", function(d, i) { return dataColours[i]; });
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+	}
+
+	function type(d) {
+		d.year = parseDate(d.year);
+    d.gdpShare = +d.gdpShare;
+
+    return d;
+	}
+
+}
+
+</script>
