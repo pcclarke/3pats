@@ -310,7 +310,7 @@ function lopsidedResults() {
 				
 				var xPos = coordinates[0] + 15;
 				if (widthScale(d["% of Votes"]) > w / 2) {
-					xPos = coordinates[0] - 195;
+					xPos = coordinates[0] - 205;
 				}
 				var yPos = coordinates[1];
 				d3.select("#lopToolTip")
