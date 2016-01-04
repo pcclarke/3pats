@@ -4,7 +4,7 @@ title:  "Lopsided Results"
 date:   2016-01-05 12:00:00
 ---
 
-One of the quirks of the Canadian electoral system is that regional results can cumulatively produce extremely lopsided victories. In most of the recent elections, the party that won the majority of seats did not receive the majority of votes or even anything close to it.
+With the ongoing and likely growing discussion of electoral reform, it seemed like a good time to look at just how skewed the results can be under our beloved current first past the post system.
 
 This chart compares the votes each of the parties recieved to the number of seats that they won by various regional groupings. There is some overlap in votes here, as in both the provinces, cities, and national groups include many of the same votes. However, each region produced very different results so it's worthwhile to compare how some are more or less skewed.
 
@@ -22,8 +22,16 @@ Source: [Elections Canada Election Results](http://enr.elections.ca/National.asp
 
 <style type="text/css">
 	#lopChart .legend, 
-	#lopChart .legendCircles {
+	#lopChart .legendSeats {
 		font-size: 10px;
+	}
+
+	.legendSeats text {
+		alignment-baseline: middle;
+		font-family: "Helvetica Neue", Helvetica, Arial !important;
+		font-weight: bold;
+		opacity: 0.7;
+		text-anchor: middle;
 	}
 
 	#lopChart .legendLabel {
@@ -41,10 +49,11 @@ Source: [Elections Canada Election Results](http://enr.elections.ca/National.asp
 	}
 
 	#lopChart g.point text {
-		font-size: 11px;
+		cursor: pointer;
+		font-family: "Helvetica Neue", Helvetica, Arial !important;
 		font-weight: bold;
-		text-anchor: end;
-		opacity: 0;
+		opacity: 0.7;
+		text-anchor: middle;
 	}
 
 	#lopChart g.point:hover rect {
@@ -78,13 +87,14 @@ Source: [Elections Canada Election Results](http://enr.elections.ca/National.asp
 	}
 
 	#lopChart .explainer {
+		color: #808080;
 		font-weight: lighter;
 		font-size: 24px;
 		font-style: italic;
 	}
 
 	#lopChart .propLine {
-		stroke: #fffb00;
+		stroke: #CCCCCC;
 		stroke-width: 3px;
 		-moz-transition: all 0.3s;
 	    -o-transition: all 0.3s;
@@ -93,7 +103,7 @@ Source: [Elections Canada Election Results](http://enr.elections.ca/National.asp
 	}
 
 	#lopChart .propLine:hover {
-		stroke: #808080;
+		stroke: #F0F0F0;
 	}
 
 	/* Tooltip */
@@ -107,20 +117,21 @@ Source: [Elections Canada Election Results](http://enr.elections.ca/National.asp
 	  background-color: white;
 	  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
 	  position: absolute;
-	  width: 225px;
+	  width: 180px;
 	  height: auto;
 	  padding: 10px;
 	  pointer-events: none;
 	}
 
 	#lopToolTip #tipTitle {
-	  font-size: 24px;
+	  font-size: 28px;
 	  font-style: italic;
 	  line-height: 20px;
-	  margin-bottom: 0px !important;
+	  margin-bottom: 4px !important;
 	}
 
 	#lopToolTip #tipSubTitle {
+		line-height: 14px;
 	  font-size: 16px;
 	  font-weight: bold;
 	  margin-bottom: 10px !important;
@@ -152,9 +163,9 @@ lopsidedResults();
 
 function lopsidedResults() {
 
-	var padding = {top: 20, right: 10, bottom: 250, left: 40},
+	var padding = {top: 20, right: 10, bottom: 20, left: 40},
 		w = 740 - padding.left - padding.right,
-		h = 740 - padding.top - padding.bottom;
+		h = 800 - padding.top - padding.bottom;
 
 	var percentFormat = d3.format("%");
 
@@ -189,7 +200,6 @@ function lopsidedResults() {
 			.attr("transform", "translate(" + padding.left + "," + padding.top + ")");
 
 	d3.csv("{{ site.baseurl }}/data/2016/01/election_results.csv", type, function(data) {
-		console.log(svg);
 
 		data.sort(function(a, b) {
 			return d3.ascending(a["% of Votes"], b["% of Votes"]);
@@ -281,20 +291,23 @@ function lopsidedResults() {
 						.append("g")
 						.attr("class", "point");
 
-		var circles = groups.append("circle")
-			.attr("cx", function(d) {
+		var dataText = groups.append("text")
+			.attr("x", function(d) {
 				return widthScale(d["% of Votes"]);
 			})
-			.attr("cy", function(d) {
+			.attr("y", function(d) {
 				return heightScale(d["% of Votes"]);
 			})
-			.attr("r", function(d) {
-				return rScale(d.Seats);
+			.attr("color", "#000")
+			.attr("class", "dataText")
+			.style("font-size", function(d) {
+				return (6 + (d.Seats / 2));
 			})
-			.attr("fill", function(d) {
-				return parties(d.Party);
+			.text(function(d) {
+				return d.Party.substr(0, 1);
 			})
 			.on("mouseover", function(d) {
+				
 				var xPos = coordinates[0] + 15;
 				if (widthScale(d["% of Votes"]) > w / 2) {
 					xPos = coordinates[0] - 195;
@@ -321,67 +334,45 @@ function lopsidedResults() {
 				d3.select("#lopToolTip").classed("hidden", true);	
 			});
 
-		circles.transition()
+		dataText.transition()
 			.delay(function(d, i) {
 				return Math.pow(i, 1.5);
 			})
 			.duration(1000)
-			.attr("cy", function(d) {
+			.attr("y", function(d) {
 				return heightScale(d["% of Seats"]);
 			});
 
-		// Legend for party colours
-		svg.append("text")
-			.attr("x", 120)
-			.attr("y", h + 85)
-			.attr("class", "legendLabel")
-			.text("Political Parties");
-
-		var legend = svg.selectAll(".legend")
-		    .data(parties.domain())
-			.enter().append("g")
-		    .attr("class", "legend")
-		    .attr("transform", function(d, i) { return "translate(0," + (h + 80 + i * 20) + ")"; });
-
-		legend.append("rect")
-		    .attr("x", 300 - 18)
-		    .attr("width", 18)
-		    .attr("height", 18)
-		    .style("fill", parties);
-
-		legend.append("text")
-		    .attr("x", 300 - 24)
-		    .attr("y", 9)
-		    .attr("dy", ".35em")
-		    .style("text-anchor", "end")
-		    .text(function(d) { return d; });
-
 		// Legend for total seats won (circle area)
 		svg.append("text")
-			.attr("x", w/2)
-			.attr("y", h + 85)
+			.attr("x", 110)
+			.attr("y", 0)
 			.attr("class", "legendLabel")
 			.text("Total Seats Won");
 
 		var sampleSeats = [0, 10, 25, 75, 150];
 
-		var legendCircles = svg.selectAll(".legendCircles")
+		var legendSeats = svg.selectAll(".legendSeats")
 			.data(sampleSeats)
 			.enter()
 			.append("g")
-			.attr("class", "legendCircles")
-			.attr("transform", function(d, i) { return "translate(0," + (h + 80 + i * 30) + ")"; });
+			.attr("class", "legendSeats")
+			.attr("transform", function(d, i) { 
+				return "translate(30," + (15 + (i * 30)) + ")"; 
+			});
 
-		legendCircles.append("circle")
-			.attr("cx", w / 2 + 120)
-			.attr("cy", 0)
-			.attr("r", function(d) {
-				return rScale(d);
+		legendSeats.append("text")
+			.attr("x", 140)
+			.attr("y", 5)
+			.text("C")
+			.style("text-anchor", "middle")
+			.style("font-size", function(d) {
+				return (6 + (d / 2));
 			})
 			.attr("fill", "grey");
 
-		legendCircles.append("text")
-			.attr("x", w/2 + 95)
+		legendSeats.append("text")
+			.attr("x", 100)
 			.attr("y", 5)
 			.style("text-anchor", "end")
 			.text(function(d) { return d; });
