@@ -1,0 +1,358 @@
+---
+layout: post
+title:  "Why aren't I getting subsidized?"
+date:   2016-01-07 12:00:00
+---
+
+Following in the path of far too many governments before them, the Liberal government is considering [giving more aid to Bombardier](http://www.bloomberg.com/news/articles/2016-01-04/bombardier-an-anchor-for-canada-trudeau-briefing-memo-says). This is virtually guaranteed to be a terrible idea, because Bombadier will almost certainly come back for more money. But is that so bad? Maybe it's just the cost of placating Quebec. Unfortunately it's difficult to even judge that, because we have no idea how much money has been spent on Bombardier. The best I could find is a [$1.1 billion total since 1961](http://www.huffingtonpost.ca/mark-milke/bombardier-corporate-welfare-trap_b_4705751.html), which doesn't say how much was spent year to year, or how much provincial governments have given to Bombardier.
+
+And as it turns out, provincial subsidies are a big deal, bigger than federal subsidies by a wide margin:
+
+* * *
+
+<div id="subsdTip" class="hidden">
+  <p id="tipTop"><span id="tipTitle"></span></p>
+  <p class="tipInfo"><span id="tipText1"></span></p>
+</div>
+<p class="subsdTitle">Federal and provincial government subsidies, 1961-2009</p>
+<div id="subsdChart"></div>
+
+* * *
+
+
+
+
+<style>
+
+#subsdChart text {
+  font-size: 10px;
+}
+
+#subsdChart .axis path,
+#subsdChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.subsdTitle {
+	font-size: 1.5em;
+	margin-bottom: 0;
+  text-align: center;
+}
+
+.subsdSubTitle {
+	font-style: italic;
+	text-align: center;
+}
+
+#subsdChart .x.axis path {
+  display: none;
+}
+
+#subsdChart .line {
+  fill: none;
+  stroke-linecap: "round";
+  stroke-width: 1.5px;
+
+}
+
+#subsdChart .fedLine {
+	stroke: #FF0000;
+}
+
+#subsdChart .provLine {
+	stroke: #808080;
+}
+
+#subsdChart .fedCircle {
+	fill: #FF0000;
+}
+
+#subsdChart .provRect {
+	fill: #000000;
+}
+
+/* Tooltip */
+.hidden {
+  display: none;
+}
+
+#subsdTip {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  width: 225px;
+  height: auto;
+  padding: 10px;
+  pointer-events: none;
+}
+
+#subsdTip strong {
+  font-weight: bold;
+}
+
+#subsdTip #tipTop {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+#subsdTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+
+<script>
+
+subsdChart();
+
+var coordinates = [0, 0];
+var body = d3.select("body")
+    .on("mousemove", function() {
+      coordinates = d3.mouse(this);
+    })
+    .on("mousedown", function() {
+      coordinates = d3.mouse(this);
+    });
+
+function subsdChart() {
+
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 740 - margin.left - margin.right,
+	    height = 300 - margin.top - margin.bottom;
+
+	var parseDate = d3.time.format("%Y").parse;
+
+	var format = d3.format(",");
+
+	var dataSources = ["Federal subsidies", "Provincial subsidies"];
+	var dataColours = ["#FF0000", "#808080"];
+
+	var x = d3.time.scale()
+	    .range([0, width]);
+
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left");
+
+	var lineStart = d3.svg.line()
+	  .x(function(d) { return x(d.Year); })
+	  .y(function(d) { return y(0); });
+
+	var fedLine = d3.svg.line()
+    .x(function(d) { return x(d.Year); })
+    .y(function(d) { return y(d.Federal); });
+
+	var provLine = d3.svg.line()
+    .x(function(d) { return x(d.Year); })
+    .y(function(d) { return y(d.Provincial); });
+
+	var svg = d3.select("#subsdChart").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	queue()
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032.csv", type)
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0010.csv", type)
+	  .await(ready);
+
+	function ready (error, csim3840032, csim3840010) {
+	  if (error) throw error;
+
+	  x.domain([d3.min(csim3840032, function(d) { return d.Year; }), 
+	  	d3.max(csim3840010, function(d) { return d.Year; })]);
+	  y.domain([d3.min(csim3840032, function(d) { return d.Provincial; }), 
+	  	d3.max(csim3840010, function(d) { return d.Provincial; })]);
+
+	  svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	  var yAxisLine = svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis);
+
+	  var yAxisLabel = yAxisLine.append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Million dollars");
+
+	  var oldFedLine = svg.append("path")
+		    .datum(csim3840032)
+		    .attr("class", "line fedLine")
+		    .attr("d", lineStart);
+
+	  var newFedLine = svg.append("path")
+		    .datum(csim3840010)
+		    .attr("class", "line fedLine")
+		    .attr("d", lineStart);
+
+	  var oldProvLine = svg.append("path")
+		    .datum(csim3840032)
+		    .attr("class", "line provLine")
+		    .attr("d", lineStart);
+
+	  var newProvLine = svg.append("path")
+		    .datum(csim3840010)
+		    .attr("class", "line provLine")
+		    .attr("d", lineStart);
+
+		function makeLine(data, name) {
+			return svg.append("path")
+		    .datum(data)
+		    .attr("class", "line " + name + "Line")
+		    .attr("d", lineStart);
+		}
+
+		var oldFedCircles = svg.selectAll("oldCircles")
+			.data(csim3840032)
+			.enter()
+			.append("circle")
+			.attr("class", "fedCircle")
+			.attr("cx", function(d) { return x(d.Year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[0]); })
+			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
+
+		var newFedCircles = svg.selectAll("newCircles")
+			.data(csim3840010)
+			.enter()
+			.append("circle")
+			.attr("class", "fedCircle")
+			.attr("cx", function(d) { return x(d.Year); })
+			.attr("cy", function(d) { return y(0); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[0]); })
+			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
+
+		var oldProvRects = svg.selectAll("oldProvRects")
+			.data(csim3840032)
+			.enter()
+			.append("rect")
+			.attr("class", "provRect")
+			.attr("x", function(d) { return x(d.Year) - 2; })
+			.attr("y", function(d) { return y(1); })
+			.attr("width", 4)
+			.attr("height", 4)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[1]); })
+			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
+
+		var newProvRects = svg.selectAll("newProvRects")
+			.data(csim3840010)
+			.enter()
+			.append("rect")
+			.attr("class", "provRect")
+			.attr("x", function(d) { return x(d.Year) - 2; })
+			.attr("y", function(d) { return y(0); })
+			.attr("width", 4)
+			.attr("height", 4)
+			.on("mouseover", function(d) { showTooltip(d, dataSources[1]); })
+			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
+
+		function showTooltip(d, gov) {
+			var xPos = coordinates[0] + 15;
+        if (x(d.year) > width / 2) {
+          xPos = coordinates[0] - 250;
+        }
+        var yPos = coordinates[1];
+        d3.select("#subsdTip")
+          .style("left", xPos + "px")
+          .style("top", yPos + "px");
+
+				d3.select("#subsdTip")
+          .select("#tipTitle").text(gov + " – " + d.Year.getFullYear());
+        d3.select("#subsdTip")
+          .select("#tipText1").text("$" + ((gov.substr(0, 1) === "F") ? format(d.Federal) : format(d.Provincial)) + " million dollars");
+
+          console.log(gov + " " + gov.substr(0, 1) === "F");
+
+        d3.select("#subsdTip").classed("hidden", false);
+		}
+
+		oldFedLine.transition()
+			.duration(1000)
+			.attr("d", fedLine);
+
+		newFedLine.transition()
+			.duration(1000)
+			.attr("d", fedLine);
+
+		oldProvLine.transition()
+			.duration(1000)
+			.attr("d", provLine);
+
+		newProvLine.transition()
+			.duration(1000)
+			.attr("d", provLine);
+
+		oldFedCircles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.Federal); });
+
+		newFedCircles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.Federal); });
+
+		oldProvRects.transition()
+			.duration(1000)
+			.attr("y", function(d) { return y(d.Provincial) - 2; });
+
+		newProvRects.transition()
+			.duration(1000)
+			.attr("y", function(d) { return y(d.Provincial) - 2; });
+
+	var legend = svg.selectAll(".legend")
+		  .data(dataSources)
+		.enter().append("g")
+		  .attr("class", "legend")
+		  .attr("transform", function(d, i) { return "translate(0," + ((i * 20)) + ")"; });
+
+  legend.append("rect")
+      .attr("x", 50)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", function(d, i) { return dataColours[i]; });
+
+  legend.append("text")
+      .attr("x", 75)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start")
+      .text(function(d) { return d; });
+	}
+
+	function type(d) {
+		d.Year = parseDate(d.Year);
+		d.Federal = +d.Federal;
+		d.Provincial = +d.Provincial;
+
+    return d;
+	}
+
+}
+
+</script>
