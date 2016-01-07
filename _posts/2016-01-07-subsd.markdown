@@ -13,13 +13,24 @@ And as it turns out, provincial subsidies are a big deal, bigger than federal su
 <div id="subsdTip" class="hidden">
   <p id="tipTop"><span id="tipTitle"></span></p>
   <p class="tipInfo"><span id="tipText1"></span></p>
+  <p class="tipInfo"><span id="tipText2"></span></p>
 </div>
-<p class="subsdTitle">Federal and provincial government subsidies, 1961-2009</p>
+<p class="subsdTitle">Total Federal and provincial government subsidies, 1961-2009</p>
+<div>
+  <select id="substSelect">
+    <option value="nominal" selected="selected">Nominal values</option>
+    <option value="inflation">Adjusted for inflation (2015 dollars)</option>
+  </select>
+</div>
 <div id="subsdChart"></div>
 
 * * *
 
+Sources:
 
+- [Statistics Canada: CANSIM Table 384-0032]()
+- [Statistics Canada: CANSIM Table 384-0010]()
+- [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
 
 
 <style>
@@ -134,9 +145,10 @@ function subsdChart() {
 
 	var parseDate = d3.time.format("%Y").parse;
 
-	var format = d3.format(",");
+	var format = d3.format(",.0");
 
-	var dataSources = ["Federal subsidies", "Provincial subsidies"];
+	var govLevels = ["Federal subsidies", "Provincial subsidies"];
+	var dataSources = ["CANSIM Table 384-0032", "CANSIM Table 384-0010"];
 	var dataColours = ["#FF0000", "#808080"];
 
 	var x = d3.time.scale()
@@ -153,6 +165,8 @@ function subsdChart() {
 	    .scale(y)
 	    .orient("left");
 
+	var selectedOpt = "nominal";
+
 	var lineStart = d3.svg.line()
 	  .x(function(d) { return x(d.Year); })
 	  .y(function(d) { return y(0); });
@@ -164,6 +178,14 @@ function subsdChart() {
 	var provLine = d3.svg.line()
     .x(function(d) { return x(d.Year); })
     .y(function(d) { return y(d.Provincial); });
+
+	var fedInfLine = d3.svg.line()
+    .x(function(d) { return x(d.Year); })
+    .y(function(d) { return y(d.FedInf); });
+
+	var provInfLine = d3.svg.line()
+    .x(function(d) { return x(d.Year); })
+    .y(function(d) { return y(d.ProvInf); });
 
 	var svg = d3.select("#subsdChart").append("svg")
 	    .attr("width", width + margin.left + margin.right)
@@ -182,7 +204,7 @@ function subsdChart() {
 	  x.domain([d3.min(csim3840032, function(d) { return d.Year; }), 
 	  	d3.max(csim3840010, function(d) { return d.Year; })]);
 	  y.domain([d3.min(csim3840032, function(d) { return d.Provincial; }), 
-	  	d3.max(csim3840010, function(d) { return d.Provincial; })]);
+	  	d3.max(csim3840010, function(d) { return d.FedInf; })]);
 
 	  svg.append("g")
 	      .attr("class", "x axis")
@@ -220,7 +242,7 @@ function subsdChart() {
 			.attr("cx", function(d) { return x(d.Year); })
 			.attr("cy", function(d) { return y(1); })
 			.attr("r", 2)
-			.on("mouseover", function(d) { showTooltip(d, dataSources[0]); })
+			.on("mouseover", function(d) { showTooltip(d, govLevels[0], dataSources[0]); })
 			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
 
 		var newFedCircles = svg.selectAll("newCircles")
@@ -231,7 +253,7 @@ function subsdChart() {
 			.attr("cx", function(d) { return x(d.Year); })
 			.attr("cy", function(d) { return y(0); })
 			.attr("r", 2)
-			.on("mouseover", function(d) { showTooltip(d, dataSources[0]); })
+			.on("mouseover", function(d) { showTooltip(d, govLevels[0], dataSources[1]); })
 			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
 
 		var oldProvRects = svg.selectAll("oldProvRects")
@@ -243,7 +265,7 @@ function subsdChart() {
 			.attr("y", function(d) { return y(1); })
 			.attr("width", 4)
 			.attr("height", 4)
-			.on("mouseover", function(d) { showTooltip(d, dataSources[1]); })
+			.on("mouseover", function(d) { showTooltip(d, govLevels[1], dataSources[0]); })
 			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
 
 		var newProvRects = svg.selectAll("newProvRects")
@@ -255,12 +277,12 @@ function subsdChart() {
 			.attr("y", function(d) { return y(0); })
 			.attr("width", 4)
 			.attr("height", 4)
-			.on("mouseover", function(d) { showTooltip(d, dataSources[1]); })
+			.on("mouseover", function(d) { showTooltip(d, govLevels[1], dataSources[1]); })
 			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
 
-		function showTooltip(d, gov) {
+		function showTooltip(d, gov, source) {
 			var xPos = coordinates[0] + 15;
-        if (x(d.year) > width / 2) {
+        if (x(d.Year) > width / 2) {
           xPos = coordinates[0] - 250;
         }
         var yPos = coordinates[1];
@@ -270,48 +292,62 @@ function subsdChart() {
 
 				d3.select("#subsdTip")
           .select("#tipTitle").text(gov + " – " + d.Year.getFullYear());
+        if (selectedOpt === "nominal") {
+        	d3.select("#subsdTip")
+          	.select("#tipText1")
+          	.text("$" + ((gov.substr(0, 1) === "F") ? format(d.Federal) : format(d.Provincial)) + " million dollars");
+        } else {
+        	d3.select("#subsdTip")
+          	.select("#tipText1")
+          	.text("$" + ((gov.substr(0, 1) === "F") ? format(d3.round(d.FedInf)) : format(d3.round(d.ProvInf))) + " million dollars");
+        }
         d3.select("#subsdTip")
-          .select("#tipText1").text("$" + ((gov.substr(0, 1) === "F") ? format(d.Federal) : format(d.Provincial)) + " million dollars");
-
-          console.log(gov + " " + gov.substr(0, 1) === "F");
+          .select("#tipText2").text(source);
 
         d3.select("#subsdTip").classed("hidden", false);
 		}
 
-		oldFedLine.transition()
-			.duration(1000)
-			.attr("d", fedLine);
+		transLine(fedLine, provLine);
+		transShape("Federal", "Provincial");
 
-		newFedLine.transition()
-			.duration(1000)
-			.attr("d", fedLine);
+		function transLine(fedLineFunc, provLineFunc) {
+			oldFedLine.transition()
+				.duration(1000)
+				.attr("d", fedLineFunc);
 
-		oldProvLine.transition()
-			.duration(1000)
-			.attr("d", provLine);
+			newFedLine.transition()
+				.duration(1000)
+				.attr("d", fedLineFunc);
 
-		newProvLine.transition()
-			.duration(1000)
-			.attr("d", provLine);
+			oldProvLine.transition()
+				.duration(1000)
+				.attr("d", provLineFunc);
 
-		oldFedCircles.transition()
-			.duration(1000)
-			.attr("cy", function(d) { return y(d.Federal); });
+			newProvLine.transition()
+				.duration(1000)
+				.attr("d", provLineFunc);
+		}
 
-		newFedCircles.transition()
-			.duration(1000)
-			.attr("cy", function(d) { return y(d.Federal); });
+		function transShape(fedData, provData) {
+			oldFedCircles.transition()
+				.duration(1000)
+				.attr("cy", function(d) { return y(d[fedData]); });
 
-		oldProvRects.transition()
-			.duration(1000)
-			.attr("y", function(d) { return y(d.Provincial) - 2; });
+			newFedCircles.transition()
+				.duration(1000)
+				.attr("cy", function(d) { return y(d[fedData]); });
 
-		newProvRects.transition()
-			.duration(1000)
-			.attr("y", function(d) { return y(d.Provincial) - 2; });
+			oldProvRects.transition()
+				.duration(1000)
+				.attr("y", function(d) { return y(d[provData]) - 2; });
+
+			newProvRects.transition()
+				.duration(1000)
+				.attr("y", function(d) { return y(d[provData]) - 2; });
+		}
 
 	var legend = svg.selectAll(".legend")
-		  .data(dataSources)
+		  .data(govLevels)
 		.enter().append("g")
 		  .attr("class", "legend")
 		  .attr("transform", function(d, i) { return "translate(0," + ((i * 20)) + ")"; });
@@ -328,6 +364,20 @@ function subsdChart() {
       .attr("dy", ".35em")
       .style("text-anchor", "start")
       .text(function(d) { return d; });
+
+  d3.select("#substSelect")
+		.on("change", selected);
+
+		function selected() {
+			selectedOpt = this.options[this.selectedIndex].value;
+			if (selectedOpt === "nominal") {
+				transLine(fedLine, provLine);
+				transShape("Federal", "Provincial");
+			} else {
+				transLine(fedInfLine, provInfLine);
+				transShape("FedInf", "ProvInf");
+			}
+		}
 	}
 
 	function type(d) {
