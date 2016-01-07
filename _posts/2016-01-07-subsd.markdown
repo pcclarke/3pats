@@ -200,25 +200,10 @@ function subsdChart() {
 	      .style("text-anchor", "end")
 	      .text("Million dollars");
 
-	  var oldFedLine = svg.append("path")
-		    .datum(csim3840032)
-		    .attr("class", "line fedLine")
-		    .attr("d", lineStart);
-
-	  var newFedLine = svg.append("path")
-		    .datum(csim3840010)
-		    .attr("class", "line fedLine")
-		    .attr("d", lineStart);
-
-	  var oldProvLine = svg.append("path")
-		    .datum(csim3840032)
-		    .attr("class", "line provLine")
-		    .attr("d", lineStart);
-
-	  var newProvLine = svg.append("path")
-		    .datum(csim3840010)
-		    .attr("class", "line provLine")
-		    .attr("d", lineStart);
+	  var oldFedLine = makeLine(csim3840032, "fed");
+	  var newFedLine = makeLine(csim3840010, "fed");
+	  var oldProvLine = makeLine(csim3840032, "prov");
+	  var newProvLine = makeLine(csim3840010, "prov");
 
 		function makeLine(data, name) {
 			return svg.append("path")
@@ -348,7 +333,9 @@ function subsdChart() {
 	function type(d) {
 		d.Year = parseDate(d.Year);
 		d.Federal = +d.Federal;
+		d.FedInf = +d.FedInf;
 		d.Provincial = +d.Provincial;
+		d.ProvInf = +d.ProvInf;
 
     return d;
 	}
