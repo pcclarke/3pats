@@ -195,23 +195,7 @@ function subsdChart() {
 	  .x(function(d) { return x(d.Year); })
 	  .y(function(d) { return y(0); });
 
-	var fedLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.Federal); });
-
-	var provLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.Provincial); });
-
-	var fedInfLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.FedInf); });
-
-	var provInfLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.ProvInf); });
-
-  function coolLine(yData) {
+  function calcLine(yData) {
   	return d3.svg.line()
 	    .x(function(d) { return x(d.Year); })
 	    .y(function(d) { return y(d[yData]); });
@@ -228,8 +212,19 @@ function subsdChart() {
 	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0010.csv", type)
 	  .await(ready);
 
-	function ready (error, csim3840032, csim3840010) {
+	function ready (error, csim3840032, csim3840010, test) {
 	  if (error) throw error;
+
+	  var nestData = d3.nest()
+	  	.key(function(d) { return d.government; })
+	  	.key(function(d) { return d.valuetype; })
+	  	//.map(function(d) { return d.value; })
+	  	.entries(test);
+
+	 	console.log(nestData);
+
+ 	/*var nest = {};
+	console.log(nest);*/
 
 	  x.domain([d3.min(csim3840032, function(d) { return d.Year; }), 
 	  	d3.max(csim3840010, function(d) { return d.Year; })]);
@@ -343,19 +338,19 @@ function subsdChart() {
 		function transLine(fedData, provData) {
 			oldFedLine.transition()
 				.duration(1000)
-				.attr("d", coolLine(fedData));
+				.attr("d", calcLine(fedData));
 
 			newFedLine.transition()
 				.duration(1000)
-				.attr("d", coolLine(fedData));
+				.attr("d", calcLine(fedData));
 
 			oldProvLine.transition()
 				.duration(1000)
-				.attr("d", coolLine(provData));
+				.attr("d", calcLine(provData));
 
 			newProvLine.transition()
 				.duration(1000)
-				.attr("d", coolLine(provData));
+				.attr("d", calcLine(provData));
 		}
 
 		function transShape(fedData, provData) {
@@ -423,11 +418,12 @@ function subsdChart() {
 }
 
 
+
 /*
 *	Provincial subsidies
 */
 
-subprChart();
+/*subprChart();
 
 function subprChart() {
 
@@ -463,21 +459,11 @@ function subprChart() {
 	  .x(function(d) { return x(d.Year); })
 	  .y(function(d) { return y(0); });
 
-	var fedLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.Federal); });
-
-	var provLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.Provincial); });
-
-	var fedInfLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.FedInf); });
-
-	var provInfLine = d3.svg.line()
-    .x(function(d) { return x(d.Year); })
-    .y(function(d) { return y(d.ProvInf); });
+  function calcLine(yData) {
+  	return d3.svg.line()
+	    .x(function(d) { return x(d.Year); })
+	    .y(function(d) { return y(d[yData]); });
+  }
 
 	var svg = d3.select("#subprChart").append("svg")
 	    .attr("width", width + margin.left + margin.right)
@@ -486,8 +472,8 @@ function subprChart() {
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	queue()
-	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032.csv", type)
-	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0010.csv", type)
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subpr_fed_384-0032.csv", type)
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subpr_fed_384-0010.csv", type)
 	  .await(ready);
 
 	function ready (error, csim3840032, csim3840010) {
@@ -495,8 +481,8 @@ function subprChart() {
 
 	  x.domain([d3.min(csim3840032, function(d) { return d.Year; }), 
 	  	d3.max(csim3840010, function(d) { return d.Year; })]);
-	  y.domain([d3.min(csim3840032, function(d) { return d.Provincial; }), 
-	  	d3.max(csim3840010, function(d) { return d.FedInf; })]);
+	  y.domain([d3.min(csim3840032, function(d) { return d["Prince Edward Island"]; }), 
+	  	d3.max(csim3840010, function(d) { return d.OntInf; })]);
 
 	  svg.append("g")
 	      .attr("class", "x axis")
@@ -514,15 +500,15 @@ function subprChart() {
 	      .style("text-anchor", "end")
 	      .text("Million dollars");
 
-	  var oldFedLine = makeLine(csim3840032, "fed");
-	  var newFedLine = makeLine(csim3840010, "fed");
+	  var oldNfldLine = makeLine(csim3840032);
+	  var newFedLine = makeLine(csim3840010);
 	  var oldProvLine = makeLine(csim3840032, "prov");
 	  var newProvLine = makeLine(csim3840010, "prov");
 
-		function makeLine(data, name) {
+		function makeLine(data) {
 			return svg.append("path")
 		    .datum(data)
-		    .attr("class", "line " + name + "Line")
+		    .attr("class", "line")
 		    .attr("d", lineStart);
 		}
 
@@ -682,6 +668,6 @@ function subprChart() {
     return d;
 	}
 
-}
+}*/
 
 </script>
