@@ -210,22 +210,10 @@ function subsdChart() {
 	queue()
 	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032.csv", type)
 	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0010.csv", type)
-	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032-test.csv")
 	  .await(ready);
 
-	function ready (error, csim3840032, csim3840010, test) {
+	function ready (error, csim3840032, csim3840010) {
 	  if (error) throw error;
-
-	  var nestData = d3.nest()
-	  	.key(function(d) { return d.government; })
-	  	.key(function(d) { return d.valuetype; })
-	  	//.map(function(d) { return d.value; })
-	  	.entries(test);
-
-	 	console.log(nestData);
-
- 	/*var nest = {};
-	console.log(nest);*/
 
 	  x.domain([d3.min(csim3840032, function(d) { return d.Year; }), 
 	  	d3.max(csim3840010, function(d) { return d.Year; })]);
