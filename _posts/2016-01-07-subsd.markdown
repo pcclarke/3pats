@@ -210,6 +210,7 @@ function subsdChart() {
 	queue()
 	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032.csv", type)
 	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0010.csv", type)
+	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032-test.csv")
 	  .await(ready);
 
 	function ready (error, csim3840032, csim3840010, test) {
