@@ -129,6 +129,7 @@ Sources:
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px !important;
+  text-transform: capitalize;
 }
 
 #subsdTip .tipInfo {
@@ -192,14 +193,23 @@ function subsdChart() {
 	var selectedOpt = "nominal";
 
 	var lineStart = d3.svg.line()
-	  .x(function(d) { return x(d.Year); })
+	  .x(function(d) { return x(d.year); })
 	  .y(function(d) { return y(0); });
 
   function calcLine(yData) {
   	return d3.svg.line()
-	    .x(function(d) { return x(d.Year); })
+  		//.interpolate("basis")
+	    .x(function(d) { return x(d.year); })
 	    .y(function(d) { return y(d[yData]); });
   }
+
+  var nominalLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d.nominal); });
+
+  var infLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d["inflation-adjusted"]); });
 
 	var svg = d3.select("#subsdChart").append("svg")
 	    .attr("width", width + margin.left + margin.right)
@@ -207,18 +217,49 @@ function subsdChart() {
 	  .append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	queue()
-	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0032.csv", type)
-	  .defer(d3.csv, "{{ site.baseurl }}/data/2016/01/subsd_can_384-0010.csv", type)
-	  .await(ready);
-
-	function ready (error, csim3840032, csim3840010) {
+	d3.csv("{{ site.baseurl }}/data/2016/01/subsd_can.csv", type, function(error, data) {
 	  if (error) throw error;
 
-	  x.domain([d3.min(csim3840032, function(d) { return d.Year; }), 
-	  	d3.max(csim3840010, function(d) { return d.Year; })]);
-	  y.domain([d3.min(csim3840032, function(d) { return d.Provincial; }), 
-	  	d3.max(csim3840010, function(d) { return d.FedInf; })]);
+	  x.domain([d3.min(data, function(d) { return d.year; }), 
+	  	d3.max(data, function(d) { return d.year; })]);
+	  y.domain([d3.min(data, function(d) { return d.nominal; }), 
+	  	d3.max(data, function(d) { return d["inflation-adjusted"]; })]);
+
+	  var nestData = d3.nest()
+	  	.key(function(d) { return d.government; })
+	  	.entries(data);
+
+	  var subsd = svg.selectAll(".subsd")
+	      .data(nestData)
+	    .enter().append("g")
+	      .attr("class", "subsd");
+
+    var lines = subsd.append("path")
+      .attr("class", "line")
+      .attr("d", function(d) { return lineStart(d.values); })
+      .style("stroke", "black");
+
+		lines.transition()
+			.duration(1000)
+			.attr("d", function(d) { return nominalLine(d.values); });
+
+		var circleGroup = subsd.append("g")
+			.attr("class", "circle-group");
+
+		var circles = circleGroup.selectAll("circles")
+			.data(function(d) { return d.values; })
+			.enter()
+			.append("circle")
+			.attr("class", "circle")
+			.attr("cx", function(d) {  return x(d.year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { showTooltip(d); })
+			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
+
+		circles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.nominal); });
 
 	  svg.append("g")
 	      .attr("class", "x axis")
@@ -236,65 +277,8 @@ function subsdChart() {
 	      .style("text-anchor", "end")
 	      .text("Million dollars");
 
-	  var oldFedLine = makeLine(csim3840032, "fed");
-	  var newFedLine = makeLine(csim3840010, "fed");
-	  var oldProvLine = makeLine(csim3840032, "prov");
-	  var newProvLine = makeLine(csim3840010, "prov");
 
-		function makeLine(data, name) {
-			return svg.append("path")
-		    .datum(data)
-		    .attr("class", "line " + name + "Line")
-		    .attr("d", lineStart);
-		}
-
-		var oldFedCircles = svg.selectAll("oldCircles")
-			.data(csim3840032)
-			.enter()
-			.append("circle")
-			.attr("class", "fedCircle")
-			.attr("cx", function(d) { return x(d.Year); })
-			.attr("cy", function(d) { return y(1); })
-			.attr("r", 2)
-			.on("mouseover", function(d) { showTooltip(d, govLevels[0], dataSources[0]); })
-			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
-
-		var newFedCircles = svg.selectAll("newCircles")
-			.data(csim3840010)
-			.enter()
-			.append("circle")
-			.attr("class", "fedCircle")
-			.attr("cx", function(d) { return x(d.Year); })
-			.attr("cy", function(d) { return y(0); })
-			.attr("r", 2)
-			.on("mouseover", function(d) { showTooltip(d, govLevels[0], dataSources[1]); })
-			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
-
-		var oldProvRects = svg.selectAll("oldProvRects")
-			.data(csim3840032)
-			.enter()
-			.append("rect")
-			.attr("class", "provRect")
-			.attr("x", function(d) { return x(d.Year) - 2; })
-			.attr("y", function(d) { return y(1); })
-			.attr("width", 4)
-			.attr("height", 4)
-			.on("mouseover", function(d) { showTooltip(d, govLevels[1], dataSources[0]); })
-			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
-
-		var newProvRects = svg.selectAll("newProvRects")
-			.data(csim3840010)
-			.enter()
-			.append("rect")
-			.attr("class", "provRect")
-			.attr("x", function(d) { return x(d.Year) - 2; })
-			.attr("y", function(d) { return y(0); })
-			.attr("width", 4)
-			.attr("height", 4)
-			.on("mouseover", function(d) { showTooltip(d, govLevels[1], dataSources[1]); })
-			.on("mouseout", function(d) { d3.select("#subsdTip").classed("hidden", true); });
-
-		function showTooltip(d, gov, source) {
+		function showTooltip(d) {
 			var xPos = coordinates[0] + 15;
         if (x(d.Year) > width / 2) {
           xPos = coordinates[0] - 250;
@@ -304,60 +288,23 @@ function subsdChart() {
           .style("left", xPos + "px")
           .style("top", yPos + "px");
 
+          console.log(d);
+
 				d3.select("#subsdTip")
-          .select("#tipTitle").text(gov + " – " + d.Year.getFullYear());
+          .select("#tipTitle").text(d.government + " subsidies – " + d.year.getFullYear());
         if (selectedOpt === "nominal") {
         	d3.select("#subsdTip")
           	.select("#tipText1")
-          	.text("$" + ((gov.substr(0, 1) === "F") ? format(d.Federal) : format(d.Provincial)) + " million dollars");
+          	.text("$" + format(d.nominal) + " million dollars");
         } else {
         	d3.select("#subsdTip")
           	.select("#tipText1")
-          	.text("$" + ((gov.substr(0, 1) === "F") ? format(d3.round(d.FedInf)) : format(d3.round(d.ProvInf))) + " million dollars");
+          	.text("$" + d["inflation-adjusted"] + " million dollars");
         }
         d3.select("#subsdTip")
-          .select("#tipText2").text(source);
+          .select("#tipText2").text(d.source);
 
         d3.select("#subsdTip").classed("hidden", false);
-		}
-
-		transLine("Federal", "Provincial");
-		transShape("Federal", "Provincial");
-
-		function transLine(fedData, provData) {
-			oldFedLine.transition()
-				.duration(1000)
-				.attr("d", calcLine(fedData));
-
-			newFedLine.transition()
-				.duration(1000)
-				.attr("d", calcLine(fedData));
-
-			oldProvLine.transition()
-				.duration(1000)
-				.attr("d", calcLine(provData));
-
-			newProvLine.transition()
-				.duration(1000)
-				.attr("d", calcLine(provData));
-		}
-
-		function transShape(fedData, provData) {
-			oldFedCircles.transition()
-				.duration(1000)
-				.attr("cy", function(d) { return y(d[fedData]); });
-
-			newFedCircles.transition()
-				.duration(1000)
-				.attr("cy", function(d) { return y(d[fedData]); });
-
-			oldProvRects.transition()
-				.duration(1000)
-				.attr("y", function(d) { return y(d[provData]) - 2; });
-
-			newProvRects.transition()
-				.duration(1000)
-				.attr("y", function(d) { return y(d[provData]) - 2; });
 		}
 
 	var legend = svg.selectAll(".legend")
@@ -385,21 +332,27 @@ function subsdChart() {
 		function selected() {
 			selectedOpt = this.options[this.selectedIndex].value;
 			if (selectedOpt === "nominal") {
-				transLine("Federal", "Provincial");
-				transShape("Federal", "Provincial");
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return nominalLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d.nominal); });
 			} else {
-				transLine("FedInf", "ProvInf");
-				transShape("FedInf", "ProvInf");
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return infLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
 			}
 		}
-	}
+	});
 
 	function type(d) {
-		d.Year = parseDate(d.Year);
-		d.Federal = +d.Federal;
-		d.FedInf = +d.FedInf;
-		d.Provincial = +d.Provincial;
-		d.ProvInf = +d.ProvInf;
+		d.year = parseDate(d.year);
+		d.nominal = +d.nominal;
+		d["inflation-adjusted"] = +d["inflation-adjusted"];
 
     return d;
 	}
