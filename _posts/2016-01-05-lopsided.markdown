@@ -1,0 +1,415 @@
+---
+layout: post
+title:  "Lopsided Results"
+date:   2016-01-05 12:00:00
+---
+
+With the ongoing and likely growing discussion of electoral reform, it seemed like a good time to look at just how skewed the results can be under our beloved current first past the post system.
+
+This chart compares the votes each of the parties recieved to the number of seats that they won by various regional groupings. There is some overlap in votes here, as in both the provinces, cities, and national groups include many of the same votes. However, each region produced very different results so it's worthwhile to compare how some are more or less skewed.
+
+<div id="lopChart"></div>
+<div id="lopToolTip" class="hidden">
+	<p id="tipTitle"><span id="party"></span></p>
+	<p id="tipSubTitle"><span id="region"></span></p>
+	<p class="tipInfo">Percent of Votes Received: <span id="votes"></span></p>
+	<p class="tipInfo">Percent of Seats Won: <span id="seatsP"></span></p>
+	<p class="tipInfo">Total Seats Won: <span id="seats"></span></p>
+</div>
+
+
+Source: [Elections Canada Election Results](http://enr.elections.ca/National.aspx)
+
+<style type="text/css">
+	#lopChart .legend, 
+	#lopChart .legendSeats {
+		font-size: 10px;
+	}
+
+	.legendSeats text {
+		alignment-baseline: middle;
+		font-family: "Helvetica Neue", Helvetica, Arial !important;
+		font-weight: bold;
+		opacity: 0.7;
+		text-anchor: middle;
+	}
+
+	#lopChart .legendLabel {
+		font-size: 10px;
+		font-weight: bold;
+	}
+
+	#lopChart g.point:hover circle {
+		stroke: black;
+		stroke-width: 1px;
+	}
+
+	#lopChart g.point circle {
+		
+	}
+
+	#lopChart g.point text {
+		cursor: pointer;
+		font-family: "Helvetica Neue", Helvetica, Arial !important;
+		font-weight: bold;
+		opacity: 0.7;
+		text-anchor: middle;
+	}
+
+	#lopChart g.point:hover rect {
+		fill: orange;
+	}
+
+	#lopChart g.point:hover text {
+		opacity: 1;
+	}
+
+	/* Axes */
+	#lopChart .axis path,
+	#lopChart .axis line {
+		fill: none;
+		stroke: black;
+		shape-rendering: crispEdges;
+	}
+
+	#lopChart .axis text {
+		font-size: 11px;
+	}
+
+	#lopChart .y.axis path,
+	#lopChart .x.axis path {
+		opacity: 0;
+	}
+
+	/* Proportional votes = seats line */
+	#lopChart .labelText {
+		font-weight: 600;
+	}
+
+	#lopChart .explainer {
+		color: #808080;
+		font-weight: lighter;
+		font-size: 24px;
+		font-style: italic;
+	}
+
+	#lopChart .propLine {
+		stroke: #CCCCCC;
+		stroke-width: 3px;
+		-moz-transition: all 0.3s;
+	    -o-transition: all 0.3s;
+	    -webkit-transition: all 0.3s;
+	    transition: all 0.3s;
+	}
+
+	#lopChart .propLine:hover {
+		stroke: #F0F0F0;
+	}
+
+	/* Tooltip */
+	.hidden {
+	  display: none;
+	}
+
+	#lopToolTip {
+	  border: 1px solid black;
+	  border-radius: 5px;
+	  background-color: white;
+	  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
+	  position: absolute;
+	  width: 180px;
+	  height: auto;
+	  padding: 10px;
+	  pointer-events: none;
+	}
+
+	#lopToolTip #tipTitle {
+	  font-size: 28px;
+	  font-style: italic;
+	  line-height: 20px;
+	  margin-bottom: 4px !important;
+	}
+
+	#lopToolTip #tipSubTitle {
+		line-height: 14px;
+	  font-size: 16px;
+	  font-weight: bold;
+	  margin-bottom: 10px !important;
+	}
+
+	#lopToolTip .tipInfo {
+	  font-size: 12px;
+	  margin: 0;
+	}
+
+	.hidden {
+	  display: none;
+	}
+
+</style>
+
+<script type="text/javascript">
+var coordinates = [0, 0];
+
+var body = d3.select("body")
+	.on("mousemove", function() {
+		coordinates = d3.mouse(this);
+	})
+	.on("mousedown", function() {
+		coordinates = d3.mouse(this);
+	});
+
+lopsidedResults();
+
+function lopsidedResults() {
+
+	var padding = {top: 20, right: 10, bottom: 20, left: 40},
+		w = 740 - padding.left - padding.right,
+		h = 800 - padding.top - padding.bottom;
+
+	var percentFormat = d3.format("%");
+
+
+	var widthScale = d3.scale.linear()
+						.range([ 0, w ]);
+	var heightScale = d3.scale.linear()
+						.range([ h, 0 ]);
+
+	var rScale = d3.scale.linear()
+             			.range([2, 15]);
+
+	var parties = d3.scale.ordinal()
+						.domain(["Bloc Québécois", "Conservative", "Green", "Liberal", "NDP", "No Affiliation", "Independent"])
+						.range([ "#0298d4", "#1340BF", "#3d9c34", "#BF3513", "#f37122", "#808080", "#CCCCCC"]);
+
+	var xAxis = d3.svg.axis()
+					.scale(widthScale)
+					.orient("bottom")
+					.tickFormat(percentFormat);
+
+	var yAxis = d3.svg.axis()
+					.scale(heightScale)
+					.orient("left")
+					.tickFormat(percentFormat);
+
+	var svg = d3.select("#lopChart")
+		.append("svg")
+			.attr("width", w + padding.left + padding.right)
+			.attr("height", h + padding.top + padding.bottom)
+		.append("g")
+			.attr("transform", "translate(" + padding.left + "," + padding.top + ")");
+
+	d3.csv("{{ site.baseurl }}/data/2016/01/election_results.csv", type, function(data) {
+
+		data.sort(function(a, b) {
+			return d3.ascending(a["% of Votes"], b["% of Votes"]);
+		});
+
+		var maxVotes = d3.max(data, function(d) {
+			return d["% of Votes"];
+		});
+		var maxSeats = d3.max(data, function(d) {
+			return d["% of Seats"];
+		});
+		var minMax = (maxVotes > maxSeats) ? maxSeats : maxVotes;
+
+		widthScale.domain([ 0, d3.max(data, function(d) {
+			return d["% of Votes"];
+		}) ]);
+		heightScale.domain([ 0, d3.max(data, function(d) {
+			return d["% of Seats"];
+		}) ]);
+		rScale.domain([0, d3.max(data, function(d) { return d.Seats; })]);
+
+		// Create clipping paths
+		var clipTop = svg.append("clipPath")
+			.attr("id", "clipTop")
+			.append("path")
+			.attr("d", function(d) {
+				var str;
+				str = "M " + widthScale(0) + " " + heightScale(0);
+				str += " L " + widthScale(0) + " " + heightScale(minMax);
+				str += " L " + widthScale(minMax) + " " + heightScale(minMax);
+				str += " Z ";
+				return str;
+			});
+		var clipBottom = svg.append("clipPath")
+			.attr("id", "clipBottom")
+			.append("path")
+			.attr("d", function(d) {
+				var str;
+				str = "M " + widthScale(0) + " " + heightScale(0);
+				str += " L " + widthScale(minMax) + " " + heightScale(0);
+				str += " L " + widthScale(minMax) + " " + heightScale(minMax);
+				str += " Z ";
+				return str;
+			});
+
+		// Draw line where % votes = % seats
+		var proportional = svg.append("line")
+			.attr("x1", widthScale(0))
+			.attr("y1", heightScale(0))
+			.attr("x2", widthScale(minMax))
+			.attr("y2", heightScale(minMax))
+			.attr("class", "propLine")
+			.on("mouseover", function(d) {
+				explainerTop.transition()
+					.duration(500)
+					.attr("y", heightScale(0.6));
+				explainerBottom.transition()
+					.duration(500)
+					.attr("y", heightScale(0.05));
+			})
+			.on("mouseout", function(d) {
+				explainerTop.transition()
+					.duration(500)
+					.attr("y", heightScale(0));
+				explainerBottom.transition()
+					.duration(500)
+					.attr("y", heightScale(0.7));
+			});
+
+		var explainerTop = svg.append("text")
+			.attr("x", widthScale(0.04))
+			.attr("y", heightScale(0))
+			.attr("clip-path", "url(#clipTop)")
+			.attr("class", "explainer")
+			.style("text-anchor", "start")
+			.text("Won proportionally more seats than votes received");
+
+		var explainerBottom = svg.append("text")
+			.attr("x", widthScale(maxVotes))
+			.attr("y", heightScale(0.7))
+			.attr("clip-path", "url(#clipBottom)")
+			.attr("class", "explainer")
+			.style("text-anchor", "end")
+			.text("Won proportionally fewer seats than votes received");
+
+		var groups = svg.selectAll("g")
+						.data(data)
+						.enter()
+						.append("g")
+						.attr("class", "point");
+
+		var dataText = groups.append("text")
+			.attr("x", function(d) {
+				return widthScale(d["% of Votes"]);
+			})
+			.attr("y", function(d) {
+				return heightScale(d["% of Votes"]);
+			})
+			.attr("color", "#000")
+			.attr("class", "dataText")
+			.attr("font-size", function(d) {
+				return (6 + (d.Seats / 2));
+			})
+			.text(function(d) {
+				return d.Party.substr(0, 1);
+			})
+			.on("mouseover", function(d) {
+				
+				var xPos = coordinates[0] + 15;
+				if (widthScale(d["% of Votes"]) > w / 2) {
+					xPos = coordinates[0] - 205;
+				}
+				var yPos = coordinates[1];
+				d3.select("#lopToolTip")
+					.style("left", xPos + "px")
+					.style("top", yPos + "px");
+					
+				d3.select("#lopToolTip")
+					.select("#party").text(d.Party);
+				d3.select("#lopToolTip")
+					.select("#region").text(d.Region);
+				d3.select("#lopToolTip")
+					.select("#votes").text(percentFormat(d["% of Votes"]));
+				d3.select("#lopToolTip")
+					.select("#seatsP").text(percentFormat(d["% of Seats"]));
+				d3.select("#lopToolTip")
+					.select("#seats").text(d.Seats);
+
+				d3.select("#lopToolTip").classed("hidden", false);
+			})
+			.on("mouseout", function(d) {
+				d3.select("#lopToolTip").classed("hidden", true);	
+			});
+
+		dataText.transition()
+			.delay(function(d, i) {
+				return Math.pow(i, 1.5);
+			})
+			.duration(1000)
+			.attr("y", function(d) {
+				return heightScale(d["% of Seats"]);
+			});
+
+		// Legend for total seats won (circle area)
+		svg.append("text")
+			.attr("x", 110)
+			.attr("y", 0)
+			.attr("class", "legendLabel")
+			.text("Total Seats Won");
+
+		var sampleSeats = [0, 10, 25, 75, 150];
+
+		var legendSeats = svg.selectAll(".legendSeats")
+			.data(sampleSeats)
+			.enter()
+			.append("g")
+			.attr("class", "legendSeats")
+			.attr("transform", function(d, i) { 
+				return "translate(30," + (15 + (i * 30)) + ")"; 
+			});
+
+		legendSeats.append("text")
+			.attr("x", 140)
+			.attr("y", 5)
+			.text("C")
+			.style("text-anchor", "middle")
+			.attr("font-size", function(d) {
+				return (6 + (d / 2));
+			})
+			.attr("fill", "grey");
+
+		legendSeats.append("text")
+			.attr("x", 100)
+			.attr("y", 5)
+			.style("text-anchor", "end")
+			.text(function(d) { return d; });
+
+		// Axes
+		svg.append("g")
+			.attr("class", "x axis")
+				.attr("transform", "translate( 0," + h + ")")
+				.call(xAxis)
+			.append("text")
+				.attr("class", "labelText")
+				.attr("x", w)
+				.attr("dy", "-.4em")
+				.style("text-anchor", "end")
+			    .text("% of Votes Received");
+
+		svg.append("g")
+			.attr("class", "y axis")
+				.call(yAxis)
+			.append("text")
+				.attr("class", "labelText")
+			    .attr("transform", "rotate(-90)")
+			    .attr("y", 6)
+			    .attr("dy", ".71em")
+			    .style("text-anchor", "end")
+			    .text("% of Seats Won");
+	});
+
+function type(d) {
+	d["% of Seats"] = +d["% of Seats"] / 100;
+	d["% of Votes"] = +d["% of Votes"] / 100;
+
+	return d;
+}
+
+}
+
+
+</script>
+
