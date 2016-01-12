@@ -196,13 +196,6 @@ function subsdChart() {
 	  .x(function(d) { return x(d.year); })
 	  .y(function(d) { return y(0); });
 
-  function calcLine(yData) {
-  	return d3.svg.line()
-  		//.interpolate("basis")
-	    .x(function(d) { return x(d.year); })
-	    .y(function(d) { return y(d[yData]); });
-  }
-
   var nominalLine = d3.svg.line()
 	  .x(function(d) { return x(d.year); })
 	  .y(function(d) { return y(d.nominal); });
