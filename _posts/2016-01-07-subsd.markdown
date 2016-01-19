@@ -19,7 +19,7 @@ And as it turns out, provincial subsidies are a big deal, bigger than federal su
 <div>
   <select id="substSelect">
     <option value="nominal" selected="selected">Nominal values</option>
-    <option value="inflation">Adjusted for inflation (2015 dollars)</option>
+    <option value="inflation-adjusted">Adjusted for inflation (2015 dollars)</option>
   </select>
 </div>
 <div id="subsdChart"></div>
@@ -34,7 +34,7 @@ Then if you break it down by province:
 <div>
   <select id="subfdSelect">
     <option value="nominal" selected="selected">Nominal values</option>
-    <option value="inflation">Adjusted for inflation (2015 dollars)</option>
+    <option value="inflation-adjusted">Adjusted for inflation (2015 dollars)</option>
   </select>
 </div>
 <div id="subfdChart"></div>
@@ -224,10 +224,8 @@ function subsdChart() {
 	d3.csv("{{ site.baseurl }}/data/2016/01/subsd_can.csv", type, function(error, data) {
 	  if (error) throw error;
 
-	  x.domain([d3.min(data, function(d) { return d.year; }), 
-	  	d3.max(data, function(d) { return d.year; })]);
-	  y.domain([d3.min(data, function(d) { return d.nominal; }), 
-	  	d3.max(data, function(d) { return d["inflation-adjusted"]; })]);
+	  x.domain(d3.extent(data, function(d) { return d.year; }));
+	  y.domain(d3.extent(data, function(d) { return d.nominal; }));
 
 	  var nestData = d3.nest()
 	  	.key(function(d) { return d.government; })
@@ -326,11 +324,16 @@ function subsdChart() {
         d3.select("#subsdTip").classed("hidden", false);
 		}
 
-  d3.select("#substSelect")
-		.on("change", selected);
+	  d3.select("#substSelect")
+			.on("change", selected);
 
 		function selected() {
 			selectedOpt = this.options[this.selectedIndex].value;
+			y.domain(d3.extent(data, function(d) { return d[selectedOpt]; }));
+			svg.select(".y")
+				.transition().duration(1500).ease("sin-in-out")
+				.call(yAxis);
+
 			if (selectedOpt === "nominal") {
 				lines.transition()
 					.duration(1000)
@@ -414,10 +417,8 @@ function subfdChart() {
 	d3.csv("{{ site.baseurl }}/data/2016/01/subsd_fed.csv", type, function(error, data) {
 	  if (error) throw error;
 
-	  x.domain([d3.min(data, function(d) { return d.year; }), 
-	  	d3.max(data, function(d) { return d.year; })]);
-	  y.domain([d3.min(data, function(d) { return d.nominal; }), 
-	  	d3.max(data, function(d) { return d["inflation-adjusted"]; })]);
+	  x.domain(d3.extent(data, function(d) { return d.year; }));
+	  y.domain(d3.extent(data, function(d) { return d.nominal; }));
 
 	  var nestData = d3.nest()
 	  	.key(function(d) { return d.government; })
@@ -516,11 +517,17 @@ function subfdChart() {
         d3.select("#subsdTip").classed("hidden", false);
 		}
 
-  d3.select("#subfdSelect")
-		.on("change", selected);
+	  d3.select("#subfdSelect")
+			.on("change", selected);
 
 		function selected() {
 			selectedOpt = this.options[this.selectedIndex].value;
+			y.domain(d3.extent(data, function(d) { return d[selectedOpt]; }));
+			console.log(y.domain());
+			svg.select(".y")
+				.transition().duration(1500).ease("sin-in-out")
+				.call(yAxis);
+
 			if (selectedOpt === "nominal") {
 				lines.transition()
 					.duration(1000)
