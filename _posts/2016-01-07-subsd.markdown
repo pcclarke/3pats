@@ -36,6 +36,18 @@ Then if you break it down by province:
     <option value="nominal" selected="selected">Nominal values</option>
     <option value="inflation-adjusted">Adjusted for inflation (2015 dollars)</option>
   </select>
+  <select id="subfdSelectProv">
+  	<option value="9">British Columbia</option>
+  	<option value="8">Alberta</option>
+  	<option value="7">Saskatchewan</option>
+  	<option value="6">Manitoba</option>
+  	<option value="5">Ontario</option>
+  	<option value="4" selected="selected">Quebec</option>
+  	<option value="3">New Brunswick</option>
+  	<option value="2">Nova Scotia</option>
+  	<option value="1">Prince Edward Island</option>
+  	<option value="0">Newfoundland and Labrador</option>
+  </select>
 </div>
 <div id="subfdChart"></div>
 
@@ -80,8 +92,7 @@ Sources:
   display: none;
 }
 
-#subsdChart .line, 
-#subfdChart .line {
+#subsdChart .line {
   fill: none;
   stroke-linecap: "round";
   stroke: #000;
@@ -96,8 +107,9 @@ Sources:
 
 }
 
-#subsdChart .selectLine {
-
+#subsdChart .selectLine,
+#subfdChart .selectLine {
+	stroke: #000 !important;
 }
 
 #subsdChart .circle {
@@ -112,8 +124,21 @@ Sources:
 	fill: #FFFFFF;
 }
 
-#subsdChart .selected {
-	fill: red;
+#subsdChart .selected,
+#subfdChart .selected {
+	fill: #000000 !important;
+}
+
+#subfdChart .line {
+  fill: none;
+  stroke-linecap: "round";
+  stroke: #CCCCCC;
+  stroke-width: 1px;
+}
+
+#subfdChart .circle {
+	cursor: pointer;
+	fill: #CCC;
 }
 
 /* Tooltip */
@@ -167,6 +192,17 @@ var body = d3.select("body")
     .on("mousedown", function() {
       coordinates = d3.mouse(this);
     });
+
+var provinces = ["Newfoundland and Labrador",
+	"Prince Edward Island",
+	"Nova Scotia",
+	"New Brunswick",
+	"Quebec",
+	"Ontario",
+	"Manitoba",
+	"Saskatchewan",
+	"Alberta",
+	"British Columbia"];
 
 /*
 *	Total Federal & Provincial subsidies
@@ -438,7 +474,7 @@ function subfdChart() {
       	}
       	return "line";
       })
-      .attr("d", function(d) { return lineStart(d.values); });
+      .attr("d", function(d) { d.line = this; return lineStart(d.values); });
 
 		lines.transition()
 			.duration(1000)
@@ -451,14 +487,8 @@ function subfdChart() {
 			.data(function(d) { return d.values; })
 			.enter()
 			.append("circle")
-			.attr("class", function(d) {
-				if (d.government === "federal") {
-					return "circle fedCircle";
-				} else {
-					return "circle provRect";
-				}
-			})
-			.attr("cx", function(d) {  return x(d.year); })
+			.attr("class", "circle")
+			.attr("cx", function(d) { d.circle = this; return x(d.year); })
 			.attr("cy", function(d) { return y(1); })
 			.attr("r", 2)
 			.on("mouseover", function(d) { 
@@ -478,6 +508,17 @@ function subfdChart() {
 	      .attr("class", "x axis")
 	      .attr("transform", "translate(0," + height + ")")
 	      .call(xAxis);
+
+	  d3.select(nestData[4].line).classed("selectLine", true);
+		nestData[4].line.parentNode.parentNode.appendChild(nestData[4].line.parentNode);
+		data.forEach(function(d) {
+			if (d.government === "Quebec") {
+				d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
+				d3.select(d.circle).classed("selected", true);
+			} else {
+				d3.select(d.circle).classed("selected", false);
+			}
+		});
 
 	  var yAxisLine = svg.append("g")
 	      .attr("class", "y axis")
@@ -515,6 +556,7 @@ function subfdChart() {
           .select("#tipText2").text(d.source);
 
         d3.select("#subsdTip").classed("hidden", false);
+        
 		}
 
 	  d3.select("#subfdSelect")
@@ -523,7 +565,6 @@ function subfdChart() {
 		function selected() {
 			selectedOpt = this.options[this.selectedIndex].value;
 			y.domain(d3.extent(data, function(d) { return d[selectedOpt]; }));
-			console.log(y.domain());
 			svg.select(".y")
 				.transition().duration(1500).ease("sin-in-out")
 				.call(yAxis);
@@ -544,6 +585,28 @@ function subfdChart() {
 					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
 			}
 		}
+
+	  d3.select("#subfdSelectProv")
+			.on("change", selectProv);
+
+		function selectProv() {
+			selectedOpt = +(this.options[this.selectedIndex].value);
+
+			nestData.forEach(function(d) {
+				d3.select(d.line).classed("selectLine", false);	
+			});
+		  d3.select(nestData[selectedOpt].line).classed("selectLine", true);
+			nestData[selectedOpt].line.parentNode.parentNode.appendChild(nestData[selectedOpt].line.parentNode);
+			data.forEach(function(d) {
+				console.log(d.circle.parentNode);
+				if (d.government === provinces[selectedOpt]) {
+					d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
+					d3.select(d.circle).classed("selected", true);
+				} else {
+					d3.select(d.circle).classed("selected", false);
+				}
+			});
+		}			
 	});
 
 	function type(d) {
