@@ -231,7 +231,7 @@ function subsdChart() {
 
 	var parseDate = d3.time.format("%Y").parse;
 
-	var format = d3.format(",.0f");
+	var format = d3.format(",.1f");
 
 	var dataColours = ["#FF0000", "#808080"];
 
@@ -342,7 +342,7 @@ function subsdChart() {
 	      .attr("y", 6)
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .text("Million dollars");
+	      .text("Billion dollars");
 
 		function showTooltip(d, circle) {
 			d3.select(selectedCircle).classed("selectCircle", false);
@@ -355,11 +355,15 @@ function subsdChart() {
       if (selectedOpt === "nominal") {
       	d3.select("#subsdTip")
         	.select(".tipText1")
-        	.text("$" + format(d.nominal) + " million dollars");
+        	.text("$" + (selectedData.nominal > 1) ?
+        		format(selectedData.nominal) + " billion dollars" :
+        		format(selectedData.nominal * 100) + " million dollars");
       } else {
       	d3.select("#subsdTip")
         	.select(".tipText1")
-        	.text("$" + format(d["inflation-adjusted"]) + " million dollars");
+        	.text("$" + (selectedData["inflation-adjusted"]) ?
+        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+        		format(selectedData["inflation-adjusted"] * 100) + " million dollars");
       }
       d3.select("#subsdTip")
         .select(".tipText2").text(d.source);
@@ -386,7 +390,10 @@ function subsdChart() {
 				if (selectedData) {
 					d3.select("#subsdTip")
 	        	.select(".tipText1")
-	        	.text("$" + format(selectedData.nominal) + " million dollars");
+	        	.text("$" + 
+	        		(selectedData.nominal > 1) ?
+	        		format(selectedData.nominal) + " billion dollars" :
+	        		format(selectedData.nominal * 100) + " million dollars");
 				}
 			} else {
 				lines.transition()
@@ -399,7 +406,10 @@ function subsdChart() {
 				if (selectedData) {
 	      	d3.select("#subsdTip")
 	        	.select(".tipText1")
-	        	.text("$" + format(selectedData["inflation-adjusted"]) + " million dollars");
+	        	.text("$" + 
+	        		(selectedData["inflation-adjusted"]) ?
+	        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+	        		format(selectedData["inflation-adjusted"] * 100) + " million dollars");
 				}
 			}
 		}
@@ -407,8 +417,8 @@ function subsdChart() {
 
 	function type(d) {
 		d.year = parseDate(d.year);
-		d.nominal = +d.nominal;
-		d["inflation-adjusted"] = +d["inflation-adjusted"];
+		d.nominal = (+d.nominal) / 100;
+		d["inflation-adjusted"] = (+d["inflation-adjusted"]) / 100;
 
     return d;
 	}
@@ -429,7 +439,7 @@ function subfdChart() {
 
 	var parseDate = d3.time.format("%Y").parse;
 
-	var format = d3.format(",.0f");
+	var format = d3.format(",.1f");
 
 	var dataColours = ["#FF0000", "#808080"];
 
@@ -545,7 +555,7 @@ function subfdChart() {
 	      .attr("y", 6)
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .text("Million dollars");
+	      .text("Billion dollars");
 
 		function showTooltip(d, circle) {
 			d3.select(selectedCircle).classed("selectCircle", false);
@@ -558,11 +568,17 @@ function subfdChart() {
       if (selectedOpt === "nominal") {
       	d3.select("#subfdTip")
         	.select(".tipText1")
-        	.text("$" + format(d.nominal) + " million dollars");
+        	.text("$" + 
+        		(d.nominal > 1) ?
+						format(d.nominal) + " billion dollars" :
+        		format(d.nominal * 100) + " million dollars");
       } else {
       	d3.select("#subfdTip")
         	.select(".tipText1")
-        	.text("$" + d["inflation-adjusted"] + " million dollars");
+        	.text("$" + 
+        		(d["inflation-adjusted"] > 1) ?
+        		format(d["inflation-adjusted"]) + " billion dollars" :
+        		format(d["inflation-adjusted"] * 100) + " million dollars");
       }
       d3.select("#subfdTip")
         .select(".tipText2").text(d.source);
@@ -589,7 +605,10 @@ function subfdChart() {
 				if (selectedData) {
 					d3.select("#subfdTip")
 	        	.select(".tipText1")
-	        	.text("$" + format(selectedData.nominal) + " million dollars");
+	        	.text("$" + 
+	        		(selectedData.nominal > 1) ?
+	        		format(selectedData.nominal) + " billion dollars" :
+	        		format(selectedData.nominal * 100) + " million dollars");
 				}
 			} else {
 				lines.transition()
@@ -602,7 +621,10 @@ function subfdChart() {
 				if (selectedData) {
 	      	d3.select("#subfdTip")
 	        	.select(".tipText1")
-	        	.text("$" + format(selectedData["inflation-adjusted"]) + " million dollars");
+	        	.text("$" + 
+	        		(selectedData["inflation-adjusted"] > 1) ?
+	        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+	        		format(selectedData["inflation-adjusted"] * 100) + " million dollars");
 				}
 			}
 		}
@@ -631,8 +653,8 @@ function subfdChart() {
 
 	function type(d) {
 		d.year = parseDate(d.year);
-		d.nominal = +d.nominal;
-		d["inflation-adjusted"] = +d["inflation-adjusted"];
+		d.nominal = (+d.nominal) / 100;
+		d["inflation-adjusted"] = (+d["inflation-adjusted"]) / 100;
 
     return d;
 	}
