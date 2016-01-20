@@ -58,6 +58,10 @@ Then if you break it down by province:
 
 * * *
 
+...which seems to be distributed by each provinces' population, until you look at how much each provinces spends itself...
+
+* * *
+
 <p class="subsdTitle">Provincial government subsidies by province, 1961-2009</p>
 <div>
   <select id="subpvSelect">
@@ -85,6 +89,8 @@ Then if you break it down by province:
 </div>
 
 * * *
+
+And Quebec is leading the way on subsidies! Unfortunately, that probably means that Bombardier is more the norm than some weird exception. But without the actual figures, it's hard to say. What's clearer, is that sadly the federal government is merely jumping on the bandwagon of giving money to Quebec corporations.
 
 Sources:
 
