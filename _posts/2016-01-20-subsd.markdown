@@ -611,7 +611,7 @@ function subfdChart() {
 			selectedData = d;
 
 			d3.select("#subfdTip")
-        .select(".tipTitle").text(d.government + " federal subsidies – " + d.year.getFullYear());
+        .select(".tipTitle").text(d.government + " provincial subsidies – " + d.year.getFullYear());
       if (selectedOpt === "nominal") {
       	console.log((d.nominal > 1) ?
 						format(d.nominal) + " billion dollars" :
