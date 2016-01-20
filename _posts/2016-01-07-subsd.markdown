@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Why aren't I getting subsidized?"
-date:   2016-01-18 12:00:00
+date:   2016-01-20 12:00:00
 ---
 
 Following in the path of far too many governments before them, the Liberal government is considering [giving more aid to Bombardier](http://www.bloomberg.com/news/articles/2016-01-04/bombardier-an-anchor-for-canada-trudeau-briefing-memo-says). This is virtually guaranteed to be a terrible idea, because Bombadier will almost certainly come back for more money. But is that so bad? Maybe it's just the cost of placating Quebec. Unfortunately it's difficult to even judge that, because we have no idea how much money has been spent on Bombardier. The best I could find is a [$1.1 billion total since 1961](http://www.huffingtonpost.ca/mark-milke/bombardier-corporate-welfare-trap_b_4705751.html), which doesn't say how much was spent year to year, or how much provincial governments have given to Bombardier.
@@ -10,11 +10,6 @@ And as it turns out, provincial subsidies are a big deal, bigger than federal su
 
 * * *
 
-<div id="subsdTip" class="hidden">
-  <p id="tipTop"><span id="tipTitle"></span></p>
-  <p class="tipInfo"><span id="tipText1"></span></p>
-  <p class="tipInfo"><span id="tipText2"></span></p>
-</div>
 <p class="subsdTitle">Total Federal and provincial government subsidies, 1961-2009</p>
 <div>
   <select id="substSelect">
@@ -23,6 +18,11 @@ And as it turns out, provincial subsidies are a big deal, bigger than federal su
   </select>
 </div>
 <div id="subsdChart"></div>
+<div id="subsdTip">
+  <p class="tipTop"><span class="tipTitle"></span></p>
+  <p class="tipInfo"><span class="tipText1"></span></p>
+  <p class="tipInfo"><span class="tipText2"></span></p>
+</div>
 
 * * *
 
@@ -50,6 +50,11 @@ Then if you break it down by province:
   </select>
 </div>
 <div id="subfdChart"></div>
+<div id="subfdTip">
+  <p class="tipTop"><span class="tipTitle"></span></p>
+  <p class="tipInfo"><span class="tipText1"></span></p>
+  <p class="tipInfo"><span class="tipText2"></span></p>
+</div>
 
 * * *
 
@@ -150,7 +155,8 @@ Sources:
 
 #subsdChart .selectCircle,
 #subfdChart .selectCircle {
-	fill: red !important;
+	stroke-width: 5px !important;
+	stroke: #000;
 }
 
 /* Tooltip */
@@ -158,30 +164,24 @@ Sources:
   display: none;
 }
 
-#subsdTip {
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
-  position: absolute;
-  width: 225px;
-  height: auto;
-  padding: 10px;
-  pointer-events: none;
+#subsdTip,
+#subfdTip {
+	display: block;
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
 }
 
-#subsdTip strong {
+#subsdTip .tipTop,
+#subfdTip .tipTop {
+  font-size: 18px;
   font-weight: bold;
+  margin-bottom: 5px !important;
 }
 
-#subsdTip #tipTop {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px !important;
-  text-transform: capitalize;
-}
-
-#subsdTip .tipInfo {
+#subsdTip .tipInfo,
+#subfdTip .tipInfo {
   font-size: 12px;
   margin: 0;
 }
@@ -231,7 +231,7 @@ function subsdChart() {
 
 	var parseDate = d3.time.format("%Y").parse;
 
-	var format = d3.format(",.0");
+	var format = d3.format(",.0f");
 
 	var dataColours = ["#FF0000", "#808080"];
 
@@ -250,6 +250,7 @@ function subsdChart() {
 	    .orient("left");
 
 	var selectedOpt = "nominal";
+	var selectedCircle, selectedData;
 
 	var lineStart = d3.svg.line()
 	  .x(function(d) { return x(d.year); })
@@ -317,12 +318,10 @@ function subsdChart() {
 			.attr("cy", function(d) { return y(1); })
 			.attr("r", 2)
 			.on("mouseover", function(d) { 
-				showTooltip(d);
-				d3.select(this).classed("selectCircle", true);
+				showTooltip(d, this);
 			})
-			.on("mouseout", function(d) { 
-				d3.select("#subsdTip").classed("hidden", true); 
-				d3.select(this).classed("selectCircle", false);
+			.on("click", function(d) { 
+				showTooltip(d, this);
 			});
 
 		circles.transition()
@@ -345,31 +344,25 @@ function subsdChart() {
 	      .style("text-anchor", "end")
 	      .text("Million dollars");
 
-		function showTooltip(d) {
-			var xPos = coordinates[0] + 15;
-        if (x(d.year) > width / 2) {
-          xPos = coordinates[0] - 250;
-        }
-        var yPos = coordinates[1];
-        d3.select("#subsdTip")
-          .style("left", xPos + "px")
-          .style("top", yPos + "px");
+		function showTooltip(d, circle) {
+			d3.select(selectedCircle).classed("selectCircle", false);
+			selectedCircle = circle;
+			d3.select(circle).classed("selectCircle", true);
+			selectedData = d;
 
-				d3.select("#subsdTip")
-          .select("#tipTitle").text(d.government + " subsidies – " + d.year.getFullYear());
-        if (selectedOpt === "nominal") {
-        	d3.select("#subsdTip")
-          	.select("#tipText1")
-          	.text("$" + format(d.nominal) + " million dollars");
-        } else {
-        	d3.select("#subsdTip")
-          	.select("#tipText1")
-          	.text("$" + d["inflation-adjusted"] + " million dollars");
-        }
-        d3.select("#subsdTip")
-          .select("#tipText2").text(d.source);
-
-        d3.select("#subsdTip").classed("hidden", false);
+			d3.select("#subsdTip")
+        .select(".tipTitle").text(d.government + " subsidies – " + d.year.getFullYear());
+      if (selectedOpt === "nominal") {
+      	d3.select("#subsdTip")
+        	.select(".tipText1")
+        	.text("$" + format(d.nominal) + " million dollars");
+      } else {
+      	d3.select("#subsdTip")
+        	.select(".tipText1")
+        	.text("$" + format(d["inflation-adjusted"]) + " million dollars");
+      }
+      d3.select("#subsdTip")
+        .select(".tipText2").text(d.source);
 		}
 
 	  d3.select("#substSelect")
@@ -389,6 +382,12 @@ function subsdChart() {
 				circles.transition()
 					.duration(1000)
 					.attr("cy", function(d) { return y(d.nominal); });
+
+				if (selectedData) {
+					d3.select("#subsdTip")
+	        	.select(".tipText1")
+	        	.text("$" + format(selectedData.nominal) + " million dollars");
+				}
 			} else {
 				lines.transition()
 					.duration(1000)
@@ -396,6 +395,12 @@ function subsdChart() {
 				circles.transition()
 					.duration(1000)
 					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
+
+				if (selectedData) {
+	      	d3.select("#subsdTip")
+	        	.select(".tipText1")
+	        	.text("$" + format(selectedData["inflation-adjusted"]) + " million dollars");
+				}
 			}
 		}
 	});
@@ -424,7 +429,7 @@ function subfdChart() {
 
 	var parseDate = d3.time.format("%Y").parse;
 
-	var format = d3.format(",.0");
+	var format = d3.format(",.0f");
 
 	var dataColours = ["#FF0000", "#808080"];
 
@@ -443,6 +448,7 @@ function subfdChart() {
 	    .orient("left");
 
 	var selectedOpt = "nominal";
+	var selectedCircle, selectedData;
 
 	var lineStart = d3.svg.line()
 	  .x(function(d) { return x(d.year); })
@@ -504,12 +510,10 @@ function subfdChart() {
 			.attr("cy", function(d) { return y(1); })
 			.attr("r", 2)
 			.on("mouseover", function(d) { 
-				showTooltip(d);
-				d3.select(this).classed("selectCircle", true);
+				showTooltip(d, this);
 			})
-			.on("mouseout", function(d) { 
-				d3.select("#subsdTip").classed("hidden", true); 
-				d3.select(this).classed("selectCircle", false);
+			.on("click", function(d) { 
+				showTooltip(d, this);
 			});
 
 		circles.transition()
@@ -543,32 +547,25 @@ function subfdChart() {
 	      .style("text-anchor", "end")
 	      .text("Million dollars");
 
-		function showTooltip(d) {
-			var xPos = coordinates[0] + 15;
-        if (x(d.year) > width / 2) {
-          xPos = coordinates[0] - 250;
-        }
-        var yPos = coordinates[1];
-        d3.select("#subsdTip")
-          .style("left", xPos + "px")
-          .style("top", yPos + "px");
+		function showTooltip(d, circle) {
+			d3.select(selectedCircle).classed("selectCircle", false);
+			selectedCircle = circle;
+			d3.select(circle).classed("selectCircle", true);
+			selectedData = d;
 
-				d3.select("#subsdTip")
-          .select("#tipTitle").text(d.government + " federal subsidies – " + d.year.getFullYear());
-        if (selectedOpt === "nominal") {
-        	d3.select("#subsdTip")
-          	.select("#tipText1")
-          	.text("$" + format(d.nominal) + " million dollars");
-        } else {
-        	d3.select("#subsdTip")
-          	.select("#tipText1")
-          	.text("$" + d["inflation-adjusted"] + " million dollars");
-        }
-        d3.select("#subsdTip")
-          .select("#tipText2").text(d.source);
-
-        d3.select("#subsdTip").classed("hidden", false);
-        
+			d3.select("#subfdTip")
+        .select(".tipTitle").text(d.government + " federal subsidies – " + d.year.getFullYear());
+      if (selectedOpt === "nominal") {
+      	d3.select("#subfdTip")
+        	.select(".tipText1")
+        	.text("$" + format(d.nominal) + " million dollars");
+      } else {
+      	d3.select("#subfdTip")
+        	.select(".tipText1")
+        	.text("$" + d["inflation-adjusted"] + " million dollars");
+      }
+      d3.select("#subfdTip")
+        .select(".tipText2").text(d.source);
 		}
 
 	  d3.select("#subfdSelect")
@@ -588,6 +585,12 @@ function subfdChart() {
 				circles.transition()
 					.duration(1000)
 					.attr("cy", function(d) { return y(d.nominal); });
+
+				if (selectedData) {
+					d3.select("#subfdTip")
+	        	.select(".tipText1")
+	        	.text("$" + format(selectedData.nominal) + " million dollars");
+				}
 			} else {
 				lines.transition()
 					.duration(1000)
@@ -595,6 +598,12 @@ function subfdChart() {
 				circles.transition()
 					.duration(1000)
 					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
+
+				if (selectedData) {
+	      	d3.select("#subfdTip")
+	        	.select(".tipText1")
+	        	.text("$" + format(selectedData["inflation-adjusted"]) + " million dollars");
+				}
 			}
 		}
 
@@ -610,7 +619,6 @@ function subfdChart() {
 		  d3.select(nestData[selectedOpt].line).classed("selectLine", true);
 			nestData[selectedOpt].line.parentNode.parentNode.appendChild(nestData[selectedOpt].line.parentNode);
 			data.forEach(function(d) {
-				console.log(d.circle.parentNode);
 				if (d.government === provinces[selectedOpt]) {
 					d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
 					d3.select(d.circle).classed("selected", true);
