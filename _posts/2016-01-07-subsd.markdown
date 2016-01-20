@@ -97,6 +97,7 @@ Sources:
   stroke-linecap: "round";
   stroke: #000;
   stroke-width: 1px;
+  transition: stroke 0.5s ease;
 }
 
 #subsdChart .fedLine {
@@ -110,10 +111,12 @@ Sources:
 #subsdChart .selectLine,
 #subfdChart .selectLine {
 	stroke: #000 !important;
+	transition: stroke 0.5s ease;
 }
 
 #subsdChart .circle {
 	cursor: pointer;
+	transition: fill 0.5s ease;
 }
 
 #subsdChart .fedCircle {
@@ -122,11 +125,13 @@ Sources:
 
 #subsdChart .provRect {
 	fill: #FFFFFF;
+	stroke: #000000;
 }
 
 #subsdChart .selected,
 #subfdChart .selected {
 	fill: #000000 !important;
+	transition: fill 0.5s ease;
 }
 
 #subfdChart .line {
@@ -134,11 +139,18 @@ Sources:
   stroke-linecap: "round";
   stroke: #CCCCCC;
   stroke-width: 1px;
+  transition: stroke 0.5s ease;
 }
 
 #subfdChart .circle {
 	cursor: pointer;
 	fill: #CCC;
+	transition: fill 0.5s ease;
+}
+
+#subsdChart .selectCircle,
+#subfdChart .selectCircle {
+	fill: red !important;
 }
 
 /* Tooltip */
@@ -306,11 +318,11 @@ function subsdChart() {
 			.attr("r", 2)
 			.on("mouseover", function(d) { 
 				showTooltip(d);
-				d3.select(this).classed("selected", true);
+				d3.select(this).classed("selectCircle", true);
 			})
 			.on("mouseout", function(d) { 
 				d3.select("#subsdTip").classed("hidden", true); 
-				d3.select(this).classed("selected", false);
+				d3.select(this).classed("selectCircle", false);
 			});
 
 		circles.transition()
@@ -493,11 +505,11 @@ function subfdChart() {
 			.attr("r", 2)
 			.on("mouseover", function(d) { 
 				showTooltip(d);
-				d3.select(this).classed("selected", true);
+				d3.select(this).classed("selectCircle", true);
 			})
 			.on("mouseout", function(d) { 
 				d3.select("#subsdTip").classed("hidden", true); 
-				d3.select(this).classed("selected", false);
+				d3.select(this).classed("selectCircle", false);
 			});
 
 		circles.transition()
@@ -542,7 +554,7 @@ function subfdChart() {
           .style("top", yPos + "px");
 
 				d3.select("#subsdTip")
-          .select("#tipTitle").text(d.government + " subsidies – " + d.year.getFullYear());
+          .select("#tipTitle").text(d.government + " federal subsidies – " + d.year.getFullYear());
         if (selectedOpt === "nominal") {
         	d3.select("#subsdTip")
           	.select("#tipText1")
