@@ -1,0 +1,954 @@
+---
+layout: post
+title:  "Why aren't I getting subsidized?"
+date:   2016-01-20 12:00:00
+---
+
+Following in the path of far too many governments before them, the Liberal government is considering [giving more aid to Bombardier](http://www.bloomberg.com/news/articles/2016-01-04/bombardier-an-anchor-for-canada-trudeau-briefing-memo-says). This is virtually guaranteed to be a terrible idea, because Bombadier will almost certainly come back for more money. But is that so bad? Maybe it's just the cost of placating Quebec. Unfortunately it's difficult to even judge that, because we have no idea how much money has been spent on Bombardier. The best I could find is a [$1.1 billion total since 1961](http://www.huffingtonpost.ca/mark-milke/bombardier-corporate-welfare-trap_b_4705751.html), which doesn't say how much was spent year to year, or how much provincial governments have given to Bombardier.
+
+And as it turns out, provincial subsidies are a big deal, bigger than federal subsidies by a wide margin:
+
+* * *
+
+<p class="subsdTitle">Total Federal and provincial government subsidies, 1961-2009</p>
+<div>
+  <select id="substSelect">
+    <option value="nominal" selected="selected">Nominal values</option>
+    <option value="inflation-adjusted">Adjusted for inflation (2015 dollars)</option>
+  </select>
+</div>
+<div id="subsdChart"></div>
+<div id="subsdTip">
+  <p class="tipTop"><span class="tipTitle"></span></p>
+  <p class="tipInfo"><span class="tipText1"></span></p>
+  <p class="tipInfo"><span class="tipText2"></span></p>
+</div>
+
+* * *
+
+Then if you break it down by province:
+
+* * *
+
+<p class="subsdTitle">Federal government subsidies by province, 1961-2009</p>
+<div>
+  <select id="subfdSelect">
+    <option value="nominal" selected="selected">Nominal values</option>
+    <option value="inflation-adjusted">Adjusted for inflation (2015 dollars)</option>
+  </select>
+  <select id="subfdSelectProv">
+  	<option value="9">British Columbia</option>
+  	<option value="8">Alberta</option>
+  	<option value="7">Saskatchewan</option>
+  	<option value="6">Manitoba</option>
+  	<option value="5">Ontario</option>
+  	<option value="4" selected="selected">Quebec</option>
+  	<option value="3">New Brunswick</option>
+  	<option value="2">Nova Scotia</option>
+  	<option value="1">Prince Edward Island</option>
+  	<option value="0">Newfoundland and Labrador</option>
+  </select>
+</div>
+<div id="subfdChart"></div>
+<div id="subfdTip">
+  <p class="tipTop"><span class="tipTitle"></span></p>
+  <p class="tipInfo"><span class="tipText1"></span></p>
+  <p class="tipInfo"><span class="tipText2"></span></p>
+</div>
+
+* * *
+
+...which seems to be distributed by each provinces' population, until you look at how much each provinces spends itself...
+
+* * *
+
+<p class="subsdTitle">Provincial government subsidies by province, 1961-2009</p>
+<div>
+  <select id="subpvSelect">
+    <option value="nominal" selected="selected">Nominal values</option>
+    <option value="inflation-adjusted">Adjusted for inflation (2015 dollars)</option>
+  </select>
+  <select id="subpvSelectProv">
+  	<option value="9">British Columbia</option>
+  	<option value="8">Alberta</option>
+  	<option value="7">Saskatchewan</option>
+  	<option value="6">Manitoba</option>
+  	<option value="5">Ontario</option>
+  	<option value="4" selected="selected">Quebec</option>
+  	<option value="3">New Brunswick</option>
+  	<option value="2">Nova Scotia</option>
+  	<option value="1">Prince Edward Island</option>
+  	<option value="0">Newfoundland and Labrador</option>
+  </select>
+</div>
+<div id="subpvChart"></div>
+<div id="subpvTip">
+  <p class="tipTop"><span class="tipTitle"></span></p>
+  <p class="tipInfo"><span class="tipText1"></span></p>
+  <p class="tipInfo"><span class="tipText2"></span></p>
+</div>
+
+* * *
+
+And Quebec is leading the way on subsidies! Unfortunately, that probably means that Bombardier is more the norm than some weird exception. But without the actual figures, it's hard to say. What's clearer, is that sadly the federal government is merely jumping on the bandwagon of giving money to Quebec corporations.
+
+Sources:
+
+- [Statistics Canada: CANSIM Table 384-0032]()
+- [Statistics Canada: CANSIM Table 384-0010]()
+- [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
+
+
+<style>
+
+#subsdChart text,
+#subfdChart text,
+#subpvChart text {
+  font-size: 10px;
+}
+
+#subsdChart .axis path,
+#subsdChart .axis line,
+#subfdChart .axis path,
+#subfdChart .axis line,
+#subpvChart .axis path,
+#subpvChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.subsdTitle {
+	font-size: 1.5em;
+	margin-bottom: 0;
+  text-align: center;
+}
+
+.subsdSubTitle {
+	font-style: italic;
+	text-align: center;
+}
+
+#subsdChart .x.axis path,
+#subfdChart .x.axis path,
+#subpvChart .x.axis path {
+  display: none;
+}
+
+#subsdChart .line {
+  fill: none;
+  stroke-linecap: "round";
+  stroke: #000;
+  stroke-width: 1px;
+  transition: stroke 0.5s ease;
+}
+
+#subsdChart .fedLine {
+	opacity: 0.5;
+}
+
+#subsdChart .provLine {
+
+}
+
+#subsdChart .selectLine,
+#subfdChart .selectLine,
+#subpvChart .selectLine {
+	stroke: #000 !important;
+	transition: stroke 0.5s ease;
+}
+
+#subsdChart .circle {
+	cursor: pointer;
+	transition: fill 0.5s ease;
+}
+
+#subsdChart .fedCircle {
+	fill: #000000;
+}
+
+#subsdChart .provRect {
+	fill: #FFFFFF;
+	stroke: #000000;
+}
+
+#subsdChart .selected,
+#subfdChart .selected,
+#subpvChart .selected {
+	fill: #000000 !important;
+	transition: fill 0.5s ease;
+}
+
+#subfdChart .line,
+#subpvChart .line {
+  fill: none;
+  stroke-linecap: "round";
+  stroke: #CCCCCC;
+  stroke-width: 1px;
+  transition: stroke 0.5s ease;
+}
+
+#subfdChart .circle,
+#subpvChart .circle {
+	cursor: pointer;
+	fill: #CCC;
+	transition: fill 0.5s ease;
+}
+
+#subsdChart .selectCircle,
+#subfdChart .selectCircle,
+#subpvChart .selectCircle {
+	stroke-width: 5px !important;
+	stroke: #000;
+}
+
+/* Tooltip */
+.hidden {
+  display: none;
+}
+
+#subsdTip,
+#subfdTip,
+#subpvTip {
+	display: block;
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#subsdTip .tipTop,
+#subfdTip .tipTop,
+#subpvTip .tipTop {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+}
+
+#subsdTip .tipInfo,
+#subfdTip .tipInfo,
+#subpvTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+
+<script>
+
+var coordinates = [0, 0];
+var body = d3.select("body")
+    .on("mousemove", function() {
+      coordinates = d3.mouse(this);
+    })
+    .on("mousedown", function() {
+      coordinates = d3.mouse(this);
+    });
+
+var provinces = ["Newfoundland and Labrador",
+	"Prince Edward Island",
+	"Nova Scotia",
+	"New Brunswick",
+	"Quebec",
+	"Ontario",
+	"Manitoba",
+	"Saskatchewan",
+	"Alberta",
+	"British Columbia"];
+
+/*
+*	Total Federal & Provincial subsidies
+*/
+
+subsdChart();
+subfdChart();
+subpvChart();
+
+function subsdChart() {
+
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 740 - margin.left - margin.right,
+	    height = 300 - margin.top - margin.bottom;
+
+	var parseDate = d3.time.format("%Y").parse;
+
+	var format = d3.format(",.1f");
+
+	var dataColours = ["#FF0000", "#808080"];
+
+	var x = d3.time.scale()
+	    .range([0, width]);
+
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left");
+
+	var selectedOpt = "nominal";
+	var selectedCircle, selectedData;
+
+	var lineStart = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(0); });
+
+  var nominalLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d.nominal); });
+
+  var infLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d["inflation-adjusted"]); });
+
+	var svg = d3.select("#subsdChart").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	d3.csv("{{ site.baseurl }}/data/2016/01/subsd_can.csv", type, function(error, data) {
+	  if (error) throw error;
+
+	  x.domain(d3.extent(data, function(d) { return d.year; }));
+	  y.domain(d3.extent(data, function(d) { return d.nominal; }));
+
+	  var nestData = d3.nest()
+	  	.key(function(d) { return d.government; })
+	  	.entries(data);
+
+	  var subsd = svg.selectAll(".subsd")
+	      .data(nestData)
+	    .enter().append("g")
+	      .attr("class", "subsd");
+
+    var lines = subsd.append("path")
+      .attr("class", function(d) {
+      	if (d.key === "federal") {
+      		return "line fedLine";
+      	} else {
+      		return "line provLine";
+      	}
+      	return "line";
+      })
+      .attr("d", function(d) { return lineStart(d.values); });
+
+		lines.transition()
+			.duration(1000)
+			.attr("d", function(d) { return nominalLine(d.values); });
+
+		var circleGroup = subsd.append("g")
+			.attr("class", "circle-group");
+
+		var circles = circleGroup.selectAll("circles")
+			.data(function(d) { return d.values; })
+			.enter()
+			.append("circle")
+			.attr("class", function(d) {
+				if (d.government === "federal") {
+					return "circle fedCircle";
+				} else {
+					return "circle provRect";
+				}
+			})
+			.attr("cx", function(d) {  return x(d.year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { 
+				showTooltip(d, this);
+			})
+			.on("click", function(d) { 
+				showTooltip(d, this);
+			});
+
+		circles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.nominal); });
+
+	  svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	  var yAxisLine = svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis);
+
+	  var yAxisLabel = yAxisLine.append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Billion dollars");
+
+		function showTooltip(d, circle) {
+			d3.select(selectedCircle).classed("selectCircle", false);
+			selectedCircle = circle;
+			d3.select(circle).classed("selectCircle", true);
+			selectedData = d;
+
+			d3.select("#subsdTip")
+        .select(".tipTitle").text(d.government + " subsidies – " + d.year.getFullYear());
+      if (selectedOpt === "nominal") {
+      	d3.select("#subsdTip")
+        	.select(".tipText1")
+        	.text("$" + ((selectedData.nominal > 1) ?
+        		format(selectedData.nominal) + " billion dollars" :
+        		format(selectedData.nominal * 100) + " million dollars"));
+      } else {
+      	d3.select("#subsdTip")
+        	.select(".tipText1")
+        	.text("$" + ((selectedData["inflation-adjusted"]) ?
+        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+        		format(selectedData["inflation-adjusted"] * 100) + " million dollars"));
+      }
+      d3.select("#subsdTip")
+        .select(".tipText2").text(d.source);
+		}
+
+	  d3.select("#substSelect")
+			.on("change", selected);
+
+		function selected() {
+			selectedOpt = this.options[this.selectedIndex].value;
+			y.domain(d3.extent(data, function(d) { return d[selectedOpt]; }));
+			svg.select(".y")
+				.transition().duration(1500).ease("sin-in-out")
+				.call(yAxis);
+
+			if (selectedOpt === "nominal") {
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return nominalLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d.nominal); });
+
+				if (selectedData) {
+					d3.select("#subsdTip")
+	        	.select(".tipText1")
+	        	.text("$" + 
+	        		((selectedData.nominal > 1) ?
+	        		format(selectedData.nominal) + " billion dollars" :
+	        		format(selectedData.nominal * 100) + " million dollars"));
+				}
+			} else {
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return infLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
+
+				if (selectedData) {
+	      	d3.select("#subsdTip")
+	        	.select(".tipText1")
+	        	.text("$" + 
+	        		((selectedData["inflation-adjusted"]) ?
+	        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+	        		format(selectedData["inflation-adjusted"] * 100) + " million dollars"));
+				}
+			}
+		}
+	});
+
+	function type(d) {
+		d.year = parseDate(d.year);
+		d.nominal = (+d.nominal) / 100;
+		d["inflation-adjusted"] = (+d["inflation-adjusted"]) / 100;
+
+    return d;
+	}
+
+}
+
+/*
+*
+* Provincial subsidies by province
+*
+*/
+
+function subfdChart() {
+
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 740 - margin.left - margin.right,
+	    height = 300 - margin.top - margin.bottom;
+
+	var parseDate = d3.time.format("%Y").parse;
+
+	var format = d3.format(",.1f");
+
+	var dataColours = ["#FF0000", "#808080"];
+
+	var x = d3.time.scale()
+	    .range([0, width]);
+
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left");
+
+	var selectedOpt = "nominal";
+	var selectedCircle, selectedData;
+
+	var lineStart = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(0); });
+
+  var nominalLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d.nominal); });
+
+  var infLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d["inflation-adjusted"]); });
+
+	var svg = d3.select("#subfdChart").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	d3.csv("{{ site.baseurl }}/data/2016/01/subsd_fed.csv", type, function(error, data) {
+	  if (error) throw error;
+
+	  x.domain(d3.extent(data, function(d) { return d.year; }));
+	  y.domain(d3.extent(data, function(d) { return d.nominal; }));
+
+	  var nestData = d3.nest()
+	  	.key(function(d) { return d.government; })
+	  	.entries(data);
+
+	  var subsd = svg.selectAll(".subsd")
+	      .data(nestData)
+	    .enter().append("g")
+	      .attr("class", "subsd");
+
+    var lines = subsd.append("path")
+      .attr("class", function(d) {
+      	if (d.key === "federal") {
+      		return "line fedLine";
+      	} else {
+      		return "line provLine";
+      	}
+      	return "line";
+      })
+      .attr("d", function(d) { d.line = this; return lineStart(d.values); });
+
+		lines.transition()
+			.duration(1000)
+			.attr("d", function(d) { return nominalLine(d.values); });
+
+		var circleGroup = subsd.append("g")
+			.attr("class", "circle-group");
+
+		var circles = circleGroup.selectAll("circles")
+			.data(function(d) { return d.values; })
+			.enter()
+			.append("circle")
+			.attr("class", "circle")
+			.attr("cx", function(d) { d.circle = this; return x(d.year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { 
+				showTooltip(d, this);
+			})
+			.on("click", function(d) { 
+				showTooltip(d, this);
+			});
+
+		circles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.nominal); });
+
+	  svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	  d3.select(nestData[4].line).classed("selectLine", true);
+		nestData[4].line.parentNode.parentNode.appendChild(nestData[4].line.parentNode);
+		data.forEach(function(d) {
+			if (d.government === "Quebec") {
+				d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
+				d3.select(d.circle).classed("selected", true);
+			} else {
+				d3.select(d.circle).classed("selected", false);
+			}
+		});
+
+	  var yAxisLine = svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis);
+
+	  var yAxisLabel = yAxisLine.append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Billion dollars");
+
+		function showTooltip(d, circle) {
+			d3.select(selectedCircle).classed("selectCircle", false);
+			selectedCircle = circle;
+			d3.select(circle).classed("selectCircle", true);
+			selectedData = d;
+
+			d3.select("#subfdTip")
+        .select(".tipTitle").text(d.government + " provincial subsidies – " + d.year.getFullYear());
+      if (selectedOpt === "nominal") {
+      	console.log((d.nominal > 1) ?
+						format(d.nominal) + " billion dollars" :
+        		format(d.nominal * 100) + " million dollars");
+      	d3.select("#subfdTip")
+        	.select(".tipText1")
+        	.text("$" + 
+        		((d.nominal > 1) ?
+						format(d.nominal) + " billion dollars" :
+        		format(d.nominal * 100) + " million dollars"));
+      } else {
+      	d3.select("#subfdTip")
+        	.select(".tipText1")
+        	.text("$" + 
+        		((d["inflation-adjusted"] > 1) ?
+        		format(d["inflation-adjusted"]) + " billion dollars" :
+        		format(d["inflation-adjusted"] * 100) + " million dollars"));
+      }
+      d3.select("#subfdTip")
+        .select(".tipText2").text(d.source);
+		}
+
+	  d3.select("#subfdSelect")
+			.on("change", selected);
+
+		function selected() {
+			selectedOpt = this.options[this.selectedIndex].value;
+			y.domain(d3.extent(data, function(d) { return d[selectedOpt]; }));
+			svg.select(".y")
+				.transition().duration(1500).ease("sin-in-out")
+				.call(yAxis);
+
+			if (selectedOpt === "nominal") {
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return nominalLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d.nominal); });
+
+				if (selectedData) {
+					d3.select("#subfdTip")
+	        	.select(".tipText1")
+	        	.text("$" + 
+	        		((selectedData.nominal > 1) ?
+	        		format(selectedData.nominal) + " billion dollars" :
+	        		format(selectedData.nominal * 100) + " million dollars"));
+				}
+			} else {
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return infLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
+
+				if (selectedData) {
+	      	d3.select("#subfdTip")
+	        	.select(".tipText1")
+	        	.text("$" + 
+	        		((selectedData["inflation-adjusted"] > 1) ?
+	        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+	        		format(selectedData["inflation-adjusted"] * 100) + " million dollars"));
+				}
+			}
+		}
+
+	  d3.select("#subfdSelectProv")
+			.on("change", selectProv);
+
+		function selectProv() {
+			var selectedProv = +(this.options[this.selectedIndex].value);
+
+			nestData.forEach(function(d) {
+				d3.select(d.line).classed("selectLine", false);	
+			});
+		  d3.select(nestData[selectedProv].line).classed("selectLine", true);
+			nestData[selectedProv].line.parentNode.parentNode.appendChild(nestData[selectedProv].line.parentNode);
+			data.forEach(function(d) {
+				if (d.government === provinces[selectedProv]) {
+					d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
+					d3.select(d.circle).classed("selected", true);
+				} else {
+					d3.select(d.circle).classed("selected", false);
+				}
+			});
+		}			
+	});
+
+	function type(d) {
+		d.year = parseDate(d.year);
+		d.nominal = (+d.nominal) / 100;
+		d["inflation-adjusted"] = (+d["inflation-adjusted"]) / 100;
+
+    return d;
+	}
+ 
+}
+
+
+/*
+*
+* Federal subsidies by province
+*
+*/
+
+function subpvChart() {
+
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 740 - margin.left - margin.right,
+	    height = 300 - margin.top - margin.bottom;
+
+	var parseDate = d3.time.format("%Y").parse;
+
+	var format = d3.format(",.1f");
+
+	var dataColours = ["#FF0000", "#808080"];
+
+	var x = d3.time.scale()
+	    .range([0, width]);
+
+	var y = d3.scale.linear()
+	    .range([height, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom");
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left");
+
+	var selectedOpt = "nominal";
+	var selectedCircle, selectedData;
+
+	var lineStart = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(0); });
+
+  var nominalLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d.nominal); });
+
+  var infLine = d3.svg.line()
+	  .x(function(d) { return x(d.year); })
+	  .y(function(d) { return y(d["inflation-adjusted"]); });
+
+	var svg = d3.select("#subpvChart").append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	d3.csv("{{ site.baseurl }}/data/2016/01/subsd_prov.csv", type, function(error, data) {
+	  if (error) throw error;
+
+	  x.domain(d3.extent(data, function(d) { return d.year; }));
+	  y.domain(d3.extent(data, function(d) { return d.nominal; }));
+
+	  var nestData = d3.nest()
+	  	.key(function(d) { return d.government; })
+	  	.entries(data);
+
+	  var subsd = svg.selectAll(".subsd")
+	      .data(nestData)
+	    .enter().append("g")
+	      .attr("class", "subsd");
+
+    var lines = subsd.append("path")
+      .attr("class", function(d) {
+      	if (d.key === "federal") {
+      		return "line fedLine";
+      	} else {
+      		return "line provLine";
+      	}
+      	return "line";
+      })
+      .attr("d", function(d) { d.line = this; return lineStart(d.values); });
+
+		lines.transition()
+			.duration(1000)
+			.attr("d", function(d) { return nominalLine(d.values); });
+
+		var circleGroup = subsd.append("g")
+			.attr("class", "circle-group");
+
+		var circles = circleGroup.selectAll("circles")
+			.data(function(d) { return d.values; })
+			.enter()
+			.append("circle")
+			.attr("class", "circle")
+			.attr("cx", function(d) { d.circle = this; return x(d.year); })
+			.attr("cy", function(d) { return y(1); })
+			.attr("r", 2)
+			.on("mouseover", function(d) { 
+				showTooltip(d, this);
+			})
+			.on("click", function(d) { 
+				showTooltip(d, this);
+			});
+
+		circles.transition()
+			.duration(1000)
+			.attr("cy", function(d) { return y(d.nominal); });
+
+	  svg.append("g")
+	      .attr("class", "x axis")
+	      .attr("transform", "translate(0," + height + ")")
+	      .call(xAxis);
+
+	  d3.select(nestData[4].line).classed("selectLine", true);
+		nestData[4].line.parentNode.parentNode.appendChild(nestData[4].line.parentNode);
+		data.forEach(function(d) {
+			if (d.government === "Quebec") {
+				d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
+				d3.select(d.circle).classed("selected", true);
+			} else {
+				d3.select(d.circle).classed("selected", false);
+			}
+		});
+
+	  var yAxisLine = svg.append("g")
+	      .attr("class", "y axis")
+	      .call(yAxis);
+
+	  var yAxisLabel = yAxisLine.append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 6)
+	      .attr("dy", ".71em")
+	      .style("text-anchor", "end")
+	      .text("Billion dollars");
+
+		function showTooltip(d, circle) {
+			d3.select(selectedCircle).classed("selectCircle", false);
+			selectedCircle = circle;
+			d3.select(circle).classed("selectCircle", true);
+			selectedData = d;
+
+			d3.select("#subpvTip")
+        .select(".tipTitle").text(d.government + " federal subsidies – " + d.year.getFullYear());
+      if (selectedOpt === "nominal") {
+      	console.log((d.nominal > 1) ?
+						format(d.nominal) + " billion dollars" :
+        		format(d.nominal * 100) + " million dollars");
+      	d3.select("#subpvTip")
+        	.select(".tipText1")
+        	.text("$" + 
+        		((d.nominal > 1) ?
+						format(d.nominal) + " billion dollars" :
+        		format(d.nominal * 100) + " million dollars"));
+      } else {
+      	d3.select("#subpvTip")
+        	.select(".tipText1")
+        	.text("$" + 
+        		((d["inflation-adjusted"] > 1) ?
+        		format(d["inflation-adjusted"]) + " billion dollars" :
+        		format(d["inflation-adjusted"] * 100) + " million dollars"));
+      }
+      d3.select("#subpvTip")
+        .select(".tipText2").text(d.source);
+		}
+
+	  d3.select("#subpvSelect")
+			.on("change", selected);
+
+		function selected() {
+			selectedOpt = this.options[this.selectedIndex].value;
+			y.domain(d3.extent(data, function(d) { return d[selectedOpt]; }));
+			svg.select(".y")
+				.transition().duration(1500).ease("sin-in-out")
+				.call(yAxis);
+
+			if (selectedOpt === "nominal") {
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return nominalLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d.nominal); });
+
+				if (selectedData) {
+					d3.select("#subpvTip")
+	        	.select(".tipText1")
+	        	.text("$" + 
+	        		((selectedData.nominal > 1) ?
+	        		format(selectedData.nominal) + " billion dollars" :
+	        		format(selectedData.nominal * 100) + " million dollars"));
+				}
+			} else {
+				lines.transition()
+					.duration(1000)
+					.attr("d", function(d) { return infLine(d.values); });
+				circles.transition()
+					.duration(1000)
+					.attr("cy", function(d) { return y(d["inflation-adjusted"]); });
+
+				if (selectedData) {
+	      	d3.select("#subpvTip")
+	        	.select(".tipText1")
+	        	.text("$" + 
+	        		((selectedData["inflation-adjusted"] > 1) ?
+	        		format(selectedData["inflation-adjusted"]) + " billion dollars" :
+	        		format(selectedData["inflation-adjusted"] * 100) + " million dollars"));
+				}
+			}
+		}
+
+	  d3.select("#subpvSelectProv")
+			.on("change", selectProv);
+
+		function selectProv() {
+			var selectedProv = +(this.options[this.selectedIndex].value);
+
+			nestData.forEach(function(d) {
+				d3.select(d.line).classed("selectLine", false);	
+			});
+		  d3.select(nestData[selectedProv].line).classed("selectLine", true);
+			nestData[selectedProv].line.parentNode.parentNode.appendChild(nestData[selectedProv].line.parentNode);
+			data.forEach(function(d) {
+				if (d.government === provinces[selectedProv]) {
+					d.circle.parentNode.parentNode.appendChild(d.circle.parentNode);
+					d3.select(d.circle).classed("selected", true);
+				} else {
+					d3.select(d.circle).classed("selected", false);
+				}
+			});
+		}			
+	});
+
+	function type(d) {
+		d.year = parseDate(d.year);
+		d.nominal = (+d.nominal) / 100;
+		d["inflation-adjusted"] = (+d["inflation-adjusted"]) / 100;
+
+    return d;
+	}
+ 
+}
+
+</script>

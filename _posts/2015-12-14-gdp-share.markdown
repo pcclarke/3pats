@@ -194,8 +194,6 @@ function shrinkChart() {
 	  y.domain([d3.min(sna1968, function(d) { return d.gdpShare; }), 
 	  	d3.max(snaModern, function(d) { return d.gdpShare; })]);
 
-	  console.log(y.domain());
-
 	  svg.append("g")
 	      .attr("class", "x axis")
 	      .attr("transform", "translate(0," + height + ")")
