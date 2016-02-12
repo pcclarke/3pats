@@ -1,0 +1,18 @@
+---
+layout: post
+title:  "Canada is not a petro-state, vol. 1"
+date:   2016-02-12 12:00:00
+---
+
+* * *
+
+<div id="petroChart"></div>
+<div id="petroTip" class="tooltip hidden">
+	<p class="tipTitle"><span id="wageType"></span></p>
+</div>
+
+* * *
+
+<script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
+<script>{% include 2016/02/petroChart.js %}</script>
+<style>{% include 2016/02/petro1.css %}</style>

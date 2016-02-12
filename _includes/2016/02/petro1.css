@@ -1,0 +1,67 @@
+#petroChart text {
+  font-size: 10px;
+}
+
+#petroChart .axis path,
+#petroChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#petroChart .shrinkTitle {
+	font-size: 1.5em;
+	margin-bottom: 0;
+  text-align: center;
+}
+
+#petroChart .shrinkSubTitle {
+	font-style: italic;
+	text-align: center;
+}
+
+#petroChart .x.axis path {
+  display: none;
+}
+
+#petroChart .line {
+  fill: none;
+  stroke-linecap: "round";
+  stroke-width: 1.5px;
+}
+
+#petroChart path:hover {
+	fill: black;
+}
+
+/* Tooltip */
+.hidden {
+  display: none;
+}
+
+#petroTip {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  width: 225px;
+  height: auto;
+  padding: 10px;
+  pointer-events: none;
+}
+
+#petroTip strong {
+  font-weight: bold;
+}
+
+#petroTip #tipTop {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+#petroTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
