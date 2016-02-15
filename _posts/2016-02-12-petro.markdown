@@ -6,12 +6,25 @@ date:   2016-02-12 12:00:00
 
 * * *
 
+<p class="petroTitle">Canadian Wages 1997-2015, total</p>
+
 <div id="petroChart"></div>
-<div id="petroTip" class="tooltip hidden">
-	<p class="tipTitle"><span id="wageType"></span></p>
+<div id="petroTip" class="tooltip">
+	<p id="tipTitle"><span id="wageType"></span></p>
 </div>
 
 * * *
+
+<p class="petroTitle">Canadian Wages 1997-2015, % change</p>
+
+<div id="petroChChart"></div>
+<div id="petroChTip" class="tooltip">
+	<p id="tipTitle"><span id="wageType"></span></p>
+</div>
+
+* * *
+
+Source: [Statistics Canada: CANSIM Table 380-0074](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800074&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=)
 
 <script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
 <script>{% include 2016/02/petroChart.js %}</script>

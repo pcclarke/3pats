@@ -61,9 +61,9 @@ var petroChart = function() {
 
 	var color = d3.scale.category10();
 	var serviceColor = d3.scale.ordinal()
-		.range(colorbrewer.Oranges[9]);
+		.range(colorbrewer.Greys[9]);
 	var goodsColor = d3.scale.ordinal()
-		.range(colorbrewer.Purples[5]);
+		.range(colorbrewer.Greys[5]);
 
 	var svg = d3.select("#petroChart")
 				.append("svg")
@@ -74,9 +74,7 @@ var petroChart = function() {
 				.attr("class", "stacked");
 
 	d3.csv("{{ site.baseurl }}/data/2016/02/canadian_wages.csv", function(data) {
-	
-	console.log(data);
-	
+
 		var quarters = d3.keys(data[0]).filter(function(d) { return d !== "Industry" && d !== "Type"; });
 
 		var dataset = [];
@@ -138,7 +136,6 @@ var petroChart = function() {
 
 		yScale.domain([ d3.max(totals), 0 ]);
 
-
 		serviceColor.domain(servIndustries);
 		goodsColor.domain(goodIndustries);
 
@@ -192,8 +189,14 @@ var petroChart = function() {
 			.call(xAxis);
 
 		svg.append("g")
-			.attr("class", "y axis")
-			.call(yAxis);
+				.attr("class", "y axis")
+				.call(yAxis)
+			.append("text")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 6)
+				.attr("dy", ".71em")
+				.style("text-anchor", "end")
+				.text("Million dollars");
 
 	});
 }();
