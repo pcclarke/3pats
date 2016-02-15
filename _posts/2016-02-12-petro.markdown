@@ -10,7 +10,8 @@ date:   2016-02-12 12:00:00
 
 <div id="petroChart"></div>
 <div id="petroTip">
-	<p class="tipTitle"><span id="wageType"></span></p>
+	<p class="tipTitle"><span id="wageCategory"></span></p>
+	<p class="tipInfo"><span id="wageType"></span></p>
 	<p class="tipInfo"><span id="wageAmount"></span></p>
 </div>
 
@@ -20,7 +21,9 @@ date:   2016-02-12 12:00:00
 
 <div id="petroChChart"></div>
 <div id="petroChTip" class="tooltip">
-	<p id="tipTitle"><span id="wageType"></span></p>
+	<p class="tipTitle"><span id="wageCategory"></span></p>
+	<p class="tipInfo"><span id="wageType"></span></p>
+	<p class="tipInfo"><span id="wageAmount"></span></p>
 </div>
 
 * * *
@@ -29,4 +32,5 @@ Source: [Statistics Canada: CANSIM Table 380-0074](http://www5.statcan.gc.ca/can
 
 <script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
 <script>{% include 2016/02/petroChart.js %}</script>
+<script>{% include 2016/02/petroChChart.js %}</script>
 <style>{% include 2016/02/petro1.css %}</style>

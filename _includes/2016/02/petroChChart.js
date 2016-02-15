@@ -1,8 +1,8 @@
-var petroChart = function() {
+var petroChChart = function() {
   var years,
       yearFormat = d3.time.format("%Y");
 			
-	var numFormat = d3.format(",.0");
+	var numFormat = d3.format("%");
 
   var margin = {top: 10, right: 20, bottom: 30, left: 50},
       width = 740 - margin.left - margin.right,
@@ -23,14 +23,14 @@ var petroChart = function() {
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.value); });
 
-  var svg = d3.select("#petroChart").append("svg")
+  var svg = d3.select("#petroChChart").append("svg")
       .attr("class", "budgetPlotted")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("{{ site.baseurl }}/data/2016/02/canadian_wages.csv", type, function(error, data) {
+  d3.csv("{{ site.baseurl }}/data/2016/02/canadian_per_wages.csv", type, function(error, data) {
     x.domain(years);
     y.domain([d3.min(data, function(c) { 
         return d3.min(c.values, function(d) { return d.value; }); 
@@ -54,13 +54,7 @@ var petroChart = function() {
         .attr("class", "axis axis--y")
         .call(d3.svg.axis()
           .scale(y)
-          .orient("left"))
-        	    .append("text")
-	      .attr("transform", "rotate(-90)")
-	      .attr("y", 6)
-	      .attr("dy", ".71em")
-	      .style("text-anchor", "end")
-	      .text("Million dollars");
+          .orient("left"));
 
     svg.append("g")
       .selectAll("path")
@@ -95,14 +89,14 @@ var petroChart = function() {
         .on("mouseout", mouseout);
 
     function mouseover(d) {
-      d3.select("#petroTip").select("#wageCategory")
+      d3.select("#petroChTip").select("#wageCategory")
 				.text(d.budget.name + " " + d.date);
 				
-      d3.select("#petroTip").select("#wageType")
+      d3.select("#petroChTip").select("#wageType")
 				.text(d.type);
 				
-      d3.select("#petroTip").select("#wageAmount")
-				.text("$" + numFormat(Math.abs(d.value)) + " million dollars");
+      d3.select("#petroChTip").select("#wageAmount")
+				.text(numFormat(d.value) + " change");
 
       d3.select(d.budget.line).classed("budget--hover", true);
       d.budget.line.parentNode.appendChild(d.budget.line);
@@ -125,7 +119,7 @@ var petroChart = function() {
       return {
         budget: budget,
         date: m,
-        value: (+d[m]),
+        value: ((+d[m]) / 100),
         type: d.Type
       };
     });

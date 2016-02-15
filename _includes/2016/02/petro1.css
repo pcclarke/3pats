@@ -1,18 +1,23 @@
-#petroChart text {
+#petroChart text,
+#petroChChart text {
   font-size: 10px;
 }
 #petroChart .axis path,
-#petroChart .axis line {
+#petroChart .axis line,
+#petroChChart .axis path,
+#petroChChart .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-#petroChart .axis--y path {
+#petroChart .axis--y path,
+#petroChChart .axis--y path {
   display: none;
 }
 
-#petroChart .data {
+#petroChart .data,
+#petroChChart .data {
   fill: none;
   stroke: rgba(100, 100, 100, 0.4);
   stroke-linejoin: round;
@@ -20,25 +25,25 @@
   stroke-width: 1.5px;
 }
 
-#petroChart .budget--hover {
+#petroChart .budget--hover,
+#petroChChart .budget--hover {
   stroke: #000 !important;
 }
 
-#petroChart .syria {
-  stroke: #d6191f;
-}
-
-#petroChart .focus text {
+#petroChart .focus text,
+#petroChChart .focus text {
   text-anchor: middle;
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
 }
 
-#petroChart .voronoi path {
+#petroChart .voronoi path,
+#petroChChart .voronoi path {
   fill: none;
   pointer-events: all;
 }
 
-#petroChart .voronoi--show path {
+#petroChart .voronoi--show path,
+#petroChChart .voronoi--show path, {
   stroke: red;
   stroke-opacity: .2;
 }
@@ -51,20 +56,23 @@
 
 /* Tooltip */
 
-#petroTip {
+#petroTip,
+#petroChTip {
 	display: block;
 	margin-bottom: 15px;
   	pointer-events: none;
 	text-align: center;
 }
 
-#petroTip .tipTitle {
+#petroTip .tipTitle,
+#petroChTip .tipTitle {
 	font-size: 14px;
 	font-weight: bold;
   	margin-bottom: 8px !important;
 }
 
-#petroTip .tipInfo {
+#petroTip .tipInfo,
+#petroChTip .tipInfo {
   font-size: 12px;
   margin: 0;
 }
