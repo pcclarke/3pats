@@ -9,8 +9,9 @@ date:   2016-02-12 12:00:00
 <p class="petroTitle">Canadian Wages 1997-2015, total</p>
 
 <div id="petroChart"></div>
-<div id="petroTip" class="tooltip">
-	<p id="tipTitle"><span id="wageType"></span></p>
+<div id="petroTip">
+	<p class="tipTitle"><span id="wageType"></span></p>
+	<p class="tipInfo"><span id="wageAmount"></span></p>
 </div>
 
 * * *

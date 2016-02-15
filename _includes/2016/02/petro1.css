@@ -1,7 +1,6 @@
 #petroChart text {
   font-size: 10px;
 }
-
 #petroChart .axis path,
 #petroChart .axis line {
   fill: none;
@@ -9,57 +8,67 @@
   shape-rendering: crispEdges;
 }
 
-#petroChart .shrinkTitle {
-	font-size: 1.5em;
-	margin-bottom: 0;
-  text-align: center;
-}
-
-#petroChart .shrinkSubTitle {
-	font-style: italic;
-	text-align: center;
-}
-
-#petroChart .x.axis path {
+#petroChart .axis--y path {
   display: none;
 }
 
-#petroChart .line {
+#petroChart .data {
   fill: none;
-  stroke-linecap: "round";
+  stroke: rgba(100, 100, 100, 0.4);
+  stroke-linejoin: round;
+  stroke-linecap: round;
   stroke-width: 1.5px;
 }
 
-#petroChart path:hover {
-	fill: black;
+#petroChart .budget--hover {
+  stroke: #000 !important;
+}
+
+#petroChart .syria {
+  stroke: #d6191f;
+}
+
+#petroChart .focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#petroChart .voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+#petroChart .voronoi--show path {
+  stroke: red;
+  stroke-opacity: .2;
 }
 
 .petroTitle {
 	font-size: 1.5em;
 	margin-bottom: 0;
-  	text-align: center;
+	text-align: center;
 }
 
 /* Tooltip */
-.hidden {
-  display: none;
-}
 
 #petroTip {
 	display: block;
-	min-height: 50px;
 	margin-bottom: 15px;
+  	pointer-events: none;
 	text-align: center;
-	text-transform: capitalize;
 }
 
-#petroTip #tipTitle {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px !important;
+#petroTip .tipTitle {
+	font-size: 14px;
+	font-weight: bold;
+  	margin-bottom: 8px !important;
 }
 
 #petroTip .tipInfo {
   font-size: 12px;
   margin: 0;
+}
+
+.hidden {
+	display: none;
 }
