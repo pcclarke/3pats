@@ -13,11 +13,15 @@ var petroChart = function() {
 
   var y = d3.scale.linear()
       .range([height, 0]);
-
+      
   var voronoi = d3.geom.voronoi()
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.value); })
       .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+      
+  var lineFlat = d3.svg.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(0); });
 
   var line = d3.svg.line()
       .x(function(d) { return x(d.date); })
@@ -62,12 +66,16 @@ var petroChart = function() {
 	      .style("text-anchor", "end")
 	      .text("Million dollars");
 
-    svg.append("g")
+    var lines = svg.append("g")
       .selectAll("path")
         .data(data)
       .enter().append("path")
-        .attr("d", function(d) { d.line = this; return line(d.values); })
+        .attr("d", function(d) { d.line = this; return lineFlat(d.values); })
 		.attr("class", "data");
+		
+	lines.transition()
+		.duration(1000)
+		.attr("d", function(d) { d.line = this; return line(d.values); });
 
     var focus = svg.append("g")
         .attr("transform", "translate(-100,-100)")
@@ -82,7 +90,7 @@ var petroChart = function() {
     var voronoiGroup = svg.append("g")
         .attr("class", "voronoi");
 
-    voronoiGroup.selectAll("path")
+   	voronoiGroup.selectAll("path")
       .data(voronoi(d3.nest()
         .key(function(d) { return x(d.date) + "," + y(d.value); })
         .rollup(function(v) { return v[0]; })
