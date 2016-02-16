@@ -19,6 +19,10 @@ var petroChChart = function() {
       .y(function(d) { return y(d.value); })
       .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
 
+  var lineFlat = d3.svg.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(0); });
+      
   var line = d3.svg.line()
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d.value); });
@@ -57,12 +61,16 @@ var petroChChart = function() {
           .orient("left")
           .tickFormat(numFormat));
 
-    svg.append("g")
+    var lines = svg.append("g")
       .selectAll("path")
         .data(data)
       .enter().append("path")
-        .attr("d", function(d) { d.line = this; return line(d.values); })
+        .attr("d", function(d) { d.line = this; return lineFlat(d.values); })
 		.attr("class", "data");
+		
+	lines.transition()
+		.duration(1000)
+		.attr("d", function(d) { d.line = this; return line(d.values); });
 
     var focus = svg.append("g")
         .attr("transform", "translate(-100,-100)")
