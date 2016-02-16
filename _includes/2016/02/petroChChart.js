@@ -54,7 +54,8 @@ var petroChChart = function() {
         .attr("class", "axis axis--y")
         .call(d3.svg.axis()
           .scale(y)
-          .orient("left"));
+          .orient("left")
+          .tickFormat(numFormat));
 
     svg.append("g")
       .selectAll("path")

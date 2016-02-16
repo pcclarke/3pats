@@ -1,0 +1,45 @@
+---
+layout: post
+title:  "Canada is not a petro-state, vol. 1"
+date:   2016-02-15 12:00:00
+---
+
+The collapse of the Canadian dollar has once again led to claims that Canada is a petro-state, entirely dependent on gas revenues to drive its economy. That certainly isn't the case, and in fact, gas is a relatively small portion of the economy. For example, let's have a look at total Canadian wages across a selection of categories:
+
+* * *
+
+<p class="petroTitle">Canadian Wages 1997-2015, total</p>
+
+<div id="petroChart"></div>
+<div id="petroTip">
+	<p class="tipTitle"><span id="wageCategory"></span></p>
+	<p class="tipInfo"><span id="wageType"></span></p>
+	<p class="tipInfo"><span id="wageAmount"></span></p>
+</div>
+
+* * *
+
+Note that Mining and oil and gas extraction isn't anywhere near the top. All that money people working on the oil sands doesn't actually add up to being close to the rest of the Canadian economy. It has, however, shown rapid growth... and decline:
+
+* * *
+
+<p class="petroTitle">Canadian Wages 1997-2015, % change from last quarter</p>
+<p class="subPetroTitle">(excluding government & military)</p>
+
+<div id="petroChChart"></div>
+<div id="petroChTip" class="tooltip">
+	<p class="tipTitle"><span id="wageCategory"></span></p>
+	<p class="tipInfo"><span id="wageType"></span></p>
+	<p class="tipInfo"><span id="wageAmount"></span></p>
+</div>
+
+* * *
+
+Mining and oil and gas extraction is the "spikiest" of the categories, barring governments, which I've removed because they have had some extreme swings. If the price of oil doesn't increase again, it's going to be a while before there's another spike in that category.
+
+Source: [Statistics Canada: CANSIM Table 380-0074](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800074&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=)
+
+<script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
+<script>{% include 2016/02/petroChart.js %}</script>
+<script>{% include 2016/02/petroChChart.js %}</script>
+<style>{% include 2016/02/petro1.css %}</style>
