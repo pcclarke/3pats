@@ -1,0 +1,70 @@
+#bcbudChart svg:not(:nth-of-type(1)) {
+  margin-top: 25px;
+}
+
+#bcbudChart .bar.positive {
+  fill: black;
+}
+
+#bcbudChart .bar.negative {
+  fill: brown;
+}
+
+#bcbudChart .bar.forepositive {
+  fill: #808080;
+}
+
+#bcbudChart .bar.forenegative {
+  fill: #FF5656;
+}
+
+#bcbudChart .axis text {
+  font: 10px sans-serif;
+}
+
+#bcbudChart .axis path,
+#bcbudChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#selectbcbud {
+  font-family: Lora, Georgia, serif;
+  font-size: 20px;
+  padding: 5px 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.bcbudTitle {
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+/* Tooltip */
+
+#bcbudTip {
+	display: block;
+	margin-bottom: 15px;
+  	pointer-events: none;
+	text-align: center;
+}
+
+#bcbudTip .tipTitle {
+	font-size: 14px;
+	font-weight: bold;
+  	margin-bottom: 8px !important;
+}
+
+#bcbudTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}
