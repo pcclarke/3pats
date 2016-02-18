@@ -30,14 +30,19 @@
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
 }
 
-#bcgasChart .voronoi path {
+#bcgasChart .line {
   fill: none;
+  stroke: #000;
   pointer-events: all;
 }
 
 #bcgasChart .voronoi--show path {
   stroke: red;
   stroke-opacity: .2;
+}
+
+#bcgasChart .area.above {
+  fill: rgba(0, 0, 0, 0.5);
 }
 
 .bcgasTitle {
@@ -50,10 +55,14 @@
 	text-align: center;
 }
 
+.vertical {
+	stroke: rgba(0, 0, 0, 0.25);
+}
+
 /* Tooltip */
 
 #bcgasTip {
-	display: block;
+
 	margin-bottom: 15px;
   	pointer-events: none;
 	text-align: center;
