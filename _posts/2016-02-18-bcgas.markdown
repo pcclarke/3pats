@@ -1,0 +1,24 @@
+---
+layout: post
+title:  "Running on fumes"
+date:   2016-02-18 12:00:00
+---
+
+* * *
+
+<div class="marketGasTitle">Marketable Natural Gas Production</div>
+<div class="subMarketGasTitle">million cubic meters per day (10<sup>6</sup>m<sup>3</sup>/d)</div>
+
+<div id="marketGasChart"></div>
+<div id="marketGasTip" class="hidden">
+	<p class="tipTitle"><span id="bcgasBudget"></span> Natural Gas Royalties</p>
+	<p class="tipInfo">Budget 2015: <span id="bcgasVal2015"></span> million dollars</p>
+	<p class="tipInfo">Budget 2016: <span id="bcgasVal2016"></span> million dollars</p>
+	<p class="tipInfo">Difference: <span id="bcgasDiff"></span> million dollars</p>
+</div>
+
+* * *
+
+<style>{% include 2016/02/marketGas.css %}</style>
+<script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
+<script>{% include 2016/02/marketGas.js %}</script>
