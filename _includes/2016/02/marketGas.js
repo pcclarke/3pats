@@ -165,27 +165,31 @@ var marketGas = function() {
 			.attr("d", function(d) { return preArea(d.production); })
 			.attr("stroke", "none")
 			.attr("fill", function(d, i) { return serviceColor(d.country); })
-			.on("mouseover", function(d) {
-				var selDate = xScale.invert(M[0]);
-				
-				d3.select("#marketGasTip")
-					.select("#gasJur").text(d.country + ", " + monthNames[selDate.getMonth()] + " " + selDate.getFullYear());
-				
-				for (var i = 0; i < d.production.length; i ++) {
-					var monthStr = monthNames[selDate.getMonth()];
-					var yearStr = "" + selDate.getFullYear();
-					var selStr = monthStr.substring(0, 3) + "-" + yearStr.substring(2, 4);
-					if (selStr === d.production[i].x) {
-						d3.select("#marketGasTip")
-							.select("#gasVal").text(d.production[i].y);
-					}
-				}
-				
-				d3.select("#marketGasTip").classed("hidden", false);
+			.on("mousemove", function(d) {
+				updateTooltip(d);
 			})
-			.on("mouseout", function(d) {
-				d3.select(".tooltip").classed("hidden", true);	
+			.on("mouseover", function(d) {
+				updateTooltip(d);
 			});
+			
+		function updateTooltip(d) {
+			var selDate = xScale.invert(M[0]);
+			
+			d3.select("#marketGasTip")
+				.select("#gasJur").text(d.country + ", " + monthNames[selDate.getMonth()] + " " + selDate.getFullYear());
+			
+			for (var i = 0; i < d.production.length; i ++) {
+				var monthStr = monthNames[selDate.getMonth()];
+				var yearStr = "" + selDate.getFullYear();
+				var selStr = monthStr.substring(0, 3) + "-" + yearStr.substring(2, 4);
+				if (selStr === d.production[i].x) {
+					d3.select("#marketGasTip")
+						.select("#gasVal").text(d.production[i].y);
+				}
+			}
+			
+			d3.select("#marketGasTip").classed("hidden", false);
+		}
 
 		paths.transition()
 			.duration(2000)
