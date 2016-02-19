@@ -14,6 +14,10 @@
 	font-size: 10px;
 }
 
+#marketGasChart .area {
+	opacity: .8;
+}
+
 .marketGasTitle {
 	font-size: 1.5em;
 	margin-bottom: 0;
@@ -25,31 +29,29 @@
 	text-align: center;
 }
 
+#marketGasChart .vertical {
+	stroke: rgba(255, 0, 0, 1);
+}
+
 /* Tooltip */
 .hidden {
 	display: none;
 }
 
-.tooltip {
-	background-color: white;
-	border: 1px solid #CCC;
-	border-radius: 5px;
-	box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	position: absolute;
-	width: 180px;
-	height: auto;
-	padding: 5px;
-	pointer-events: none;
+#marketGasTip {
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
 }
 
-.tooltip p {
-	margin: 2px 0;
+#marketGasTip .tipTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
 }
 
-.tipTitle {
-	font-size: 24px;
-	font-style: italic;
-	font-weight: lighter;
-	margin: 0 !important;
+#marketGasTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
 }

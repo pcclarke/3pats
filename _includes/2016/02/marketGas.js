@@ -14,54 +14,52 @@ var marketGas = function() {
 		h = 400 - padding.top - padding.bottom;
 
 	//Set up scales
-	var xScale = d3.scale.ordinal()
-						.rangePoints([ 0, w ]);
+	var xScale = d3.time.scale()
+    	.range([0, w]);
 	
 	var yScale = d3.scale.linear()
-						.range([ 0, h]);
+		.range([ 0, h]);
+		
+	var dateFormat = d3.time.format("%b-%y");
 
-	//Configure axis generators
 	var xAxis = d3.svg.axis()
-					.scale(xScale)
-					.orient("bottom");
+		.scale(xScale)
+		.orient("bottom")
+		.ticks(15)
+		.tickFormat(function(d) {
+			return dateFormat(d);
+		});
 
 	var yAxis = d3.svg.axis()
-					.scale(yScale)
-					.orient("left")
-					.ticks(5);
+		.scale(yScale)
+		.orient("left")
+		.ticks(5);
 
-	var coordinates = [0, 0];
+	var M;
+	var monthNames = ["January", "February", "March", "April", "May", "June",
+		  "July", "August", "September", "October", "November", "December"
+		];
 
-	var body = d3.select("body")
-		.on("mousemove", function() {
-			coordinates = d3.mouse(this);
-		})
-		.on("mousedown", function() {
-			coordinates = d3.mouse(this);
-		});
-
-	//Configure area generator
 	var preArea = d3.svg.area()
 		.x(function(d) {
-			return xScale(d.x);
+			return xScale(dateFormat.parse(d.x));
 		})
 		.y0(function(d) {
-			return yScale(0);  //Updated
+			return yScale(0);
 		})
 		.y1(function(d) {
-			return yScale(0);  //Updated
+			return yScale(0);
 		});
 
-	//Configure area generator
 	var area = d3.svg.area()
 		.x(function(d) {
-			return xScale(d.x);
+			return xScale(dateFormat.parse(d.x));
 		})
 		.y0(function(d) {
-			return yScale(d.y0);  //Updated
+			return yScale(d.y0);
 		})
 		.y1(function(d) {
-			return yScale(d.y0 + d.y);  //Updated
+			return yScale(d.y0 + d.y);
 		});
 
 	//Easy colors accessible via a 10-step ordinal scale
@@ -114,10 +112,14 @@ var marketGas = function() {
 
 		stack(dataset);
 
-		xScale.domain(months);
-
-		var tickFilter = xScale.domain().filter(function(d) { return (+d.substring(0, 4) % 5) == 0 && d.substring(d.length - 2) === "Q1"; } );
-		xAxis.tickValues(tickFilter);
+		xScale.domain([ 
+			d3.min(months, function(d) {
+				return dateFormat.parse(d);
+			}),
+			d3.max(months, function(d) {
+				return dateFormat.parse(d);
+			})
+		]);
 
 		var totals = [];
 
@@ -130,6 +132,29 @@ var marketGas = function() {
 
 		yScale.domain([ d3.max(totals), 0 ]);
 
+		var vertical = svg.append("line")
+			.attr("x1", 20)
+			.attr("y1", yScale(yScale.domain()[0]))
+			.attr("x2", 20)
+			.attr("y2", yScale(yScale.domain()[1]))
+			.attr("class", "vertical");
+			
+		d3.select("#marketGasChart")
+		  .on("mousemove", function(){
+			if (d3.mouse(svg[0][0])[0] > 0 && d3.mouse(svg[0][0])[0] < w) {
+				 M = d3.mouse(svg[0][0]);
+				 vertical.attr("x1", M[0]);
+				 vertical.attr("x2", M[0]);
+			 }
+			 })
+		  .on("mouseover", function(){  
+			if (d3.mouse(svg[0][0])[0] > 0 && d3.mouse(svg[0][0])[0] < w) {
+				 M = d3.mouse(svg[0][0]);
+				 vertical.attr("x1", M[0]);
+				 vertical.attr("x2", M[0]);
+			 }
+			});
+
 		serviceColor.domain(jurisdictions);
 
 		var paths = svg.selectAll("path")
@@ -141,14 +166,22 @@ var marketGas = function() {
 			.attr("stroke", "none")
 			.attr("fill", function(d, i) { return serviceColor(d.country); })
 			.on("mouseover", function(d) {
-				d3.select(".tooltip")
-					.style("left", coordinates[0] + "px")
-					.style("top", coordinates[1] + "px");
-					
-				d3.select(".tooltip")
-					.select("#wageType").text(d.country);
-
-				d3.select(".tooltip").classed("hidden", false);
+				var selDate = xScale.invert(M[0]);
+				
+				d3.select("#marketGasTip")
+					.select("#gasJur").text(d.country + ", " + monthNames[selDate.getMonth()] + " " + selDate.getFullYear());
+				
+				for (var i = 0; i < d.production.length; i ++) {
+					var monthStr = monthNames[selDate.getMonth()];
+					var yearStr = "" + selDate.getFullYear();
+					var selStr = monthStr.substring(0, 3) + "-" + yearStr.substring(2, 4);
+					if (selStr === d.production[i].x) {
+						d3.select("#marketGasTip")
+							.select("#gasVal").text(d.production[i].y);
+					}
+				}
+				
+				d3.select("#marketGasTip").classed("hidden", false);
 			})
 			.on("mouseout", function(d) {
 				d3.select(".tooltip").classed("hidden", true);	
