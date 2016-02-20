@@ -133,9 +133,9 @@ var marketGas = function() {
 		yScale.domain([ d3.max(totals), 0 ]);
 
 		var vertical = svg.append("line")
-			.attr("x1", 20)
+			.attr("x1", 0)
 			.attr("y1", yScale(yScale.domain()[0]))
-			.attr("x2", 20)
+			.attr("x2", 0)
 			.attr("y2", yScale(yScale.domain()[1]))
 			.attr("class", "vertical");
 			
@@ -199,11 +199,6 @@ var marketGas = function() {
 			.attr("d", function(d) {
 				return area(d.production);
 			})
-
-		paths.append("title")
-			.text(function(d) {
-				return d.country;
-			});
 
 		svg.append("g")
 			.attr("class", "x axis")
