@@ -170,6 +170,9 @@ var marketGas = function() {
 			})
 			.on("mouseover", function(d) {
 				updateTooltip(d);
+			})
+			.on("click", function(d) {
+				updateTooltip(d);
 			});
 			
 		function updateTooltip(d) {
