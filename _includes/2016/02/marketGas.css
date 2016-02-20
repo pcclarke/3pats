@@ -30,7 +30,8 @@
 }
 
 #marketGasChart .vertical {
-	stroke: rgba(255, 0, 0, 1);
+	stroke: rgba(0, 0, 0, 1);
+	stroke-weight: 2px;
 }
 
 /* Tooltip */

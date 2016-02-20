@@ -110,6 +110,12 @@ var bcgas = function() {
 			 vertical.attr("x1", M[0])
 			 vertical.attr("x2", M[0])
 			 updateTip();
+			})
+			.on("click", function(){  
+			 M = d3.mouse(svg[0][0]);
+			 vertical.attr("x1", M[0])
+			 vertical.attr("x2", M[0])
+			 updateTip();
 			});
 			
 		function updateTip() {

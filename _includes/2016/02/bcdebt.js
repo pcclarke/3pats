@@ -99,6 +99,9 @@ var bcdebt = function() {
 					.attr("class", "electionBar")
 					.attr("transform", function(d) { return "translate(" + x(d.year) + ",0)"; });
 
+			var selectObj;
+			var selectCol;
+
 		  // Position election length data
 		  election.selectAll("rect")
 			  .data(function(d) {  return d.lengths; })
@@ -108,15 +111,28 @@ var bcdebt = function() {
 			  .attr("height", 0)
 			  .style("fill", function(d) { return color(d.name); })
 			.attr("class", "databar")
-			.on("mouseover", function(d, i) {
-				showTooltip(d, i);
+			.on("mouseover", function(d) {
+				showTooltip(d, this);
 			})
-			.on("mousedown", function(d, i) {
-				showTooltip(d, i);
+			.on("mousedown", function(d) {
+				showTooltip(d, this);
 			});
 
-		  function showTooltip(d, i) {
-			//console.log(d);
+		  function showTooltip(d, obj) {
+			if (selectObj) {
+				d3.select(selectObj).style("fill", selectCol);
+			}
+
+			var t = textures.lines()
+				.stroke("black")
+				.background(color(d.name))
+				.size(4)
+				.strokeWidth(1);   
+			svg.call(t);
+			d3.select(obj).style("fill", t.url());
+			
+			selectObj = obj;
+			selectCol = color(d.name);
 	  
 			d3.select("#debtTip")
 				.select("#debtYear").text(d.name);

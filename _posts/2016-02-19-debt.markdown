@@ -22,8 +22,11 @@ This was inspired by [Vaughn Palmer's column on this seeming contradiction](http
 
 * * *
 
-Source: [BC Budgets 2010-2016](http://www.bcbudget.gov.bc.ca/default.htm)
+Sources: 
+
+- [BC Budgets 2010-2016](http://www.bcbudget.gov.bc.ca/default.htm)
+- [BC Ferries Annual Reports](http://www.bcferries.com/investors/AR.html)
 
 <style>{% include 2016/02/bcdebt.css %}</style>
-<script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/js/textures.min.js"></script>
 <script>{% include 2016/02/bcdebt.js %}</script>
