@@ -1,0 +1,63 @@
+#debtChart {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  position: relative;
+  width: 960px;
+}
+
+#debtChart text {
+  font-size: 10px;
+}
+
+#debtChart .axis path {
+  display: none;
+}
+
+#debtChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#debtChart .source-label {
+  font-weight: bold;
+  text-anchor: end;
+}
+
+#debtChart rect:hover {
+	fill: #941100 !important;
+}
+
+.debtTitle {
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.debtSubTitle {
+	font-style: italic;
+	text-align: center;
+}
+
+/* Tooltip */
+.hidden {
+	display: none;
+}
+
+#debtTip {
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#debtTip .tipTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+}
+
+#debtTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
