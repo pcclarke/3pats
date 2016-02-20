@@ -8,6 +8,8 @@ date:   2016-02-19 12:00:00
 
 <div class="debtTitle">BC Budget Debt</div>
 
+<label class="showBCFerries"><input class="show" name="bcFerries" type="checkbox">Include BC Ferries debt (to 2015)</label>
+
 <div id="debtChart"></div>
 <div id="debtTip" class="hidden">
 	<p class="tipTitle"><span id="debtYear"></span></p>
