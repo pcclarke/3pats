@@ -17,10 +17,6 @@
   text-anchor: end;
 }
 
-#debtChart rect:hover {
-	fill: #941100 !important;
-}
-
 .debtTitle {
 	font-size: 1.5em;
 	margin-bottom: 0;
