@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "Running on fumes"
+date:   2016-02-18 12:00:00
+---
+
+The more you look at natural gas, the more of a mystery the [BC government's natural gas royalty optimism]({% post_url 2016-02-17-bcgas %}) becomes. There has been a decline in the natural gas production going on for almost a decade:
+
+* * *
+
+<div class="marketGasTitle">Marketable Natural Gas Production</div>
+<div class="subMarketGasTitle">million cubic meters per day (10<sup>6</sup>m<sup>3</sup>/d)</div>
+
+<div id="marketGasChart"></div>
+<div id="marketGasTip" class="hidden">
+	<p class="tipTitle"><span id="gasJur"></span></p>
+	<p class="tipInfo"><span id="gasVal"></span> 10<sup>6</sup>m<sup>3</sup>/d</p>
+</div>
+
+* * *
+
+There's just no shortage of natural gas here in North America:
+
+> The North American natural gas market continues to be oversupplied. By April 2015, the remaining storage deficit from the winter of 2013-2014 was replenished and inventories returned to levels near the five-year average. As a consequence, gas storage can be expected to fill more rapidly during future injection seasons and deliverability is expected to outpace demand from 2015 to 2017. If storage reaches capacity and deliverability exceeds demand, there is a risk of production being shut in to reduce supply to balance markets.
+
+So unless the international price shoots up massively, natural gas royalties aren't going to rise much.
+
+Sources: 
+
+- [Short-term Canadian Natural Gas Deliverability 2015-2017 - Energy Market Assessment](http://www.neb-one.gc.ca/nrg/sttstc/ntrlgs/rprt/ntrlgsdlvrblty20152017/ntrlgsdlvrblty20152017-eng.html)
+- [Marketable Natural Gas Production in Canada 2015](http://www.neb-one.gc.ca/nrg/sttstc/ntrlgs/stt/mrktblntrlgsprdctn-eng.html)
+
+<style>{% include 2016/02/marketGas.css %}</style>
+<script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
+<script>{% include 2016/02/marketGas.js %}</script>

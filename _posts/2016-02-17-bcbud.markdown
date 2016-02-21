@@ -1,0 +1,26 @@
+---
+layout: post
+title:  "British Columbia's feeling confident"
+date:   2016-02-17 12:00:00
+---
+
+The BC Budget was released yesterday, and it looks like they're expecting nothing but surpluses in the next few years. Hooray! I'm sure there will be absolutely nothing else of interest about it for me to post about over the next few days, so here's the balances:
+
+* * *
+
+<p class="bcbudTitle">British Columbia Budget Balances 2009/10-2018/19</p>
+
+<div id="bcbudChart"></div>
+<div id="bcbudTip">
+	<p class="tipTitle"><span id="budgetYear"></span></p>
+	<p class="tipInfo"><span id="budgetVal"></span> <span id="budgetBal"></span></p>
+	<p class="tipInfo"><span id="budgetType"></span></p>
+</div>
+
+* * *
+
+Sources: 
+- [Budget and Fiscal Plan 2016/17 – 2018/19, Table A8, Operating Statement – 2009/10 to 2018/19](http://bcbudget.gov.bc.ca/2016/bfp/2016_Budget_and_Fiscal_Plan.pdf)
+
+<style>{% include 2016/02/bcbud.css %}</style>
+<script>{% include 2016/02/bcbud.js %}</script>

@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "Gassed out"
+date:   2016-02-17 23:00:00
+---
+
+Surprisingly enough, the BC government is being pretty up-front about how badly things are looking for natural gas. The once highly-touted natural-gas royalties from new projects weren't included in the BC Budget's revenue:
+
+> We are, however, prudent in our forecasts, and though we have seen important and substantive progress in the development of an LNG industry in B.C., we have not included LNG projects in our revenue projections at this time, pending the announcement of a final investment decision.
+
+And what a difference it makes in revenues from the 2015 budget:
+
+* * *
+
+<div class="bcgasTitle">Natural Gas Royalty Budget Revenues 2009/10–2017/18</div>
+
+<div id="bcgasChart"></div>
+<div id="bcgasTip" class="hidden">
+	<p class="tipTitle"><span id="bcgasBudget"></span> Natural Gas Royalties</p>
+	<p class="tipInfo">Budget 2015: <span id="bcgasVal2015"></span> million dollars</p>
+	<p class="tipInfo">Budget 2016: <span id="bcgasVal2016"></span> million dollars</p>
+	<p class="tipInfo">Difference: <span id="bcgasDiff"></span> million dollars</p>
+</div>
+
+* * *
+
+Well, at least they hope it will pick up again in the next couple of years.
+
+Sources:
+
+- [Budget and Fiscal Plan 2015/16 – 2017/18, Table A9, Revenue by Source – 2008/09 to 2017/18](http://bcbudget.gov.bc.ca/2015/bfp/2015_Budget_and_Fiscal_Plan.pdf)
+- [Budget and Fiscal Plan 2016/17 – 2018/19, Table A9, Revenue by Source – 2009/10 to 2018/19](http://bcbudget.gov.bc.ca/2016/bfp/2016_Budget_and_Fiscal_Plan.pdf)
+
+<style>{% include 2016/02/bcgas1.css %}</style>
+<script>{% include 2016/02/bcgas1.js %}</script>
