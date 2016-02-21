@@ -1,2 +1,4 @@
 # 3pats
-My Canadian data viz site
+My personal Canada-focused data visualization blog. Serves both my interest in Canadian politics and getting better with d3.js.
+
+Go [here](3pats.ca) to see the live site.
