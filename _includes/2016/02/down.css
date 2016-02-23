@@ -2,6 +2,15 @@
   font-size: 10px;
 }
 
+#downChart .bars {
+	cursor: pointer;
+}
+
+#downChart .bars:hover {
+	fill: #ff2600 !important;
+	transition: all 0.5s ease;
+}
+
 #downChart .axis path,
 #downChart .axis line {
   fill: none;
@@ -17,9 +26,36 @@
   display: none;
 }
 
+#downChart .vertical {
+	stroke: #CCC;
+}
+
 .downTitle {
 	font-family: Trueno;
 	font-size: 1.5em;
 	margin-bottom: 0;
 	text-align: center;
+}
+
+/* Tooltip */
+.hidden {
+	display: none;
+}
+
+#downTip {
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#downTip .tipTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+}
+
+#downTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
 }

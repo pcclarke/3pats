@@ -13,7 +13,7 @@ var downBudget = function() {
 		.range([height, 0]);
 
 	var color = d3.scale.ordinal()
-		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+		.range(["#d6d6d6", "#c0c0c0", "#a9a9a9", "#929292", "#919191", "#797979", "#5e5e5e"]);
 
 	var xAxis = d3.svg.axis()
 		.scale(x0)
@@ -33,24 +33,37 @@ var downBudget = function() {
 	d3.csv("{{ site.baseurl }}/data/2016/02/down.csv", function(error, data) {
 	  if (error) throw error;
 
-	  var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "State"; });
+	  var budNames = d3.keys(data[0]).filter(function(key) { return key !== "year"; });
 
 	  data.forEach(function(d) {
-		d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+		d.buds = budNames.map(function(name) { return {name: name, year: d.year, value: +d[name]}; });
 	  });
 
-	  x0.domain(data.map(function(d) { return d.State; }));
-	  x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
-	  y.domain([d3.min(data, function(d) { return d3.min(d.ages, function(d) { return d.value; }); }), 
-	  	d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
-	  	
-	  	console.log(y.domain());
-
+	  x0.domain(data.map(function(d) { return d.year; }));
+	  x1.domain(budNames).rangeRoundBands([0, x0.rangeBand()]);
+	  y.domain([d3.min(data, function(d) { return d3.min(d.buds, function(d) { return d.value; }); }), 
+	  	d3.max(data, function(d) { return d3.max(d.buds, function(d) { return d.value; }); })]);
+	  
+		var vertical = svg.append("g");
+		  	
+		vertical.append("line")
+			.attr("class", "vertical")
+			.attr("x1", x0("2016/17") - 8)
+			.attr("y1", y(y.domain()[0]))
+			.attr("x2", x0("2016/17") - 8)
+			.attr("y2", y(y.domain()[1]));
+			
+		vertical.append("line")
+			.attr("class", "vertical")
+			.attr("x1", x0("2017/18") - 8)
+			.attr("y1", y(y.domain()[0]))
+			.attr("x2", x0("2017/18") - 8)
+			.attr("y2", y(y.domain()[1]));
+		
 	  svg.append("g")
 		  .attr("class", "x axis")
 		  .attr("transform", "translate(0," + height + ")")
 		  .call(xAxis);
-
 		  
 		svg.append("g")
 			.attr("class", "xLine")
@@ -69,41 +82,39 @@ var downBudget = function() {
 		  .attr("y", 6)
 		  .attr("dy", ".71em")
 		  .style("text-anchor", "end")
-		  .text("Population");
+		  .text("Billions");
 
 	  var state = svg.selectAll(".state")
 		  .data(data)
 		.enter().append("g")
 		  .attr("class", "state")
-		  .attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
+		  .attr("transform", function(d) { return "translate(" + x0(d.year) + ",0)"; });
 
-	  state.selectAll("rect")
-		  .data(function(d) { return d.ages; })
+	  var bars = state.selectAll("rect")
+		  .data(function(d) { return d.buds; })
 		.enter().append("rect")
+			.attr("class", "bars")
 		  .attr("width", x1.rangeBand())
 		  .attr("x", function(d) { return x1(d.name); })
-		  .attr("y", function(d) { return y(Math.max(0, d.value)); })
-		  .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); /*return height - y(d.value);*/ })
-		  .style("fill", function(d) { return color(d.name); });
-
-	  var legend = svg.selectAll(".legend")
-		  .data(ageNames.slice().reverse())
-		.enter().append("g")
-		  .attr("class", "legend")
-		  .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-	  legend.append("rect")
-		  .attr("x", width - 18)
-		  .attr("width", 18)
-		  .attr("height", 18)
-		  .style("fill", color);
-
-	  legend.append("text")
-		  .attr("x", width - 24)
-		  .attr("y", 9)
-		  .attr("dy", ".35em")
-		  .style("text-anchor", "end")
-		  .text(function(d) { return d; });
+		  .attr("y", function(d) { return y(0); })
+		  .attr("height", 0)
+		  .style("fill", function(d) { return color(d.name); })
+		  .on("mouseover", function(d) { toolTip(d); })
+		  .on("click", function(d) { toolTip(d); });
+		  
+		bars.transition()
+			.delay(function(d, i) {return i * 32})
+			.attr("y", function(d) { return y(Math.max(0, d.value)); })
+		  	.attr("height", function(d) { return Math.abs(y(d.value) - y(0)); });
+		  
+		  function toolTip(d) {
+			d3.select("#downTip")
+				.select("#downName").text(d.name + " " + d.year);
+			d3.select("#downTip")
+				.select("#downVal").text(d.value + " billion dollars " + ((d.value > 0) ? "surplus" : "deficit"));
+	  
+			d3.select("#downTip").classed("hidden", false);
+		  }
 
 	});
 
