@@ -41,12 +41,25 @@ var downBudget = function() {
 
 	  x0.domain(data.map(function(d) { return d.State; }));
 	  x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
-	  y.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
+	  y.domain([d3.min(data, function(d) { return d3.min(d.ages, function(d) { return d.value; }); }), 
+	  	d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
+	  	
+	  	console.log(y.domain());
 
 	  svg.append("g")
 		  .attr("class", "x axis")
 		  .attr("transform", "translate(0," + height + ")")
 		  .call(xAxis);
+
+		  
+		svg.append("g")
+			.attr("class", "xLine")
+		.append("line")
+		  .attr("y1", y(0))
+		  .attr("y2", y(0))
+		  .attr("x1", 0)
+		  .attr("x2", width)
+		  .style("stroke", "black");
 
 	  svg.append("g")
 		  .attr("class", "y axis")
@@ -69,8 +82,8 @@ var downBudget = function() {
 		.enter().append("rect")
 		  .attr("width", x1.rangeBand())
 		  .attr("x", function(d) { return x1(d.name); })
-		  .attr("y", function(d) { return y(d.value); })
-		  .attr("height", function(d) { return height - y(d.value); })
+		  .attr("y", function(d) { return y(Math.max(0, d.value)); })
+		  .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); /*return height - y(d.value);*/ })
 		  .style("fill", function(d) { return color(d.name); });
 
 	  var legend = svg.selectAll(".legend")
