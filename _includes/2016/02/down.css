@@ -4,11 +4,11 @@
 
 #downChart .bars {
 	cursor: pointer;
+	transition: all 0.2s ease;
 }
 
-#downChart .bars:hover {
+#downChart .selected {
 	fill: #ff2600 !important;
-	transition: all 0.5s ease;
 }
 
 #downChart .axis path,
