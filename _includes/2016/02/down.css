@@ -1,0 +1,14 @@
+#downChart .axis path,
+#downChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#downChart .bar {
+  fill: steelblue;
+}
+
+#downChart .x.axis path {
+  display: none;
+}
