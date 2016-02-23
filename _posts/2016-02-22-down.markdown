@@ -6,7 +6,9 @@ date:   2016-02-22 12:00:00
 
 * * *
 
-<div id="downChart"></div>
+<div class="downTitle">Federal Budget Forecasts 2015-2018</div>
+
+<div id="downChart" class="chart"></div>
 <div id="downTip" class="hidden">
 	<p class="tipTitle"><span id="debtYear"></span></p>
 	<p class="tipInfo"><span id="debtVal"></span> million dollars</p>

@@ -25,10 +25,10 @@ var downBudget = function() {
 		.tickFormat(d3.format(".2s"));
 
 	var svg = d3.select("#downChart").append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
-	  .append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	d3.csv("{{ site.baseurl }}/data/2016/02/down.csv", function(error, data) {
 	  if (error) throw error;
