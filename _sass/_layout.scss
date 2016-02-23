@@ -163,7 +163,8 @@
 	margin-top: 40px;
 	
 	.previous, .next {
-		font-family: $heading-font-family;
+		font-family: $base-font-family;
+		font-weight: bold;
 	}
 }
 
@@ -253,5 +254,7 @@
 }
 
 text {
-	font-family: $base-font-family;
+	font-family: $small-font-family !important;
+
 }
+
