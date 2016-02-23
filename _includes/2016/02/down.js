@@ -99,15 +99,24 @@ var downBudget = function() {
 		  .attr("y", function(d) { return y(0); })
 		  .attr("height", 0)
 		  .style("fill", function(d) { return color(d.name); })
-		  .on("mouseover", function(d) { toolTip(d); })
-		  .on("click", function(d) { toolTip(d); });
+		  .on("mouseover", function(d) { toolTip(d, this); })
+		  .on("click", function(d) { toolTip(d, this); });
 		  
 		bars.transition()
 			.delay(function(d, i) {return i * 32})
 			.attr("y", function(d) { return y(Math.max(0, d.value)); })
 		  	.attr("height", function(d) { return Math.abs(y(d.value) - y(0)); });
 		  
-		  function toolTip(d) {
+		var selected;
+		
+		  function toolTip(d, obj) {
+		  	if (selected) {
+		  		d3.select(selected).classed("selected", false);
+			}
+			
+			selected = obj;
+			d3.select(obj).classed("selected", true);
+		  
 			d3.select("#downTip")
 				.select("#downName").text(d.name + " " + d.year);
 			d3.select("#downTip")
