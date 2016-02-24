@@ -36,15 +36,17 @@ UPDATE 24/02/16: With help from Vaughn Palmer himself, here's data going back fa
 
 * * *
 
-<div class="debtTitle">BC Debt to GDP Ratio</div>
+<div class="debtTitle">BC Debt to GDP Ratios 1969/70 - 2014/15</div>
 
-<div id="debtChart2"></div>
-<div id="debtTip2" class="hidden">
-	<p class="tipTitle"><span id="debtJur"></span></p>
-	<p class="tipInfo"><span id="debtVal"></span> million dollars</p>
+<div id="debtChart3"></div>
+<div id="debtTip3" class="hidden">
+	<p class="tipTitle"><span id="year"></span></p>
+	<p class="tipInfo"><span id="val"></span></p>
 </div>
 
 * * *
+
+
 
 Sources: 
 
@@ -56,3 +58,4 @@ Sources:
 <script type="text/javascript" src="{{ site.baseurl }}/js/textures.min.js"></script>
 <script>{% include 2016/02/bcdebt.js %}</script>
 <script>{% include 2016/02/bcdebt2.js %}</script>
+<script>{% include 2016/02/bcdebt3.js %}</script>
