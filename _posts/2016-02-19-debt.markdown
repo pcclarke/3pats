@@ -22,7 +22,7 @@ This was inspired by [Vaughn Palmer's column on this seeming contradiction](http
 
 * * *
 
-UPDATE 23/02/16: With help from Vaughn Palmer himself, here's data going back farther:
+UPDATE 24/02/16: With help from Vaughn Palmer himself, here's data going back farther:
 
 * * *
 
@@ -36,10 +36,21 @@ UPDATE 23/02/16: With help from Vaughn Palmer himself, here's data going back fa
 
 * * *
 
+<div class="debtTitle">BC Debt to GDP Ratio</div>
+
+<div id="debtChart2"></div>
+<div id="debtTip2" class="hidden">
+	<p class="tipTitle"><span id="debtJur"></span></p>
+	<p class="tipInfo"><span id="debtVal"></span> million dollars</p>
+</div>
+
+* * *
+
 Sources: 
 
 - [BC Budgets 2010-2016](http://www.bcbudget.gov.bc.ca/default.htm)
 - [BC Ferries Annual Reports](http://www.bcferries.com/investors/AR.html)
+- [2015 British Columbia Financial and Economic Review](http://www.fin.gov.bc.ca/tbs/F&Ereview15.pdf)
 
 <style>{% include 2016/02/bcdebt.css %}</style>
 <script type="text/javascript" src="{{ site.baseurl }}/js/textures.min.js"></script>

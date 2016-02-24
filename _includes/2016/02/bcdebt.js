@@ -56,7 +56,7 @@ var bcdebt = function() {
 		d3.csv("{{ site.baseurl }}/data/2016/02/bc_debt.csv", type, function(error, data) {
 			if (error) throw error;
 
-			var color = d3.scale.ordinal().range(["#ebebeb", "#d6d6d6", "#c0c0c0", "#a9a9a9", "#929292", "#919191", "#797979", "#5e5e5e", "#424242", "#212121"]);
+			var color = d3.scale.ordinal().range(["#ebebeb", "#d6d6d6", "#c0c0c0", "#a9a9a9", "#A0A0A0", "#919191", "#797979", "#5e5e5e", "#424242", "#212121"]);
 			color.domain(d3.keys(data[0]).filter(function(key) { 
 				if (bcf == 1) {
 					return key !== "year";

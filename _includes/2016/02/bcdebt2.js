@@ -19,6 +19,7 @@ var bcDebt2 = function() {
 		.range([ 0, h]);
 		
 	var dateFormat = d3.time.format("%Y");
+	var numFormat = d3.format(",");
 
 	var xAxis = d3.svg.axis()
 		.scale(xScale)
@@ -31,7 +32,7 @@ var bcDebt2 = function() {
 	var yAxis = d3.svg.axis()
 		.scale(yScale)
 		.orient("left")
-		.ticks(5);
+		.tickFormat(d3.format(".2s"));
 
 	var M;
 	var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -61,7 +62,7 @@ var bcDebt2 = function() {
 		});
 
 	//Easy colors accessible via a 10-step ordinal scale
-	var color = d3.scale.ordinal().range(["#ebebeb", "#d6d6d6", "#c0c0c0", "#a9a9a9", "#929292", "#919191", "#797979", "#5e5e5e", "#424242", "#212121"]);
+	var color = d3.scale.ordinal().range(["#ebebeb", "#d6d6d6", "#c0c0c0", "#a9a9a9", "#A0A0A0", "#919191", "#797979", "#5e5e5e", "#424242", "#212121"]);
 
 
 	//Create the empty SVG image
@@ -95,7 +96,7 @@ var bcDebt2 = function() {
 				var amount = null;
 
 				if (data[i][months[j]]) {
-					amount = (+data[i][months[j]]) / 1000;
+					amount = +data[i][months[j]];
 				}
 
 				dataset[i].production.push({
@@ -116,8 +117,6 @@ var bcDebt2 = function() {
 				return dateFormat.parse(d);
 			})
 		]);
-		
-		console.log(xScale.domain());
 
 		var totals = [];
 
@@ -164,16 +163,24 @@ var bcDebt2 = function() {
 			.attr("stroke", "none")
 			.attr("fill", function(d, i) { return color(d.country); })
 			.on("mousemove", function(d) {
-				updateTooltip(d);
+				updateTooltip(d, this);
 			})
 			.on("mouseover", function(d) {
-				updateTooltip(d);
+				updateTooltip(d, this);
 			})
 			.on("click", function(d) {
-				updateTooltip(d);
+				updateTooltip(d, this);
 			});
 			
-		function updateTooltip(d) {
+		var selected;			
+
+		function updateTooltip(d, obj) {
+		  	if (selected) {
+		  		d3.select(selected).classed("selected", false);
+			}
+			selected = obj;
+			d3.select(obj).classed("selected", true);
+			
 			var selDate = xScale.invert(M[0] + 5);
 			
 			d3.select("#debtTip2")
@@ -184,7 +191,7 @@ var bcDebt2 = function() {
 				var yearStr = "" + selDate.getFullYear();
 				if (yearStr === d.production[i].x) {
 					d3.select("#debtTip2")
-						.select("#debtVal").text(d.production[i].y);
+						.select("#debtVal").text(numFormat(d.production[i].y));
 				}
 			}
 			
@@ -204,7 +211,14 @@ var bcDebt2 = function() {
 
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(yAxis);
+			.call(yAxis)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", 6)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Millions");
+
 	});
 
 }();
