@@ -1,4 +1,6 @@
-#debtChart text {
+#debtChart text,
+#debtChart2 text,
+#debtChart3 text {
   font-size: 10px;
 }
 
@@ -6,18 +8,33 @@
   display: none;
 }
 
-#debtChart .axis line {
+#debtChart2 .y path {
+  display: none;
+}
+
+#debtChart2 .axis path,
+#debtChart2 .axis line {
+	fill: none;
+	stroke: black;
+	stroke-width: 0.5px;
+	shape-rendering: crispEdges;
+}
+
+#debtChart .axis line,
+#debtChart2 .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-#debtChart .source-label {
+#debtChart .source-label,
+#debtChart2 .source-label {
   font-weight: bold;
   text-anchor: end;
 }
 
 .debtTitle {
+	font-family: "Trueno Regular";
 	font-size: 1.5em;
 	margin-bottom: 0;
 	text-align: center;
@@ -28,8 +45,56 @@
 	text-align: center;
 }
 
-#debtChart .vertical {
+#debtChart .vertical,
+#debtChart2 .vertical {
 	stroke: #000;
+}
+
+#debtChart2 .area {
+	opacity: .8;
+}
+
+#debtChart2 .selected {
+	fill: #ff2600 !important;
+}
+
+#debtChart3 .axis path,
+#debtChart3 .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#debtChart3 .axis--y path {
+  display: none;
+}
+
+#debtChart3 .data {
+  fill: none;
+  stroke: rgba(100, 100, 100, 0.4);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 1.5px;
+}
+
+#debtChart3 .budget--hover {
+  stroke: #000 !important;
+}
+
+#debtChart3 .focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#debtChart3 .voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+#debtChart3 .voronoi--show path,
+#petroChChart .voronoi--show path, {
+  stroke: red;
+  stroke-opacity: .2;
 }
 
 /* Tooltip */
@@ -37,20 +102,26 @@
 	display: none;
 }
 
-#debtTip {
+#debtTip,
+#debtTip2,
+#debtTip3 {
+	font-family: "Trueno Regular";
 	min-height: 50px;
 	margin-bottom: 15px;
 	text-align: center;
 	text-transform: capitalize;
 }
 
-#debtTip .tipTitle {
+#debtTip .tipTitle,
+#debtTip2 .tipTitle,
+#debtTip3 .tipTitle {
   font-size: 18px;
-  font-weight: bold;
   margin-bottom: 5px !important;
 }
 
-#debtTip .tipInfo {
+#debtTip .tipInfo
+#debtTip2 .tipInfo,
+#debtTip3 .tipInfo {
   font-size: 12px;
   margin: 0;
 }
