@@ -1,23 +1,28 @@
-#debtChart text {
+#debtChart text,
+#debtChart2 text {
   font-size: 10px;
 }
 
-#debtChart .axis path {
+#debtChart .axis path,
+#debtChart2 .axis path {
   display: none;
 }
 
-#debtChart .axis line {
+#debtChart .axis line,
+#debtChart2 .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-#debtChart .source-label {
+#debtChart .source-label,
+#debtChart2 .source-label {
   font-weight: bold;
   text-anchor: end;
 }
 
 .debtTitle {
+	font-family: "Trueno Regular";
 	font-size: 1.5em;
 	margin-bottom: 0;
 	text-align: center;
@@ -37,20 +42,23 @@
 	display: none;
 }
 
-#debtTip {
+#debtTip,
+#debtTip2 {
+	font-family: "Trueno Regular";
 	min-height: 50px;
 	margin-bottom: 15px;
 	text-align: center;
 	text-transform: capitalize;
 }
 
-#debtTip .tipTitle {
+#debtTip .tipTitle,
+#debtTip2 .tipTitle {
   font-size: 18px;
-  font-weight: bold;
   margin-bottom: 5px !important;
 }
 
-#debtTip .tipInfo {
+#debtTip .tipInfo
+#debtTip2 .tipInfo {
   font-size: 12px;
   margin: 0;
 }

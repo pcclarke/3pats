@@ -10,13 +10,27 @@ This was inspired by [Vaughn Palmer's column on this seeming contradiction](http
 
 * * *
 
-<div class="debtTitle">BC Budget Debt</div>
+<div class="debtTitle">BC Budget Debt 2006/07 - 2018/19</div>
 
 <label class="showBCFerries"><input class="showBCF" name="bcFerries" type="checkbox">Include BC Ferries debt (to 2015)</label>
 
 <div id="debtChart"></div>
 <div id="debtTip" class="hidden">
 	<p class="tipTitle"><span id="debtYear"></span></p>
+	<p class="tipInfo"><span id="debtVal"></span> million dollars</p>
+</div>
+
+* * *
+
+UPDATE 23/02/16: With help from Vaughn Palmer himself, here's data going back farther:
+
+* * *
+
+<div class="debtTitle">BC Budget Debt 1969/70 - 2014/15</div>
+
+<div id="debtChart2"></div>
+<div id="debtTip2" class="hidden">
+	<p class="tipTitle"><span id="debtJur"></span></p>
 	<p class="tipInfo"><span id="debtVal"></span> million dollars</p>
 </div>
 
@@ -30,3 +44,4 @@ Sources:
 <style>{% include 2016/02/bcdebt.css %}</style>
 <script type="text/javascript" src="{{ site.baseurl }}/js/textures.min.js"></script>
 <script>{% include 2016/02/bcdebt.js %}</script>
+<script>{% include 2016/02/bcdebt2.js %}</script>
