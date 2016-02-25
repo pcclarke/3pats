@@ -13,7 +13,7 @@ var bcinc = function() {
 	var y1 = d3.scale.ordinal();
 
 	var color = d3.scale.ordinal()
-		.range(["#d6d6d6", "#c0c0c0", "#a9a9a9", "#929292", "#919191", "#797979", "#5e5e5e"]);
+		.range(["#ebebeb", "#d6d6d6", "#c0c0c0", "#a9a9a9", "#A0A0A0", "#919191", "#797979", "#5e5e5e", "#424242", "#212121"]);
 
 	var xAxis = d3.svg.axis()
 		.scale(x)
