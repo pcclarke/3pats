@@ -1,0 +1,26 @@
+#bcincChart text {
+  font-size: 10px;
+}
+
+#bcincChart .bars {
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+#bcincChart .selected {
+	fill: #ff2600 !important;
+}
+
+#bcincChart .axis path,
+#bcincChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bcincTitle {
+	font-family: "Trueno Regular";
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}

@@ -1,0 +1,20 @@
+---
+layout: post
+title:  "Who will pay higher MSPs?"
+date:   2016-02-25 12:00:00
+---
+
+* * *
+
+<div class="bcincTitle">Budget Forecasts 2015/16 - 2017/18</div>
+
+<div id="bcincChart" class="chart"></div>
+<div id="bcincTip" class="hidden">
+	<p class="tipTitle"><span id="downName"></span></p>
+	<p class="tipInfo"><span id="downVal"></span></p>
+</div>
+
+* * *
+
+<style>{% include 2016/02/bcinc.css %}</style>
+<script>{% include 2016/02/bcinc.js %}</script>

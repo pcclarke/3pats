@@ -18,10 +18,6 @@
   shape-rendering: crispEdges;
 }
 
-#downChart .bar {
-  fill: steelblue;
-}
-
 #downChart .x.axis path {
   display: none;
 }
@@ -31,7 +27,7 @@
 }
 
 .downTitle {
-	font-family: Trueno;
+	font-family: "Trueno Regular";
 	font-size: 1.5em;
 	margin-bottom: 0;
 	text-align: center;
