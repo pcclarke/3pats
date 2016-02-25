@@ -147,16 +147,24 @@ function msp(chartName, chartId, diffFile, dataFile) {
 			
 				var income1 = (d.Income1 < 15000) ? 0 : numFormatComma(d.Income1);
 				var income2 = (d.Income2 > 55000) ? "and up" : ("to " + numFormatComma(d.Income2));
-				var change = 0;
-				if (d["2016"] == 0)
-					change = 0;
-				if (d["2017"] == 0 && d["2016"] != 0)
-					change = -100;
-				if (d["2016"] > d["2017"])
-					change = ((1 - (d["2017"] / d["2016"])) * -100);
-				else
-					change = ((d["2017"] / d["2016"] -1) * 100);
-				console.log(change);
+				var change = (function() {
+					if (d["2016"] == 0)
+						return 0;
+					else if (d["2017"] == 0 && d["2016"] != 0)
+						return 100;
+					else if (d["2016"] > d["2017"])
+						return ((1 - (d["2017"] / d["2016"])) * 100);
+					else
+						return ((d["2017"] / d["2016"] -1) * 100);
+				})();
+				var changeText = (function() {
+					if (d["2017"] > d["2016"])
+						return "increase";
+					else if (d["2016"] > d["2017"])
+						return "decrease";
+					else
+						return "";
+				})();
 				d3.select("#" + "tip1_" + chartId)
 					.text(income1 + " " + income2);
 				d3.select("#" + "tip2_" + chartId)
@@ -164,7 +172,7 @@ function msp(chartName, chartId, diffFile, dataFile) {
 				d3.select("#" + "tip3_" + chartId)
 					.text("2017: $" + numFormat(d["2017"]));
 				d3.select("#" + "tip4_" + chartId)
-					.text("Change: " + numFormat(change) + "%");
+					.text("Change: " + numFormat(change) + "% " + changeText);
 			}
 		}
 		
