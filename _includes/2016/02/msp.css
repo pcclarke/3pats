@@ -1,0 +1,62 @@
+#mspChart text {
+	font-size: 10px;
+}
+
+#mspChart .line {
+  fill: none;
+  stroke: #CCC;
+  pointer-events: all;
+}
+
+#mspChart .area.above {
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+#mspChart .area.below {
+  fill: rgba(0, 0, 0, 0.4);
+}
+
+#mspChart .axis path,
+#mspChart .axis line{
+  fill: none;
+  stroke: #BBB;
+  shape-rendering: crispEdges;
+}
+
+#mspChart .y .axis path {
+  display: none;
+}
+
+#mspChart .msp2016,
+#mspChart .msp2017 {
+	cursor: pointer;
+	transition: all 0.2s ease;
+	stroke-width: 3px;
+}
+
+#mspChart .msp2016 {
+	stroke: #797979;
+}
+
+#mspChart .msp2017 {
+	stroke: #212121;
+}
+
+#mspChart .selected {
+	stroke: #ff2600;
+}
+
+#mspChart .chartName {
+	font-size: 16px;
+}
+
+#mspChart .tipInfo {
+	text-anchor: start;
+}
+
+.mspTitle {
+	font-family: "Trueno Regular";
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
