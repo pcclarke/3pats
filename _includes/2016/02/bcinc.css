@@ -28,3 +28,27 @@
 	margin-bottom: 0;
 	text-align: center;
 }
+
+/* Tooltip */
+.hidden {
+	display: none;
+}
+
+#bcincTip {
+	font-family: "Trueno Regular";
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#bcincTip .tipTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+}
+
+#bcincTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}

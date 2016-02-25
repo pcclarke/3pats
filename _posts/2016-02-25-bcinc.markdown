@@ -4,17 +4,24 @@ title:  "Who will pay higher MSPs?"
 date:   2016-02-25 12:00:00
 ---
 
+The question raised by [yesterday's post]({% post_url 2016-02-24-msp %}) is just who will be paying the increased MSPs? Statscan can give us a rough idea by breaking out the number of people at various income levels in BC:
+
 * * *
 
-<div class="bcincTitle">Population by Age and Income</div>
+<div class="bcincTitle">BC Population by Age and Income (2013)</div>
 
 <div id="bcincChart" class="chart"></div>
 <div id="bcincTip" class="hidden">
-	<p class="tipTitle"><span id="downName"></span></p>
-	<p class="tipInfo"><span id="downVal"></span></p>
+	<p class="tipTitle"><span id="bcincName"></span></p>
+	<p class="tipInfo"><span id="bcincInc"></span></p>
+	<p class="tipInfo"><span id="bcincVal"></span></p>
 </div>
 
 * * *
+
+This data doesn't include all of the government workers who don't have to pay MSPs, and other quirks (such as number of children, household size) but it does look like quite a few people will be paying more.
+
+Source [CANSIM Table 111-0008](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=1110008)
 
 <style>{% include 2016/02/bcinc.css %}</style>
 <script>{% include 2016/02/bcinc.js %}</script>

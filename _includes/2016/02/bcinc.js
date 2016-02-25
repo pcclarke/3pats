@@ -2,7 +2,7 @@ var bcinc = function() {
 
 	var margin = {top: 20, right: 20, bottom: 30, left: 100},
 		width = 740 - margin.left - margin.right,
-		height = 800 - margin.top - margin.bottom;
+		height = 900 - margin.top - margin.bottom;
 
 	var x = d3.scale.linear()
 		.range([0, width]);
@@ -23,6 +23,10 @@ var bcinc = function() {
 	var yAxis = d3.svg.axis()
 		.scale(y0)
 		.orient("left");
+		
+	var selected;
+	
+	var numFormat = d3.format(",");
 
 	var svg = d3.select("#bcincChart").append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -36,7 +40,7 @@ var bcinc = function() {
 	  var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "income"; });
 
 	  data.forEach(function(d) {
-		d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+		d.ages = ageNames.map(function(name) { return {name: name, income: d.income, value: +d[name]}; });
 	  });
 
 	  y0.domain(data.map(function(d) { return d.income; }));
@@ -63,14 +67,39 @@ var bcinc = function() {
 		  .attr("class", "income")
 		  .attr("transform", function(d) { return "translate(0," + y0(d.income) + ")"; });
 
-	  income.selectAll("rect")
+	  var bars = income.selectAll("rect")
 		  .data(function(d) { return d.ages; })
 		.enter().append("rect")
-		  .attr("width", function(d) { return x(d.value); })
+		  .attr("class", "bars")
+		  .attr("width", function(d) { return x(0); })
 		  .attr("x", function(d) { return 0; })
 		  .attr("y", function(d) { return y1(d.name); })
 		  .attr("height", y1.rangeBand())
-		  .style("fill", function(d) { return color(d.name); });
+		  .style("fill", function(d) { return color(d.name); })
+		  .on("mouseover", function(d) { tooltip(d, this); })
+		  .on("click", function(d) { tooltip(d, this); });
+		  
+		bars.transition()
+			.delay(function(d, i) {return i * 32})
+			.attr("width", function(d) { return x(d.value); });
+		  
+		function tooltip(d, obj) {
+		  	if (selected) {
+		  		d3.select(selected).classed("selected", false);
+			}
+			
+			selected = obj;
+			d3.select(obj).classed("selected", true);
+		  
+			d3.select("#bcincTip")
+				.select("#bcincName").text("Ages " + d.name);
+			d3.select("#bcincTip")
+				.select("#bcincInc").text("Earning between " + d.income + " per year");
+			d3.select("#bcincTip")
+				.select("#bcincVal").text(numFormat(d.value) + " people");
+	  
+			d3.select("#bcincTip").classed("hidden", false);
+		}
 
 	  var legend = svg.selectAll(".legend")
 		  .data(ageNames.slice().reverse())
