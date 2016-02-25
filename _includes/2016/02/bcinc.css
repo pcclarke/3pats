@@ -1,32 +1,28 @@
-#downChart text {
+#bcincChart text {
   font-size: 10px;
 }
 
-#downChart .bars {
+#bcincChart .bars {
 	cursor: pointer;
 	transition: all 0.2s ease;
 }
 
-#downChart .selected {
+#bcincChart .selected {
 	fill: #ff2600 !important;
 }
 
-#downChart .axis path,
-#downChart .axis line {
+#bcincChart .y path {
+	display: none;
+}
+
+#bcincChart .axis path,
+#bcincChart .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-#downChart .x.axis path {
-  display: none;
-}
-
-#downChart .vertical {
-	stroke: #CCC;
-}
-
-.downTitle {
+.bcincTitle {
 	font-family: "Trueno Regular";
 	font-size: 1.5em;
 	margin-bottom: 0;
@@ -38,20 +34,21 @@
 	display: none;
 }
 
-#downTip {
+#bcincTip {
+	font-family: "Trueno Regular";
 	min-height: 50px;
 	margin-bottom: 15px;
 	text-align: center;
 	text-transform: capitalize;
 }
 
-#downTip .tipTitle {
+#bcincTip .tipTitle {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px !important;
 }
 
-#downTip .tipInfo {
+#bcincTip .tipInfo {
   font-size: 12px;
   margin: 0;
 }
