@@ -1,28 +1,28 @@
 var bcinc = function() {
 
-	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+	var margin = {top: 20, right: 20, bottom: 30, left: 100},
 		width = 740 - margin.left - margin.right,
-		height = 400 - margin.top - margin.bottom;
+		height = 800 - margin.top - margin.bottom;
 
-	var x0 = d3.scale.ordinal()
-		.rangeRoundBands([0, width], .1);
+	var x = d3.scale.linear()
+		.range([0, width]);
 
-	var x1 = d3.scale.ordinal();
+	var y0 = d3.scale.ordinal()
+		.rangeRoundBands([0, height], .1);
 
-	var y = d3.scale.linear()
-		.range([height, 0]);
+	var y1 = d3.scale.ordinal();
 
 	var color = d3.scale.ordinal()
 		.range(["#d6d6d6", "#c0c0c0", "#a9a9a9", "#929292", "#919191", "#797979", "#5e5e5e"]);
 
 	var xAxis = d3.svg.axis()
-		.scale(x0)
-		.orient("bottom");
+		.scale(x)
+		.orient("bottom")
+		.tickFormat(d3.format(".2"));
 
 	var yAxis = d3.svg.axis()
-		.scale(y)
-		.orient("left")
-		.tickFormat(d3.format(".2s"));
+		.scale(y0)
+		.orient("left");
 
 	var svg = d3.select("#bcincChart").append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -39,38 +39,37 @@ var bcinc = function() {
 		d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
 	  });
 
-	  x0.domain(data.map(function(d) { return d.income; }));
-	  x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
-	  y.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
+	  y0.domain(data.map(function(d) { return d.income; }));
+	  y1.domain(ageNames).rangeRoundBands([0, y0.rangeBand()]);
+	  x.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
 
 	  svg.append("g")
 		  .attr("class", "x axis")
 		  .attr("transform", "translate(0," + height + ")")
-		  .call(xAxis);
+		  .call(xAxis)
+		  .append("text")
+		  .attr("x", width - 2)
+		  .attr("y", -5)
+		  .style("text-anchor", "end")
+		  .text("Taxfilers and dependents");
 
 	  svg.append("g")
 		  .attr("class", "y axis")
-		  .call(yAxis)
-		.append("text")
-		  .attr("transform", "rotate(-90)")
-		  .attr("y", 6)
-		  .attr("dy", ".71em")
-		  .style("text-anchor", "end")
-		  .text("Taxfilers and dependents");
+		  .call(yAxis);
 
 	  var income = svg.selectAll(".income")
 		  .data(data)
 		.enter().append("g")
 		  .attr("class", "income")
-		  .attr("transform", function(d) { return "translate(" + x0(d.income) + ",0)"; });
+		  .attr("transform", function(d) { return "translate(0," + y0(d.income) + ")"; });
 
 	  income.selectAll("rect")
 		  .data(function(d) { return d.ages; })
 		.enter().append("rect")
-		  .attr("width", x1.rangeBand())
-		  .attr("x", function(d) { return x1(d.name); })
-		  .attr("y", function(d) { return y(d.value); })
-		  .attr("height", function(d) { return height - y(d.value); })
+		  .attr("width", function(d) { return x(d.value); })
+		  .attr("x", function(d) { return 0; })
+		  .attr("y", function(d) { return y1(d.name); })
+		  .attr("height", y1.rangeBand())
 		  .style("fill", function(d) { return color(d.name); });
 
 	  var legend = svg.selectAll(".legend")

@@ -11,6 +11,10 @@
 	fill: #ff2600 !important;
 }
 
+#bcincChart .y path {
+	display: none;
+}
+
 #bcincChart .axis path,
 #bcincChart .axis line {
   fill: none;
