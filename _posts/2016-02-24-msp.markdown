@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "MSP not MSG"
+date:   2016-02-24 12:00:00
+---
+
+The MSP changes in the recent BC budget have both [The Vancouver Sun](http://www.vancouversun.com/opinion/editorials/editorial+unfair+inefficient+unnecessary/11731822/story.html) and [David Schreck](http://www.strategicthoughts.com) flustered. Here's an overview of the changes:
+
+* * *
+
+<div class="mspTitle">MSP Changes in 2016 BC Budget</div>
+
+<div id="mspChart"></div>
+
+* * *
+
+Source: [Budget and Fiscal Plan 2016/17 - 2018/19](http://www.bcbudget.gov.bc.ca/2016/bfp/2016_Budget_and_Fiscal_Plan.pdf) (pdf)
+
+<style>{% include 2016/02/msp.css %}</style>
+<script type="text/javascript" src="{{ site.baseurl }}/js/textures.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+<script>{% include 2016/02/msp.js %}</script>
