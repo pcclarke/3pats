@@ -1,5 +1,6 @@
 var bcrev = function() {
-	var years;
+	var years,
+		yearFormat = d3.time.format("%Y");
 			
 	var numFormat = d3.format(",.0");
 	var percentFormat = d3.format("%");
@@ -9,7 +10,7 @@ var bcrev = function() {
       height = 400 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
-      .rangeBands([0, width]);
+      .rangePoints([0, width]);
 
   var y = d3.scale.linear()
       .range([height, 0]);
@@ -34,23 +35,84 @@ var bcrev = function() {
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("{{ site.baseurl }}/data/2016/02/bcrev.csv", type, function(error, data) {
-    x.domain(years);
-    y.domain([d3.min(data, function(c) { 
-		return d3.min(c.values, function(d) { return d.value; }); 
-      }),
-			d3.max(data, function(c) {
-	      return d3.max(c.values, function(d) { return d.value; }); 
+	d3.csv("{{ site.baseurl }}/data/2016/02/bcrev.csv", type, function(error, data) {
+		x.domain(years);
+		y.domain([d3.min(data, function(c) { return d3.min(c.values, function(d) { return d.value; }); }),
+			d3.max(data, function(c) { return d3.max(c.values, function(d) { return d.value; }); 
 	    })]).nice();
+	    
+	svg.append("text")
+		.attr("x", x("2013/14"))
+		.attr("y", 0)
+		.attr("font-style", "italic")
+		.attr("text-anchor", "right")
+		.text("Actual");
+		
+	svg.append("line")
+		.attr("x1", function(d) {
+			return x("2014/15") + 20;
+		})
+		.attr("y1", y(y.domain()[0]))
+		.attr("x2", function(d) {
+			return x("2014/15") + 20;
+		})
+		.attr("y2", y(y.domain()[1]))
+		.attr("class", "vertical")
+		.attr("stroke-dasharray", "5, 3");
+		
+	svg.append("text")
+		.attr("x", x("2015/16"))
+		.attr("y", 0)
+		.attr("font-style", "italic")
+		.attr("text-anchor", "middle")
+		.text("Forecast");
+		
+	svg.append("line")
+		.attr("x1", function(d) {
+			return x("2016/17") - 22;
+		})
+		.attr("y1", y(y.domain()[0]))
+		.attr("x2", function(d) {
+			return x("2016/17") - 22;
+		})
+		.attr("y2", y(y.domain()[1]))
+		.attr("class", "vertical")
+		.attr("stroke-dasharray", "5, 3");
+		
+	svg.append("text")
+		.attr("x", x("2016/17"))
+		.attr("y", 0)
+		.attr("font-style", "italic")
+		.attr("text-anchor", "middle")
+		.text("Estimate");
+		
+	svg.append("line")
+		.attr("x1", function(d) {
+			return x("2017/18") - 24;
+		})
+		.attr("y1", y(y.domain()[0]))
+		.attr("x2", function(d) {
+			return x("2017/18") - 24;
+		})
+		.attr("y2", y(y.domain()[1]))
+		.attr("class", "vertical")
+		.attr("stroke-dasharray", "5, 3");
+		
+	svg.append("text")
+		.attr("x", x("2017/18"))
+		.attr("y", 0)
+		.attr("font-style", "italic")
+		.attr("text-anchor", "middle")
+		.text("Plan");
 
-    svg.append("g")
+	svg.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.svg.axis()
           .scale(x)
           .orient("bottom")
           .tickValues(years.filter(function(y, i) { 
-          	if (i % 10 == 0) return y; 
+          	if (i % 4 == 0) return y; 
           }))
         );
 
@@ -98,11 +160,19 @@ var bcrev = function() {
         .on("mouseout", mouseout);
 
     function mouseover(d) {
-    console.log(d);
       d3.select("#bcrevTip").select("#bcrevName")
 				.text(d.budget.name + " " + d.date);
+				
+		var changeText = (function() {
+					if (d.value > 0)
+						return "increase";
+					else if (d.value < 0)
+						return "decrease";
+					else
+						return "";
+				})();
       d3.select("#bcrevTip").select("#bcrevVal")
-				.text(percentFormat(d.value));
+				.text(percentFormat(Math.abs(d.value)) + " " + changeText);
 
       d3.select(d.budget.line).classed("budget--hover", true);
       d.budget.line.parentNode.appendChild(d.budget.line);

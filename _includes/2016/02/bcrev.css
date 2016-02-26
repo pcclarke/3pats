@@ -42,6 +42,10 @@
   pointer-events: all;
 }
 
+#bcrevChart .vertical {
+	stroke: #CCC;
+}
+
 .bcrevTitle {
 	font-family: "Trueno Regular";
 	font-size: 1.5em;

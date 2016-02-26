@@ -98,7 +98,6 @@ var bcdebt3 = function() {
         .on("mouseout", mouseout);
 
     function mouseover(d) {
-    console.log(d);
       d3.select("#debtTip3").select("#year")
 				.text(d.budget.name + " " + d.date);
       d3.select("#debtTip3").select("#val")
