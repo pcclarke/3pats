@@ -1,0 +1,23 @@
+---
+layout: post
+title:  "Steady stream of income"
+date:   2016-02-26 12:00:00
+---
+
+* * *
+
+<div class="bcrevTitle">Yearly change in BC Government revenues</div>
+
+<div id="bcrevChart" class="chart"></div>
+<div id="bcrevTip" class="hidden">
+	<p class="tipTitle"><span id="bcrevName"></span></p>
+	<p class="tipInfo"><span id="bcrevVal"></span></p>
+</div>
+
+* * *
+
+- [2015 British Columbia Financial and Economic Review, Table A2.6 Revenue by Source Supplementary Information – 2003/04 to 2014/15](http://www.fin.gov.bc.ca/tbs/F&Ereview15.pdf)
+- [Budget and Fiscal Plan 2016/17 – 2018/19, Table A10 Revenue by Source Supplementary Information – 2009/10 to 2018/19](http://bcbudget.gov.bc.ca/2016/bfp/2016_Budget_and_Fiscal_Plan.pdf)
+
+<style>{% include 2016/02/bcrev.css %}</style>
+<script>{% include 2016/02/bcrev.js %}</script>

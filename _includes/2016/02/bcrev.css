@@ -1,0 +1,74 @@
+#bcrevChart text {
+  font-size: 10px;
+}
+
+#bcrevChart .axis path,
+#bcrevChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#bcrevChart .axis path,
+#bcrevChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#bcrevChart .axis--y path {
+  display: none;
+}
+
+#bcrevChart .data {
+  fill: none;
+  stroke: rgba(100, 100, 100, 0.4);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 1.5px;
+}
+
+#bcrevChart .budget--hover {
+  stroke: #000 !important;
+}
+
+#bcrevChart .focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#bcrevChart .voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+.bcrevTitle {
+	font-family: "Trueno Regular";
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+/* Tooltip */
+.hidden {
+	display: none;
+}
+
+#bcrevTip {
+	font-family: "Trueno Regular";
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#bcrevTip .tipTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+}
+
+#bcrevTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
