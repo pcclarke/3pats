@@ -4,6 +4,10 @@ title:  "Rise of the pretty rich"
 date:   2016-02-29 12:00:00
 ---
 
+With all the talk of millionaires buying up Vancouver houses, I thought it would be interesting to check out just how many millionaires there are in Vancouver. As ever, it's hard to find exact measures of millionaires, especially immigrant millionaires.
+
+Statscan does keep track of demographics by large income groups, so let's start there:
+
 * * *
 
 <div class="richTitle">Annual change in Vancouver demographics by income group</div>
@@ -16,6 +20,12 @@ date:   2016-02-29 12:00:00
 </div>
 
 * * *
+
+Interestingly, while there has been some growth in people earning over 250,000 per year, the fastest growth has been in the income groups just below that: $100,000-149,000 and $150,000-199,999. Whereas, most of the income groups that saw decreases were in the lower income groups – and I doubt that's just because they got wealthier.
+
+It's too bad the data only goes until 2013, because it looks like the population has surged ahead since the 2008 economic recession in the US.
+
+Source [CANSIM Table 111-0008](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=1110008)
 
 <style>{% include 2016/02/rich.css %}</style>
 <script>{% include 2016/02/rich.js %}</script>

@@ -104,7 +104,7 @@ var rich = function() {
 
     function mouseover(d) {
       d3.select("#richTip").select("#richName")
-				.text("Earning " + d.budget.name + " in " + d.date);
+				.text("Earning " + d.budget.name);
 				
 		function changeText(val) {
 					if (val > 0)
@@ -115,10 +115,10 @@ var rich = function() {
 						return "";
 				};
       d3.select("#richTip").select("#richVal")
-				.text(percentFormat(Math.abs(d.value)) + " " + changeText(d.value) + " in population");
+				.text(percentFormat(Math.abs(d.value)) + " " + changeText(d.value) + " in population from " + (+d.date - 1) + "-" + d.date);
 				console.log(d.budget);
       d3.select("#richTip").select("#richAvg")
-				.text(percentFormat(Math.abs(d.budget.average)) + " average " + changeText(d.budget.average) + " over " + x.domain()[0] + "-" + x.domain()[x.domain().length - 1]);
+				.text(percentFormat(Math.abs(d.budget.total)) + " total " + changeText(d.budget.total) + " from " + x.domain()[0] + "-" + x.domain()[x.domain().length - 1]);
 
       d3.select(d.budget.line).classed("budget--hover", true);
       d.budget.line.parentNode.appendChild(d.budget.line);
@@ -134,10 +134,10 @@ var rich = function() {
   });
 
   function type(d, i) {
-    if (!i) years = Object.keys(d).filter(function(key) { return key!== "Income" && key !== "Average"; });
+    if (!i) years = Object.keys(d).filter(function(key) { return key!== "Income" && key !== "Total"; });
     var budget = {
       name: d.Income,
-      average: d.Average,
+      total: d.Total,
       values: null
     };
     budget.values = years.map(function(m) {
