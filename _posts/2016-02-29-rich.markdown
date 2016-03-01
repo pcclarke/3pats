@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "Rise of the pretty rich"
+date:   2016-02-29 12:00:00
+---
+
+* * *
+
+<div class="richTitle">Annual change in Vancouver demographics by income group</div>
+
+<div id="richChart" class="chart"></div>
+<div id="richTip" class="hidden">
+	<p class="tipTitle"><span id="richName"></span></p>
+	<p class="tipInfo"><span id="richVal"></span></p>
+	<p class="tipInfo"><span id="richAvg"></span></p>
+</div>
+
+* * *
+
+<style>{% include 2016/02/rich.css %}</style>
+<script>{% include 2016/02/rich.js %}</script>

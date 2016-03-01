@@ -1,0 +1,80 @@
+#richChart text {
+  font-size: 10px;
+}
+
+#richChart .axis path,
+#richChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#richChart .axis path,
+#richChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#richChart .axis--y path {
+  display: none;
+}
+
+#richChart .data {
+  fill: none;
+  stroke: rgba(100, 100, 100, 0.4);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 1.5px;
+}
+
+#richChart .budget--hover {
+  stroke: #000 !important;
+}
+
+#richChart .focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#richChart .voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+#richChart .zeroLine {
+	stroke: #CCC;
+	stroke-dasharray: 5,5; 
+	stroke-width: 5;
+}
+
+.richTitle {
+	font-family: "Trueno Regular";
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+/* Tooltip */
+.hidden {
+	display: none;
+}
+
+#richTip {
+	font-family: "Trueno Regular";
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#richTip .tipTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+}
+
+#richTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
