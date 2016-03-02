@@ -1,0 +1,28 @@
+---
+layout: post
+title:  "The boring one percent"
+date:   2016-03-01 12:00:00
+---
+
+Here's another attempt at looking at the ultra-wealthy in Vancouver, with the demographics of the 1%. Somewhat predictably, the biggest growth of people in the top 1% of income has been in Calgary and Edmonton.
+
+* * *
+
+<div class="onepTitle">Demographic change of the 1% in Canadian cities</div>
+<div class="onepSubTitle">After tax income with capital gains</div>
+
+<div id="onepChart" class="chart"></div>
+<div id="onepTip" class="hidden">
+	<p class="tipTitle"><span id="onepName"></span></p>
+	<p class="tipInfo"><span id="onepVal"></span></p>
+	<p class="tipInfo"><span id="onepAvg"></span></p>
+</div>
+
+* * *
+
+So again, Vancouver doesn't look especially exceptional when it comes to the super-rich when compared to other parts of Canada. The growth has been virtually identical to Toronto.
+
+Source [CANSIM Table 204-0002](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=2040002&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=)
+
+<style>{% include 2016/03/onep.css %}</style>
+<script>{% include 2016/03/onep.js %}</script>
