@@ -10,7 +10,7 @@ I'm not sure how they count multiple ethnic origins, because it doesn't look lik
 
 * * *
 
-<div class="vanpyrTitle">Vancouver demographics by age and ethnicity</div>
+<div class="vanpyrTitle">Vancouver demographics by age, origins, and gender</div>
 <div class="vanpyrSubTitle">Total single and multiple ethnic origin responses</div>
 
 <div id="vanpyrChart1" class="chart"></div>
