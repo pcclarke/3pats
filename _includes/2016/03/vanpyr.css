@@ -1,0 +1,58 @@
+.vanpyrChart text {
+  font-size: 10px;
+}
+
+
+.vanpyrChart .axis path,
+.vanpyrChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.vanpyrChart .bar {
+  fill: steelblue;
+}
+
+.vanpyrChart .y.axis path {
+  display: none;
+}
+
+.vanpyrChart .bars {
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.vanpyrChart .selected {
+	fill: #ff2600 !important;
+}
+
+.vanpyrChart .vertical {
+	stroke: #000000;
+	stroke-width: 0.5px;
+}
+
+.vanpyrTitle {
+	font-family: "Trueno Regular";
+	font-size: 1.5em;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.vanpyrSubTitle {
+	font-style: italic;
+	text-align: center;
+}
+
+.hidden {
+	display: none;
+}
+
+.vanpyrChart .tipTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.vanpyrChart .tipInfo {
+  font-size: 12px;
+}
