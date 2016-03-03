@@ -1,0 +1,18 @@
+---
+layout: post
+title:  "Step pyramid"
+date:   2016-03-02 12:00:00
+---
+
+<div class="vanpyrTitle">Demographic change of the 1% in Canadian cities</div>
+<div class="vanpyrSubTitle">After tax income with capital gains</div>
+
+<div id="vanpyrChart" class="chart"></div>
+<div id="vanpyrTip" class="hidden">
+	<p class="tipTitle"><span id="vanpyrName"></span></p>
+	<p class="tipInfo"><span id="vanpyrVal"></span></p>
+	<p class="tipInfo"><span id="vanpyrAvg"></span></p>
+</div>
+
+<style>{% include 2016/03/vanpyr.css %}</style>
+<script>{% include 2016/03/vanpyr.js %}</script>

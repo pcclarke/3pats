@@ -1,0 +1,19 @@
+#vanpyrChart text {
+  font-size: 10px;
+}
+
+
+#vanpyrChart .axis path,
+#vanpyrChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#vanpyrChart .bar {
+  fill: steelblue;
+}
+
+#vanpyrChart .y.axis path {
+  display: none;
+}
