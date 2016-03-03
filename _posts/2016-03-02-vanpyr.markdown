@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "Step pyramid"
+date:   2016-03-03 12:00:00
+---
+
+Just having some fun with the census data.
+
+I'm not sure how they count multiple ethnic origins, because it doesn't look like they count multiple origins as multiple people. But then how to decide which origin to count?
+
+* * *
+
+<div class="vanpyrTitle">Vancouver demographics by age and ethnicity</div>
+<div class="vanpyrSubTitle">Total single and multiple ethnic origin responses</div>
+
+<div id="vanpyrChart1" class="chart"></div>
+
+* * *
+
+<div class="vanpyrSubTitle">Single ethnic origin responses</div>
+
+<div id="vanpyrChart2" class="chart"></div>
+
+* * *
+
+<div class="vanpyrSubTitle">Multiple ethnic origin responses</div>
+
+<div id="vanpyrChart3" class="chart"></div>
+
+* * *
+
+Source [2011 National Household Survey: Data tables - 99-010-X2011028](http://www12.statcan.gc.ca/nhs-enm/2011/dp-pd/dt-td/Ap-eng.cfm?LANG=E&APATH=3&DETAIL=0&DIM=0&FL=A&FREE=0&GC=0&GID=0&GK=0&GRP=0&PID=105396&PRID=0&PTYPE=105277&S=0&SHOWALL=0&SUB=0&Temporal=2013&THEME=95&VID=0&VNAMEE=&VNAMEF=)
+
+<style>{% include 2016/03/vanpyr.css %}</style>
+<script>{% include 2016/03/vanpyr.js %}</script>
