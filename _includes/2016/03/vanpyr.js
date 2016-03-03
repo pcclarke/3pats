@@ -86,7 +86,7 @@ d3.csv("{{ site.baseurl }}/data/2016/03/" + file + ".csv", function(error, data)
 		selected = obj;
 		d3.select(obj).classed("selected", true);
 		
-		pyrLabel.text(d.name + ((d.x0 > 0) ? " male" : " female"));
+		pyrLabel.text(d.name + ((d.x1 > 0) ? " male" : " female"));
 		pyrVal.text(numFormat(Math.abs(d.x0 - d.x1)) + " respondents");
 		tooltip.classed("hidden", false);
 	}
