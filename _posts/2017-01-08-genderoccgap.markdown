@@ -32,11 +32,16 @@ I wasn't really planning on doing anything with gender gaps, but when I came acr
 </div>
 <div id="genderOccGapChart" class="chart"></div>
 
-<div id="genderOccGapTip" class="hidden">
-	<p class="tipTitle"><span id="year"></span> Total Wages</p>
-	<p class="tipInfo">All Male Workers: <span id="maleWages"></span> thousand dollars</p>
-	<p class="tipInfo">All Female Workers: <span id="femaleWages"></span> thousand dollars</p>
-	<p class="tipInfo">Difference: <span id="difference"></span> thousand dollars more for <span id="diffGender"></span></p>
+<div id="genderOccGapTip">
+	<div id="hint">
+		<p class="tipInfo">Click or hover over a section of the chart area to view exact figures</p>
+	</div>
+	<div id="details" class="hidden">
+		<p class="tipTitle"><span id="year"></span> Total Wages</p>
+		<p class="tipInfo">All Male Workers: <span id="maleWages"></span> thousand dollars</p>
+		<p class="tipInfo">All Female Workers: <span id="femaleWages"></span> thousand dollars</p>
+		<p class="tipInfo">Difference: <span id="difference"></span> thousand dollars more for <span id="diffGender"></span></p>
+	</div>
 </div>
 
 * * *
@@ -65,9 +70,15 @@ Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 	  stroke-width: 1.5px;
 	}
 
-	#genderOccGapChart .line {
+	#genderOccGapChart .maleLine {
 	  fill: none;
 	  stroke: #000;
+	  pointer-events: all;
+	}
+
+	#genderOccGapChart .femaleLine {
+	  fill: none;
+	  stroke: #FF0000;
 	  pointer-events: all;
 	}
 
@@ -86,8 +97,17 @@ Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 		text-align: center;
 	}
 
-	.vertical {
-		stroke: rgba(0, 0, 0, 0.25);
+	#genderOccGapChart .vertical {
+		stroke: rgba(100, 100, 100, 0.5);
+	}
+
+	#genderOccGapChart .tick line,
+	#genderOccGapChart .x path {
+		stroke: rgba(100, 100, 100, 0.5);
+	}
+
+	#genderOccGapChart .y path {
+		display: none;
 	}
 
 	/* Tooltip */
@@ -141,10 +161,15 @@ var genderOccGap = function() {
 		.scale(y)
 		.orient("left");
 
-	var line = d3.svg.area()
+	var maleDrawLine = d3.svg.area()
 		.interpolate("basis")
 		.x(function(d) { return x(d.Date); })
 		.y(function(d) { return y(d[occupation + "-Males"]); });
+
+	var femaleDrawLine = d3.svg.area()
+		.interpolate("basis")
+		.x(function(d) { return x(d.Date); })
+		.y(function(d) { return y(d[occupation + "-Females"]); });
 
 	var area = d3.svg.area()
 		.interpolate("basis")
@@ -187,8 +212,12 @@ var genderOccGap = function() {
 		  	.attr("d", area);
 
 	  	var maleLine = svg.append("path")
-			.attr("class", "line")
-			.attr("d", line);
+			.attr("class", "maleLine")
+			.attr("d", maleDrawLine);
+
+	  	var femaleLine = svg.append("path")
+			.attr("class", "femaleLine")
+			.attr("d", femaleDrawLine);
 
 	  	svg.append("g")
 			.attr("class", "x axis")
@@ -200,9 +229,11 @@ var genderOccGap = function() {
 			.call(yAxis)
 			.append("text")
 			.attr("transform", "rotate(-90)")
+			.attr("x", -120)
 			.attr("y", 6)
-			.attr("dy", ".71em")
+			.attr("dy", -48 + "px")
 			.style("text-anchor", "end")
+			.attr("class", "axisLabel")
 			.text("Thousand dollars");
 		  
 		var vertical = svg.append("line")
@@ -249,7 +280,13 @@ var genderOccGap = function() {
 			var item = ((selYear - baseYear) * 12) + selMonth;
 			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-			d3.select("#genderOccGapTip").classed("hidden", false);
+			d3.select("#genderOccGapTip")
+				.select("#hint")
+				.classed("hidden", true);
+
+			d3.select("#genderOccGapTip")
+				.select("#details")
+				.classed("hidden", false);
 
 			d3.select("#genderOccGapTip")
 				.select("#year")
@@ -285,7 +322,8 @@ var genderOccGap = function() {
 				clipAbove.attr("d", area.y0(0));
 				areaAbove.attr("d", area.y0(function(d) { return y(d[occupation + "-Females"]); }));
 				areaBelow.attr("d", area);
-				maleLine.attr("d", line);
+				maleLine.attr("d", maleDrawLine);
+				femaleLine.attr("d", femaleDrawLine);
 		});
 	});
 
