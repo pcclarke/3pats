@@ -33,15 +33,17 @@ I wasn't really planning on doing anything with gender gaps, but when I came acr
 <div id="genderOccGapChart" class="chart"></div>
 
 <div id="genderOccGapTip" class="hidden">
-	<p class="tipTitle"><span id="year"></span></p>
-	<p class="tipInfo">All Male Workers Total Wages: <span id="maleWages"></span> thousand dollars</p>
-	<p class="tipInfo">All Female Workers Total Wages: <span id="femaleWages"></span> thousand dollars</p>
+	<p class="tipTitle"><span id="year"></span> Total Wages</p>
+	<p class="tipInfo">All Male Workers: <span id="maleWages"></span> thousand dollars</p>
+	<p class="tipInfo">All Female Workers: <span id="femaleWages"></span> thousand dollars</p>
 	<p class="tipInfo">Difference: <span id="difference"></span> thousand dollars more for <span id="diffGender"></span></p>
 </div>
 
 * * *
 
-Source [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
+The occupations are taken from the [National Occupational Classification (NOC)](http://www23.statcan.gc.ca/imdb/p3VD.pl?Function=getVD&TVD=314243)
+
+Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 
 <style>
 	#genderOccGapChart text {
@@ -55,10 +57,6 @@ Source [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 	  shape-rendering: crispEdges;
 	}
 
-	#genderOccGapChart .axis--y path {
-	  display: none;
-	}
-
 	#genderOccGapChart .data {
 	  fill: none;
 	  stroke: rgba(100, 100, 100, 0.4);
@@ -67,28 +65,14 @@ Source [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 	  stroke-width: 1.5px;
 	}
 
-	#genderOccGapChart .budget--hover {
-	  stroke: #000 !important;
-	}
-
-	#genderOccGapChart .focus text {
-	  text-anchor: middle;
-	  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
-	}
-
 	#genderOccGapChart .line {
 	  fill: none;
 	  stroke: #000;
 	  pointer-events: all;
 	}
 
-	#genderOccGapChart .voronoi--show path {
-	  stroke: red;
-	  stroke-opacity: .2;
-	}
-
 	#genderOccGapChart .area.above {
-	  fill: rgba(0, 0, 0, 0.5);
+	  fill: rgba(255, 0, 0, 1);
 	}
 
 	.genderOccGapTitle {
@@ -97,7 +81,8 @@ Source [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 		text-align: center;
 	}
 
-	.subBcgasTitle {
+	.genderOccGapSubTitle {
+		font-style: italic;
 		text-align: center;
 	}
 
@@ -229,22 +214,13 @@ var genderOccGap = function() {
 			
 		d3.select("#genderOccGapChart")
 			.on("mousemove", function(){
-				M = d3.mouse(svg[0][0]);
-				vertical.attr("x1", M[0])
-				vertical.attr("x2", M[0])
-				updateTip();
+				updateVertical();
 			 })
 		  	.on("mouseover", function(){  
-				M = d3.mouse(svg[0][0]);
-				vertical.attr("x1", M[0])
-				vertical.attr("x2", M[0])
-				updateTip();
+				updateVertical();
 			})
 			.on("click", function(){  
-				M = d3.mouse(svg[0][0]);
-				vertical.attr("x1", M[0])
-				vertical.attr("x2", M[0])
-				updateTip();
+				updateVertical();
 			});
 
 		function setDomains() {
@@ -254,38 +230,46 @@ var genderOccGap = function() {
 				d3.max(data, function(d) { return Math.max(d[occupation + "-Males"], d[occupation + "-Females"]); })
 			]);
 		}
-			
-		function updateTip() {
+
+		function updateVertical() {
+			M = d3.mouse(svg[0][0]);
 			var selYear = x.invert(M[0]).getFullYear();
-			var selMonth = x.invert(M[0]).getMonth();
 			var baseYear = x.domain()[0].getFullYear();
 			var endYear = x.domain()[1].getFullYear();
+
+			if (selYear >= baseYear && selYear <= endYear) {
+				vertical.attr("x1", M[0])
+				vertical.attr("x2", M[0])
+				updateTip(selYear, baseYear);
+			}
+		}
+			
+		function updateTip(selYear, baseYear) {
+			var selMonth = x.invert(M[0]).getMonth();
 			var item = ((selYear - baseYear) * 12) + selMonth;
 			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-			if (selYear >= baseYear && selYear <= endYear) {
-				d3.select("#genderOccGapTip").classed("hidden", false);
+			d3.select("#genderOccGapTip").classed("hidden", false);
 
-				d3.select("#genderOccGapTip")
-					.select("#year")
-					.text(monthNames[selMonth] + " " + selYear);
+			d3.select("#genderOccGapTip")
+				.select("#year")
+				.text(monthNames[selMonth] + " " + selYear);
 
-				d3.select("#genderOccGapTip")
-					.select("#maleWages")
-					.text(parseWages(Math.round(data[item][occupation + "-Males"])));
+			d3.select("#genderOccGapTip")
+				.select("#maleWages")
+				.text(parseWages(Math.round(data[item][occupation + "-Males"])));
 
-				d3.select("#genderOccGapTip")
-					.select("#femaleWages")
-					.text(parseWages(Math.round(data[item][occupation + "-Females"])));
+			d3.select("#genderOccGapTip")
+				.select("#femaleWages")
+				.text(parseWages(Math.round(data[item][occupation + "-Females"])));
 
-				d3.select("#genderOccGapTip")
-					.select("#difference")
-					.text(parseWages(Math.round(Math.abs(data[item][occupation + "-Males"] - data[item][occupation + "-Females"]))));
+			d3.select("#genderOccGapTip")
+				.select("#difference")
+				.text(parseWages(Math.round(Math.abs(data[item][occupation + "-Males"] - data[item][occupation + "-Females"]))));
 
-				d3.select("#genderOccGapTip")
-					.select("#diffGender")
-					.text((data[item][occupation + "-Males"] > data[item][occupation + "-Females"]) ? "men" : "women");
-			}
+			d3.select("#genderOccGapTip")
+				.select("#diffGender")
+				.text((data[item][occupation + "-Males"] > data[item][occupation + "-Females"]) ? "men" : "women");
 		}
 
 		d3.select("#genderOccGapSelect")
