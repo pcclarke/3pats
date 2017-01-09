@@ -62,14 +62,6 @@ Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 	  shape-rendering: crispEdges;
 	}
 
-	#genderOccGapChart .data {
-	  fill: none;
-	  stroke: rgba(100, 100, 100, 0.4);
-	  stroke-linejoin: round;
-	  stroke-linecap: round;
-	  stroke-width: 1.5px;
-	}
-
 	#genderOccGapChart .maleLine {
 	  fill: none;
 	  stroke: #000;
@@ -83,7 +75,11 @@ Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 	}
 
 	#genderOccGapChart .area.above {
-	  fill: rgba(255, 0, 0, 1);
+	  fill: rgba(255, 0, 0, 0.5);
+	}
+
+	#genderOccGapChart .area.below {
+	  fill: rgba(0, 0, 0, 0.5);
 	}
 
 	.genderOccGapTitle {
@@ -108,6 +104,10 @@ Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 
 	#genderOccGapChart .y path {
 		display: none;
+	}
+
+	#genderOccGapChart .femaleLegendRect {
+		fill: red;
 	}
 
 	/* Tooltip */
@@ -315,7 +315,6 @@ var genderOccGap = function() {
 
 				setDomains();
 				svg.select(".y")
-					//.transition().duration(1500).ease("sin-in-out")
 					.call(yAxis);
 
 				clipBelow.attr("d", area.y0(height));
@@ -325,6 +324,34 @@ var genderOccGap = function() {
 				maleLine.attr("d", maleDrawLine);
 				femaleLine.attr("d", femaleDrawLine);
 		});
+
+		// Legend
+
+		svg.append("rect")
+			.attr("x", 8)
+			.attr("y", 13)
+			.attr("width", 15)
+			.attr("height", 15)
+			.attr("class", "maleLegendRect");
+
+		svg.append("text")
+			.attr("x", 25)
+			.attr("y", 25)
+			.attr("class", "maleLegendText")
+			.text("Men");
+
+		svg.append("rect")
+			.attr("x", 58)
+			.attr("y", 13)
+			.attr("width", 15)
+			.attr("height", 15)
+			.attr("class", "femaleLegendRect");
+
+		svg.append("text")
+			.attr("x", 75)
+			.attr("y", 25)
+			.attr("class", "femaleLegendText")
+			.text("Women");
 	});
 
 
