@@ -317,12 +317,24 @@ var genderOccGap = function() {
 				svg.select(".y")
 					.call(yAxis);
 
-				clipBelow.attr("d", area.y0(height));
-				clipAbove.attr("d", area.y0(0));
-				areaAbove.attr("d", area.y0(function(d) { return y(d[occupation + "-Females"]); }));
-				areaBelow.attr("d", area);
-				maleLine.attr("d", maleDrawLine);
-				femaleLine.attr("d", femaleDrawLine);
+				clipBelow.transition()
+					.duration(1000)
+					.attr("d", area.y0(height));
+				clipAbove.transition()
+					.duration(1000)
+					.attr("d", area.y0(0));
+				areaAbove.transition()
+					.duration(1000)
+					.attr("d", area.y0(function(d) { return y(d[occupation + "-Females"]); }));
+				areaBelow.transition()
+					.duration(1000)
+					.attr("d", area);
+				maleLine.transition()
+					.duration(1000)
+					.attr("d", maleDrawLine);
+				femaleLine.transition()
+					.duration(1000)
+					.attr("d", femaleDrawLine);
 		});
 
 		// Legend
