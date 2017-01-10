@@ -1,14 +1,14 @@
 ---
 layout: post
-title:  "Canadian Gender Occupation Gaps"
-date:   2017-01-08 12:00:00
+title:  "Not the wage gap, but a wage gap"
+date:   2017-01-10 12:00:00
 ---
 
 I've been neglecting this blog for a while, on account of spending far too much time on [another project](http://pcclarke.github.io/civ-techs/). As a puny attempt at a new year's resolution, I thought I should try updating this blog again.
 
 So here it is, an update.
 
-I wasn't really planning on doing anything with gender gaps, but when I came across the data it seemed interesting. Sometimes that's all it takes to get a post started, apparently!
+I wasn't really planning on doing anything with gender gaps, but when I came across the data for total wages it seemed interesting. It isn't to be confused with the better known gender wage gap because these are total wages, so it could just be due to gendered jobs rather than pay. Still, the fact that they aren't really converging at all was surprising and worth looking at. Sometimes that's all it takes to get a post started for me!
 
 * * *
 
