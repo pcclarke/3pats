@@ -4,6 +4,12 @@ title:  "UNHCR Refugees in Canada, Mapped"
 date:   2015-10-23 22:00:00
 ---
 
+And finally, here is the UNHCR data mapped.
+
+Note that the colour scheme is relative to each year. The darkest red is the country with the most refugees living in Canada for that year. But a dark red in one year is not the same as a dark red in another year; there were twice as many refugees from Poland in 1994 as from Afghanistan in 2001.
+
+* * *
+
 <div><b>Year:</b>
   <select id="selectUnhcr">
 		<option value="1994" selected="selected">1994</option>
@@ -36,11 +42,8 @@ date:   2015-10-23 22:00:00
 
 * * *
 
-And finally, here is the UNHCR data mapped.
-
-Note that the colour scheme is relative to each year. The darkest red is the country with the most refugees living in Canada for that year. But a dark red in one year is not the same as a dark red in another year; there were twice as many refugees from Poland in 1994 as from Afghanistan in 2001.
-
 Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
+
 
 <style>
 
@@ -119,6 +122,7 @@ Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
 
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/0.2.9/d3.geo.projection.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>

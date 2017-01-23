@@ -4,6 +4,10 @@ title:  "Some budgets are bigger than others"
 date:   2015-10-15 12:00:00
 ---
 
+Here's a comparison of the different party budget balances from their costing plans. They're all very optimistic about 2020.
+
+* * *
+
 <div id="partyBalanceChart"></div>
 <div id="partyBalanceTip">
 	<p id="tipTop"><strong><span id="tipParty">NDP 2016-17</span> Budget</strong></p>
@@ -11,8 +15,6 @@ date:   2015-10-15 12:00:00
 </div>
 
 * * *
-
-Here's a comparison of the different party budget balances from their costing plans. They're all very optimistic about 2020.
 
 Sources:
 
@@ -75,6 +77,8 @@ Sources:
 }
 
 </style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
 

@@ -4,6 +4,12 @@ title:  "New Spending Compared"
 date:   2015-10-18 12:00:00
 ---
 
+Now to compare the different spending plans proposed by the parties, here they are in one chart.
+
+Note: The Green party includes some spending cuts on in their total for "Spending Increases", which is why the total is higher here.
+
+* * *
+
 <div id="compSpendingChart"></div>
 <div id="compSpendingTip">
 	<p id="tipTop"><strong><span id="tipParty">Green 2017</span> New Spending</strong></p>
@@ -11,10 +17,6 @@ date:   2015-10-18 12:00:00
 </div>
 
 * * *
-
-Now to compare the different spending plans proposed by the parties, here they are in one chart.
-
-Note: The Green party includes some spending cuts on in their total for "Spending Increases", which is why the total is higher here.
 
 Sources:
 
@@ -104,6 +106,8 @@ Sources:
 }
 
 </style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
 

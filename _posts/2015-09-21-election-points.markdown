@@ -66,6 +66,8 @@ Here's another thought: what constitutes an normal length election, anyways? Tak
 }
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
 <script type="text/javascript">
 showPoints();
 

@@ -4,6 +4,10 @@ title:  "Party Budget Balances Compared"
 date:   2015-10-16 12:00:00
 ---
 
+And to follow up the previous post, here are the different budget balances compared on the same chart. The Greens sure are optimistic.
+
+* * *
+
 <div id="partyBalancesChart"></div>
 <div id="partyBalancesTip">
 	<p id="tipTop"><strong><span id="tipParty">Green 2017</span> Budget</strong></p>
@@ -11,8 +15,6 @@ date:   2015-10-16 12:00:00
 </div>
 
 * * *
-
-And to follow up the previous post, here are the different budget balances compared on the same chart. The Greens sure are optimistic.
 
 Sources:
 
@@ -101,6 +103,8 @@ Sources:
 }
 
 </style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
 

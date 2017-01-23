@@ -32,4 +32,5 @@ Sources:
 - [Budget and Fiscal Plan 2016/17 – 2018/19, Table A9, Revenue by Source – 2009/10 to 2018/19](http://bcbudget.gov.bc.ca/2016/bfp/2016_Budget_and_Fiscal_Plan.pdf)
 
 <style>{% include 2016/02/bcgas1.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>{% include 2016/02/bcgas1.js %}</script>

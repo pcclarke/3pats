@@ -81,6 +81,8 @@ Source: [Description for Chart 2 - Proportion of employees paid at the minimum w
 
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
 <script>
 
 minChart();

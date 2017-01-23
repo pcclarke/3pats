@@ -135,6 +135,8 @@ Source: [CANSIM table 282-0151](http://www5.statcan.gc.ca/cansim/a47)
 	}
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
 <script>
 var genderOccGap = function() {
 	var margin = {top: 20, right: 20, bottom: 30, left: 50},

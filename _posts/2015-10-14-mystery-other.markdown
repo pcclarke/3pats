@@ -94,6 +94,8 @@ Source: [Department of Finance, Fiscal Reference Tables September 2015](http://w
 
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
 <script>
 
 otherChart();

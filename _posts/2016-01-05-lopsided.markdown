@@ -8,6 +8,8 @@ With the ongoing and likely growing discussion of electoral reform, it seemed li
 
 This chart compares the votes each of the parties recieved to the number of seats that they won by various regional groupings. There is some overlap in votes here, as in both the provinces, cities, and national groups include many of the same votes. However, each region produced very different results so it's worthwhile to compare how some are more or less skewed.
 
+* * *
+
 <div id="lopChart"></div>
 <div id="lopToolTip" class="hidden">
 	<p id="tipTitle"><span id="party"></span></p>
@@ -17,8 +19,10 @@ This chart compares the votes each of the parties recieved to the number of seat
 	<p class="tipInfo">Total Seats Won: <span id="seats"></span></p>
 </div>
 
+* * *
 
 Source: [Elections Canada Election Results](http://enr.elections.ca/National.aspx)
+
 
 <style type="text/css">
 	#lopChart .legend, 
@@ -147,6 +151,8 @@ Source: [Elections Canada Election Results](http://enr.elections.ca/National.asp
 	}
 
 </style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script type="text/javascript">
 var coordinates = [0, 0];

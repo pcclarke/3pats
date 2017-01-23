@@ -24,4 +24,5 @@ This data doesn't include all of the government workers who don't have to pay MS
 Source [CANSIM Table 111-0008](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=1110008)
 
 <style>{% include 2016/02/bcinc.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>{% include 2016/02/bcinc.js %}</script>
