@@ -4,6 +4,12 @@ title:  "Advance polling turnout 35–42nd elections"
 date:   2015-10-13 12:00:00
 ---
 
+This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
+
+*Update* 2015-10-18: Now includes data for 35th election and latest data for 42nd election.
+
+* * *
+
 <div id="advChart"></div>
 <div id="advTip">
 	<p id="tipTop"><strong><span id="tipNum"></span> General Election</strong></p>
@@ -12,10 +18,6 @@ date:   2015-10-13 12:00:00
 </div>
 
 * * * * *
-
-This year has marked a record turnout in the advance polls, with over 3.6 million voters casting their ballot over the past weekend. Advance polling has grown steadily in popularity over the years, in spite of the otherwise languid voting turnout in Canada since the 1990s. At this rate I wonder if we will eventually have a voting week rather than election day.
-
-*Update* 2015-10-18: Now includes data for 35th election and latest data for 42nd election.
 
 Sources:
 
@@ -77,6 +79,8 @@ Sources:
 }
 
 </style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
 

@@ -1,0 +1,52 @@
+#partyBalanceChart {
+  height: 400px;
+}
+
+#partyBalanceChart svg:not(:nth-of-type(1)) {
+  margin-top: 25px;
+}
+
+#partyBalanceChart .bar.positive {
+  fill: #808080;
+}
+
+#partyBalanceChart .bar.negative {
+  fill: brown;
+}
+
+#partyBalanceChart .sel {
+	fill: black !important;
+}
+
+#partyBalanceChart .axis text {
+  font-size: 10px;
+}
+
+#partyBalanceChart .axis path,
+#partyBalanceChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#partyBalanceTip {
+	display: block;
+    font-family: Trueno, sans-serif;
+    margin-bottom: 15px;
+    pointer-events: none;
+}
+
+#partyBalanceTip #tipTop {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+#partyBalanceTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}

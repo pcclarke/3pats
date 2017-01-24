@@ -32,4 +32,5 @@ I'm not sure how they count multiple ethnic origins, because it doesn't look lik
 Source [2011 National Household Survey: Data tables - 99-010-X2011028](http://www12.statcan.gc.ca/nhs-enm/2011/dp-pd/dt-td/Ap-eng.cfm?LANG=E&APATH=3&DETAIL=0&DIM=0&FL=A&FREE=0&GC=0&GID=0&GK=0&GRP=0&PID=105396&PRID=0&PTYPE=105277&S=0&SHOWALL=0&SUB=0&Temporal=2013&THEME=95&VID=0&VNAMEE=&VNAMEF=)
 
 <style>{% include 2016/03/vanpyr.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>{% include 2016/03/vanpyr.js %}</script>

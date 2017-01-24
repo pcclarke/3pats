@@ -31,5 +31,6 @@ Sources:
 - [Marketable Natural Gas Production in Canada 2015](http://www.neb-one.gc.ca/nrg/sttstc/ntrlgs/stt/mrktblntrlgsprdctn-eng.html)
 
 <style>{% include 2016/02/marketGas.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
 <script>{% include 2016/02/marketGas.js %}</script>

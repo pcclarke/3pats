@@ -31,4 +31,5 @@ Sources:
 
 
 <style>{% include 2016/02/down.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>{% include 2016/02/down.js %}</script>

@@ -4,6 +4,8 @@ title:  "That shrinking feeling"
 date:   2015-12-14 12:00:00
 ---
 
+After my [last attempt]({% post_url 2015-12-13-financial-safety %}) at redesigning one of the [50 Maclean's charts](http://www.macleans.ca/economy/economicanalysis/the-most-important-charts-for-the-canadian-economy-in-2016/) wasn't much of an improvement, I didn't think I'd try again. But the chart from Kevin Milligan on the shrinking share of government expenditures is pretty interesting... and really, really ugly. No harm in polishing it up, right?
+
 * * *
 
 <div id="shrinkTip" class="hidden">
@@ -16,13 +18,12 @@ date:   2015-12-14 12:00:00
 
 * * *
 
-After my [last attempt]({% post_url 2015-12-13-financial-safety %}) at redesigning one of the [50 Maclean's charts](http://www.macleans.ca/economy/economicanalysis/the-most-important-charts-for-the-canadian-economy-in-2016/) wasn't much of an improvement, I didn't think I'd try again. But the chart from Kevin Milligan on the shrinking share of government expenditures is pretty interesting... and really, really ugly. No harm in polishing it up, right?
-
 Sources:
 
 - [Historical Statistics of Canada: Government Finance](http://www.statcan.gc.ca/pub/11-516-x/sectionh/4057752-eng.htm#1), [Historical Statistics of Canada: Section F: Gross National Product, the Capital Stock, and Productivity](http://www.statcan.gc.ca/pub/11-516-x/sectionf/4057751-eng.htm)
 - [Statistics Canada: CANSIM Table 380-0506](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800506&&pattern=&stByVal=1&p1=1&p2=50&tabMode=dataTable&csid=), [Statistics Canada: CANSIM Table 380-0501](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800501&pattern=&tabMode=dataTable&srchLan=-1&p1=-1&p2=9)
 - [Statistics Canada: CANSIM Table 380-0080](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800080&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=), [Statistics Canada: CANSIM Table 380-0064](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800064&pattern=&tabMode=dataTable&srchLan=-1&p1=-1&p2=9)
+
 
 <style>
 
@@ -120,6 +121,7 @@ Sources:
 
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
 
 <script>

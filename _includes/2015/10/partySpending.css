@@ -1,0 +1,48 @@
+#partySpendingChart {
+  font-size: 10px;
+}
+
+#partySpendingChart .axis path,
+#partySpendingChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#partySpendingChart .browser text {
+  text-anchor: end;
+}
+
+#partySpendingChart .sel {
+	fill: #000000 !important;
+}
+
+#partySpendingTip {
+	display: block;
+    font-family: trueno, sans-serif;
+	min-height: 50px;
+	margin-bottom: 15px;
+  pointer-events: none;
+}
+
+#partySpendingTip #tipTop {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+	text-align: center;
+}
+
+#partySpendingTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+#selectSpending {
+  font-family: Lora, Georgia, serif;
+  font-size: 20px;
+  padding: 5px 15px;
+}

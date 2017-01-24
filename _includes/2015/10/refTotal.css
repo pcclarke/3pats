@@ -1,0 +1,57 @@
+#refTotalChart {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: auto;
+    position: relative;
+    width: 960px;
+}
+
+#refTotalChart text {
+    font-size: 10px;
+}
+
+#refTotalChart .axis path {
+    display: none;
+}
+
+#refTotalChart .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+#refTotalChart .source-label {
+    text-anchor: end;
+}
+
+#refTotalForm {
+    font-family: Trueno, sans-serif;
+    font-size: 12px;
+}
+
+#refTotalTip {
+    border: 1px solid black;
+    background-color: white;
+    position: absolute;
+    width: 225px;
+    height: auto;
+    padding: 5px;
+    pointer-events: none;
+}
+
+#refTotalTip strong {
+    font-weight: bold;
+}
+
+#refTotalTip #tipTop {
+    font-size: 16px;
+    margin-bottom: 10px !important;
+}
+
+#refTotalTip .tipInfo {
+    font-size: 12px;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}

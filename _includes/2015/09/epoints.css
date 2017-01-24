@@ -1,0 +1,46 @@
+#pointsChart {
+  font: 10px sans-serif;
+}
+
+.pointsAxis path,
+.pointsAxis line {
+  fill: none;
+  
+  stroke: #CCCCCC;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+.hidden {
+	display: none;
+}
+
+#pointsTooltip {
+	border: 1px solid black;
+	background-color: white;
+    position: absolute;
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    pointer-events: none;
+}
+
+#pointsTooltip strong {
+	font-weight: bold;
+}
+
+#pointsTooltip#tipTop {
+	font-size: 16px;
+	margin-bottom: 10px !important;
+}
+
+#pointsTooltip .tipInfo {
+	font-size: 12px;
+	margin: 0;
+}
+
+#options {
+	font-size: 12px;
+	font-weight: normal;
+	padding: 10px;
+}
