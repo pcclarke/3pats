@@ -1,0 +1,67 @@
+#unhcrChart text {
+  font-size: 10px;
+}
+#unhcrChart .axis path,
+#unhcrChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#unhcrChart .axis--y path {
+  display: none;
+}
+
+#unhcrChart .data {
+  fill: none;
+  stroke: rgba(100, 100, 100, 0.4);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 1.5px;
+}
+
+#unhcrChart .budget--hover {
+  stroke: #000 !important;
+}
+
+#unhcrChart .syria {
+  stroke: #d6191f;
+}
+
+#unhcrChart .focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#unhcrChart .voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+#unhcrChart .voronoi--show path {
+  stroke: red;
+  stroke-opacity: .2;
+}
+
+#unhcrTip {
+	display: block;
+    font-family: trueno, sans-serif;
+	margin-bottom: 15px;
+    pointer-events: none;
+	text-align: center;
+}
+
+#unhcrTip #tipTop {
+	font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+#unhcrTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}

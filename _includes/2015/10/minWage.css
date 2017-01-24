@@ -1,0 +1,47 @@
+#minWageChart .bar {
+  fill: #808080;
+}
+
+#minWageChart .barSel {
+	fill: #000000 !important;
+}
+
+#minWageChart .barCan {
+	fill: red;
+}
+
+#minWageChart .axis text {
+  font-size: 10px;
+}
+
+#minWageChart .axis path,
+#minWageChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#minWageChart .y.axis path {
+  display: none;
+}
+
+#minTip {
+    font-family: Trueno, sans-serif;
+	display: block;
+	margin-bottom: 15px;
+  pointer-events: none;
+}
+
+#minTip #tipTop {
+  font-size: 18px;
+  margin-bottom: 10px !important;
+}
+
+#minTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}

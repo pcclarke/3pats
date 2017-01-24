@@ -1,0 +1,43 @@
+#cdnRefChart {
+  font: 10px sans-serif;
+}
+
+#cdnRefChart .axis path,
+#cdnRefChart .axis line {
+  fill: none;
+  
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#cdnRefChart .x.axis path {
+  display: none;
+}
+
+#cdnRefChart .sel {
+	fill: #000000 !important;
+}
+
+.hidden {
+	display: none;
+}
+
+#cdnRefTip {
+	display: block;
+    font-family: trueno, sans-serif;
+	min-height: 50px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+#cdnRefTip #tipTop {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px !important;
+
+}
+
+#cdnRefTip .tipInfo {
+	font-size: 12px;
+	margin: 0;
+}

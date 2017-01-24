@@ -1,0 +1,79 @@
+#compSpendingChart text {
+  font-size: 10px;
+}
+#compSpendingChart .axis path,
+#compSpendingChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#compSpendingChart .axis--y path {
+  display: none;
+}
+
+#compSpendingChart .data {
+  fill: none;
+  stroke: #aaa;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 1.5px;
+}
+
+#compSpendingChart .budget--hover {
+  stroke: #000 !important;
+}
+
+#compSpendingChart .liberal {
+  stroke: #d6191f;
+}
+
+#compSpendingChart .conservative {
+  stroke: #0b6aaa;
+}
+
+#compSpendingChart .green {
+  stroke: #3d9c34;
+}
+
+#compSpendingChart .ndp {
+  stroke: #f37122;
+}
+
+#compSpendingChart .focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#compSpendingChart .voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+#compSpendingChart .voronoi--show path {
+  stroke: red;
+  stroke-opacity: .2;
+}
+
+#compSpendingTip {
+	display: block;
+    font-family: trueno, sans-serif;
+	margin-bottom: 15px;
+    pointer-events: none;
+	text-align: center;
+}
+
+#compSpendingTip #tipTop {
+	font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+#compSpendingTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}
