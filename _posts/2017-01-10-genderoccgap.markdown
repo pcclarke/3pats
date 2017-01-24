@@ -2,6 +2,7 @@
 layout: post
 title:  "Not the wage gap, but a wage gap"
 date:   2017-01-10 12:00:00
+thumbnail: /img/2017/01/gendergapThumb.jpg
 ---
 
 I've been neglecting this blog for a while, on account of spending far too much time on [another project](http://pcclarke.github.io/civ-techs/). As a puny attempt at a new year's resolution, I thought I should try updating this blog again.

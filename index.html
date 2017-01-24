@@ -12,6 +12,9 @@ layout: default
 	  </p>
 	  <div class="content">
 	    {{ post.excerpt }}
+			{% if post.thumbnail %}
+			<img class="thumbnail" src="{{ post.thumbnail }}" />
+			{% endif %}
 	  </div>
 	{% endfor %}
 
