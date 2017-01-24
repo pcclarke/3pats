@@ -39,6 +39,7 @@ Mining and oil and gas extraction is the "spikiest" of the categories, barring g
 
 Source: [Statistics Canada: CANSIM Table 380-0074](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=3800074&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=)
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="{{ site.baseurl }}/js/colorbrewer.js"></script>
 <script>{% include 2016/02/petroChart.js %}</script>
 <script>{% include 2016/02/petroChChart.js %}</script>

@@ -28,4 +28,5 @@ It's too bad the data only goes until 2013, because it looks like the population
 Source [CANSIM Table 111-0008](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=1110008)
 
 <style>{% include 2016/02/rich.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>{% include 2016/02/rich.js %}</script>

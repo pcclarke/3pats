@@ -1,0 +1,50 @@
+#unhcrShare {
+  font-size: 10px;
+}
+
+#unhcrShare .axis path,
+#unhcrShare .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#unhcrShare .refugee text {
+  text-anchor: end;
+}
+
+#unhcrShare .sel {
+	fill: #000000 !important;
+}
+
+#unhcrShare .line {
+  fill: none;
+  stroke: rgba(200, 200, 200, 0.2);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 0.5px;
+}
+
+#unhcrShareTip {
+	display: block;
+    font-family: trueno, sans-serif;
+	min-height: 50px;
+	margin-bottom: 15px;
+    pointer-events: none;
+}
+
+#unhcrShareTip #tipTop {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+    text-align: center;
+}
+
+#unhcrShareTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}

@@ -1,0 +1,101 @@
+svg {
+  font: 10px sans-serif;
+}
+
+.background path {
+  fill: none;
+  stroke: none;
+  stroke-width: 20px;
+  pointer-events: stroke;
+}
+
+.foreground path {
+  fill: none;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-opacity: 0.6;
+  cursor: pointer;
+  -webkit-transition: stroke 125ms linear;
+}
+
+.axis .title {
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #bdbdbd;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+.label {
+  -webkit-transition: fill 125ms linear;
+  cursor: pointer;
+}
+
+.label:hover {
+  font-weight: normal;
+}
+
+.active .label:not(.inactive) {
+  font-weight: normal;
+}
+
+.label.inactive {
+  fill: #ccc;
+}
+
+.foreground path.inactive {
+  stroke: #ccc;
+  stroke-opacity: .5;
+  stroke-width: 1px;
+}
+
+.dataPoint.inactive {
+  fill: #ccc;
+}
+
+.safetyTitle {
+    font-family: trueno, sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Tooltip */
+.hidden {
+  display: none;
+}
+
+#safetyTip {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  width: 225px;
+  height: auto;
+  padding: 10px;
+  pointer-events: none;
+}
+
+#safetyTip strong {
+  font-weight: bold;
+}
+
+#safetyTip #tipTop {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px !important;
+}
+
+#safetyTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+}

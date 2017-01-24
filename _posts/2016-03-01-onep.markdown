@@ -25,4 +25,5 @@ So again, Vancouver doesn't look especially exceptional when it comes to the sup
 Source [CANSIM Table 204-0002](http://www5.statcan.gc.ca/cansim/a26?lang=eng&retrLang=eng&id=2040002&&pattern=&stByVal=1&p1=1&p2=49&tabMode=dataTable&csid=)
 
 <style>{% include 2016/03/onep.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>{% include 2016/03/onep.js %}</script>

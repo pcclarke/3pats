@@ -2,6 +2,7 @@
 layout: post
 title:  "I don't like oil sand. It's ugly and messy and expensive to clean up."
 date:   2017-01-15 12:00:00
+thumbnail: /img/2017/01/oilsandsThumb.jpg
 ---
 
 Maclean's did their [annual charts showcase](http://www.macleans.ca/economy/economicanalysis/75-charts-every-canadian-should-watch-in-2017/) this past December, and [unlike last year](http://3pats.ca/2015/12/13/financial-safety.html) I didn't pay much attention to it. But I recently stumbled across Frances Woolley's post on the tar sands inadequate cleanup cost, and she was asking for suggestions so I couldn't help myself.

@@ -55,6 +55,7 @@ Sources:
 - [2015 British Columbia Financial and Economic Review](http://www.fin.gov.bc.ca/tbs/F&Ereview15.pdf)
 
 <style>{% include 2016/02/bcdebt.css %}</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="{{ site.baseurl }}/js/textures.min.js"></script>
 <script>{% include 2016/02/bcdebt.js %}</script>
 <script>{% include 2016/02/bcdebt2.js %}</script>

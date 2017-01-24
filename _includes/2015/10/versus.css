@@ -1,0 +1,72 @@
+#versusChart {
+  font-size: 10px;
+}
+
+#versusChart .axis path,
+#versusChart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#versusChart .x.axis path {
+  display: none;
+}
+
+#versusChart .area.above {
+  fill: rgba(252,141,89,0.5);
+}
+
+#versusChart .area.below {
+  fill: rgba(145,207,96,0.5);
+}
+
+#versusChart .spendLine {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
+}
+
+#versusChart .revLine {
+  fill: none;
+  stroke: #808080;
+  stroke-width: 1.5px;
+}
+
+#versusChart .circle {
+	fill: #808080;
+}
+
+#versusChart .sel {
+	stroke: #000000 !important;
+}
+
+#versusTip {
+	display: block;
+    font-family: trueno, sans-serif;
+	margin-bottom: 15px;
+    min-height: 50px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+#versusTip #tipTop {
+	font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+#versusTip .tipInfo {
+  font-size: 12px;
+  margin: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+#selectVersus {
+  font-family: Lora, Georgia, serif;
+  font-size: 20px;
+  padding: 5px 15px;
+}

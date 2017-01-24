@@ -1,0 +1,74 @@
+#selectUnhcr {
+  font-family: Lora, Georgia, serif;
+  font-size: 20px;
+  padding: 5px 15px;
+	width: 200px;
+}
+
+#unchrChart {
+  background: #fcfcfa;
+}
+
+#unchrChart .stroke {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+#unchrChart .fill {
+  fill: #fff;
+}
+
+#unchrChart .land {
+  fill: #ddd;
+}
+
+#unchrChart .sel {
+  fill: #000 !important;
+}
+
+#unchrChart .boundary {
+  fill: none;
+  stroke: #CCC;
+	stroke-width: 0.5px;
+}
+
+#sparkGroup {
+	clear: both;
+	height: 40px;
+	margin-bottom: 25px;
+}
+
+#unhcrSparkline {
+	border: 1px solid #CCC;
+	display: inline-block;
+	height: 25px;
+	width: 102px;
+}
+
+#unhcrSparkline .line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
+}
+
+#sparkGroup {
+    font-family: trueno, sans-serif;
+	margin: 0 auto;
+	width: 600px;
+}
+
+#sparkValue {
+	display: inline-block;
+	padding: 5px;
+}
+
+#mapCountry {
+	font-size: 24px;
+    font-weight: bold;
+	margin-right: 10px;
+}
+
+.hidden {
+	display: none;
+}

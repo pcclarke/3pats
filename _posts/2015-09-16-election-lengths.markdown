@@ -102,6 +102,8 @@ Retrieved August 27, at 4:00pm PST
 }
 </style>
 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
 <script>
 electionLengths();
 

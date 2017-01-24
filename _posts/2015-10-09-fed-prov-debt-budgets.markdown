@@ -4,6 +4,35 @@ title:  "Federal and Provincial Budgets by Year"
 date:   2015-10-09 12:00:00
 ---
 
+Whoops. Budget week (and this blog) got severely knocked off course, because I was knocked off my bike a couple weeks ago. I'm healed up, and back to the intense work of sitting down at my computer – it's hard to sit down when bending your knee hurts.
+
+In part 3 of my series of budget charts, I compare the budget balances and debt on a line plot. This should make it clearer how the different jurisdictions compare in scale.
+
+* * *
+
+<div id="fpdbTip" class="hidden">
+  <p id="tipTop"><strong><span id="tipNum"></span></strong></p>
+  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span> <span id="tipCap" class="hidden">per capita</span> <span id="tipInf" class="hidden">(in 2015 dollars)</span></p>
+  <p class="tipInfo hidden" id="tipFore">(projected)</p>
+</div>
+<div>
+  <select id="selectBudgetPlot">
+    <option value="budget_balances_t" selected="selected">Budget balances</option>
+		<option value="budget_balances_inf_t">Budget balances adjusted for inflation</option>
+    <option value="budget_balances_gdp_t">Budget balances relative to GDP</option>
+    <option value="net_debt_t">Net debt</option>
+		<option value="net_debt_inf_t">Net debt adjusted for inflation</option>
+    <option value="net_debt_gdp_t">Net debt relative to GDP</option>
+    <option value="net_debt_capita_t">Net debt per capita</option>
+  </select>
+</div>
+<div id="budgetPlot"></div>
+
+* * *
+
+Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for September 15, 2015](http://www.rbc.com/economics/economic-reports/provincial-economic-forecasts.html), with the inflation adjustments courtesy of the [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
+
+
 <style>
 
 #budgetPlot text {
@@ -76,29 +105,7 @@ date:   2015-10-09 12:00:00
 }
 </style>
 
-Whoops. Budget week (and this blog) got severely knocked off course, because I was knocked off my bike a couple weeks ago. I'm healed up, and back to the intense work of sitting down at my computer – it's hard to sit down when bending your knee hurts.
-
-In part 3 of my series of budget charts, I compare the budget balances and debt on a line plot. This should make it clearer how the different jurisdictions compare in scale.
-
-<div id="fpdbTip" class="hidden">
-  <p id="tipTop"><strong><span id="tipNum"></span></strong></p>
-  <p class="tipInfo"><span id="tipVal"></span> <span id="tipBal"></span> <span id="tipCap" class="hidden">per capita</span> <span id="tipInf" class="hidden">(in 2015 dollars)</span></p>
-  <p class="tipInfo hidden" id="tipFore">(projected)</p>
-</div>
-<div>
-  <select id="selectBudgetPlot">
-    <option value="budget_balances_t" selected="selected">Budget balances</option>
-		<option value="budget_balances_inf_t">Budget balances adjusted for inflation</option>
-    <option value="budget_balances_gdp_t">Budget balances relative to GDP</option>
-    <option value="net_debt_t">Net debt</option>
-		<option value="net_debt_inf_t">Net debt adjusted for inflation</option>
-    <option value="net_debt_gdp_t">Net debt relative to GDP</option>
-    <option value="net_debt_capita_t">Net debt per capita</option>
-  </select>
-</div>
-<div id="budgetPlot"></div>
-
-Source: [Royal Bank of Canada, Canadian Federal and Provincial Fiscal Tables for September 15, 2015](http://www.rbc.com/economics/economic-reports/provincial-economic-forecasts.html), with the inflation adjustments courtesy of the [Bank of Canada's Inflation Calculator](http://www.bankofcanada.ca/rates/related/inflation-calculator/)
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
 
