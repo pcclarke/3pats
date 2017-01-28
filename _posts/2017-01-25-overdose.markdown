@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "Valley of the dolls"
+date:   2017-01-25 12:00:00
+thumbnail: /img/2017/01/gendergapThumb.jpg
+---
+
+Blah blah blah
+
+* * *
+
+<div id="map"></div>
+
+* * *
+
+Source: [Fraser Health Hackathon Github](https://github.com/healthhackathon)
+
+<style>{% include 2017/01/overdose.css %}</style>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="//d3js.org/queue.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-ease.v1.min.js"></script>
+<script>{% include 2017/01/overdose.js %}</script>
