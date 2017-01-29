@@ -6,14 +6,41 @@
 }
 
 .city {
-    cursor: pointer;
 	fill: #eee;
- 	stroke: #ccc;
+ 	stroke: #bbb;
+    stroke-dasharray: 2,2;
+    stroke-linejoin: round;
+}
+
+.odCity {
+    cursor: pointer;
     transition: all 0.5s ease;
 }
 
+.cityLabel {
+    cursor: pointer;
+    fill: #5c5c5c;
+    font-size: 10px;
+    text-anchor: middle;
+    transition: all 0.5s ease;
+    paint-order: stroke;
+    stroke: #cfe0e7;
+    stroke-width: 2;
+    stroke-opacity: 0.8;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+}
+
+.selLabel {
+    fill: #000;
+}
+
+.bar {
+    stroke: #cfe0e7;
+}
+
 .hidden {
-	display: none;
+	display: #bbb;
 }
 
 #infoBox {
