@@ -1,4 +1,38 @@
+.chartTitle {
+    font-family: trueno, helvetica, arial, sans-serif;
+    font-size: 1.5em;
+    margin-bottom: 0;
+    text-align: center;
+}
+
 .city {
+    cursor: pointer;
 	fill: #eee;
  	stroke: #ccc;
+    transition: all 0.5s ease;
+}
+
+.hidden {
+	display: none;
+}
+
+#infoBox {
+    border: 1px solid #000;
+    font-family: trueno, helvetica, arial, sans-serif;
+    height: 130px;
+    margin: 15px auto;
+    padding: 10px;
+    pointer-events: none;
+    width: 300px;
+}
+
+#infoBox .infoTitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px !important;
+}
+
+#infoBox .info {
+    font-size: 12px;
+    margin: 0;
 }

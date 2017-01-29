@@ -9,7 +9,29 @@ Blah blah blah
 
 * * *
 
+<div class="chartTitle">Overdoses by community and Fraser Health hospital</div>
+
+<select id="selectMuni">
+    <option value="Percent" selected="selected">Percent of opioid to total overdoses</option>
+    <option value="Opioid YTD">Opioid overdoses in year</option>
+    <option value="Overall YTD">Overall overdoses in year</option>
+</select>
+
 <div id="map"></div>
+
+<div id="infoBox">
+	<div id="hint">
+		<p class="info">Click or hover over a section of the map area to view exact details</p>
+	</div>
+	<div id="details" class="hidden">
+		<p class="infoTitle"><span id="label"></span></p>
+		<p class="info">Opioid 10 week average: <span id="op10wk"></span> overdoses</p>
+		<p class="info">Opioid year to date: <span id="opytd"></span> overdoses</p>
+		<p class="info">Overall 10 week average: <span id="ov10wk"></span> overdoses</p>
+        <p class="info">Overall year to date: <span id="ov10ytd"></span> overdoses</p>
+        <p class="info">Share of opioid to overall year to date: <span id="opovper"></span></p>
+	</div>
+</div>
 
 * * *
 

@@ -1,4 +1,6 @@
-// Map variables
+var OD = {
+    muniSelect: "Percent"
+}
 
 var margin = {top: 30, right: 10, bottom: 10, left: 50},
     width = 740,
@@ -24,7 +26,7 @@ var svg = d3.select("#map").append("svg")
 
 d3.queue()
     .defer(d3.json, "{{ site.baseurl }}/data/2017/01/lowermainland.json")
-    .defer(d3.csv, "{{ site.baseurl }}/data/2017/01/overdose_muni.csv", type)
+    .defer(d3.csv, "{{ site.baseurl }}/data/2017/01/overdose_muni.csv", typeMuni)
     .await(function ready(error, bcMuni, data) {
         console.log(bcMuni);
         console.log(data);
@@ -42,25 +44,52 @@ d3.queue()
         console.log(muniOds);
 
         color.domain([
-            d3.min(data, function(d) { return d["Opioid YTD"]; }), 
-            d3.max(data, function(d) { return d["Opioid YTD"]; })
+            d3.min(data, function(d) { return d[OD.muniSelect]; }), 
+            d3.max(data, function(d) { return d[OD.muniSelect]; })
         ]);
-        console.log(color.domain());
 
         city.filter(function(d) { return muniOds.has(d.properties.CSDNAME); })
-            .style("fill", function(d) { console.log(muniOds.get(d.properties.CSDNAME)[0]["Opioid YTD"]);
-                return color(muniOds.get(d.properties.CSDNAME)[0]["Opioid YTD"]); });
+            .style("fill", function(d) { return color(muniOds.get(d.properties.CSDNAME)[0][OD.muniSelect]); })
+            .on("mouseover", function(d) {
 
-        // svg.selectAll("path")
-        //     .data(bcMuni.features)
-        //     .enter()
-        //     .append("path")
-        //     .attr("d", path);
+                 d3.select("#label")
+                    .text(muniOds.get(d.properties.CSDNAME)[0]["Community"]);
+                d3.select("#op10wk")
+                    .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid 10wk avg"]);
+                d3.select("#opytd")
+                    .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid YTD"]);
+                d3.select("#ov10wk")
+                    .text(muniOds.get(d.properties.CSDNAME)[0]["Overall 10wk avg"]);
+                d3.select("#ov10ytd")
+                    .text(muniOds.get(d.properties.CSDNAME)[0]["Overall YTD"]);
+                d3.select("#opovper")
+                    .text(muniOds.get(d.properties.CSDNAME)[0]["Percent"]);
 
-    });
+                d3.select("#hint").classed("hidden", true);
+                d3.select("#details").classed("hidden", false);
+            });
 
-function type(d) {
-    d["Opioid YTD"] = +(d["Opioid YTD"]);
+		d3.select("#selectMuni")
+			.on("change", function(sel) {
+				OD.muniSelect = this.options[this.selectedIndex].value;
+
+                color.domain([
+                    d3.min(data, function(d) { return d[OD.muniSelect]; }), 
+                    d3.max(data, function(d) { return d[OD.muniSelect]; })
+                ]);
+
+                city.filter(function(d) { return muniOds.has(d.properties.CSDNAME); })
+                    .style("fill", function(d) { return color(muniOds.get(d.properties.CSDNAME)[0][OD.muniSelect]); });
+            });
+
+        });
+
+function typeMuni(d) {
+    d["Opioid 10wk avg"] = +d["Opioid 10wk avg"];
+    d["Opioid YTD"] = +d["Opioid YTD"];
+    d["Overall 10wk avg"] = +d["Overall 10wk avg"];
+    d["Overall YTD"] = +d["Overall YTD"];
+    d["Percent"] = +(d["Percent"]);
 
     return d;
 }
