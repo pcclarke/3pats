@@ -17,7 +17,7 @@ Blah blah blah
     <option value="Overall YTD">Overall overdoses in year</option>
 </select>
 
-<div id="map"></div>
+<div id="map" class="svg-container"></div>
 
 <div id="infoBoxMap" class="infoBox hidden">
 	<p class="infoTitle"><span id="label"></span></p>
@@ -30,7 +30,7 @@ Blah blah blah
 
 * * *
 
-<div id="chart"></div>
+<div id="chart" ></div>
 
 * * *
 

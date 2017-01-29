@@ -20,9 +20,9 @@ var path = d3.geoPath()
     .projection(projection);
 
 var svg = d3.select("#map").append("svg")
-      .attr("class", "vanMap")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", "0 0 " + width + " " + height)
+      .classed("svg-content", true);
 
 // Bar chart variables
 
@@ -194,7 +194,7 @@ d3.queue()
             d3.select("#infoBoxMap")
                 .style("left", function(temp) {
                     var shift = (d3.event.pageX + 5) + "px";
-                    if (x.invert(d3.event.pageX) > barWidth / 2) {
+                    if (d3.event.pageX > 500) {
                       shift = (d3.event.pageX - 330) + "px";
                     }
                     return shift;

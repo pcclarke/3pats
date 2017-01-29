@@ -1,3 +1,10 @@
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
 .chartTitle {
     font-family: trueno, helvetica, arial, sans-serif;
     font-size: 1.5em;
