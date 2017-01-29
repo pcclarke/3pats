@@ -34,7 +34,10 @@ d3.queue()
         var city = svg.selectAll(".city")
             .data(topojson.feature(bcMuni, bcMuni.objects.lowermainland).features)
             .enter().append("path")
-            .attr("class", "city")
+            .attr("class", function(d) {
+                var community = d.properties.CSDNAME.replace(' ', "_").toLowerCase();
+                return "city " + community;
+            })
             .attr("d", path);
 
         var muniOds = d3.nest()
