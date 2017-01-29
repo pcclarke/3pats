@@ -40,26 +40,27 @@
 }
 
 .hidden {
-	display: #bbb;
+	display: none;
 }
 
-#infoBox {
+.infoBox {
+    background: #fff;
     border: 1px solid #000;
     font-family: trueno, helvetica, arial, sans-serif;
-    height: 130px;
     margin: 15px auto;
     padding: 10px;
     pointer-events: none;
+    position: absolute;
     width: 300px;
 }
 
-#infoBox .infoTitle {
+.infoBox .infoTitle {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 8px !important;
 }
 
-#infoBox .info {
+.infoBox .info {
     font-size: 12px;
     margin: 0;
 }

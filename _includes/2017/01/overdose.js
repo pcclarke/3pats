@@ -1,5 +1,7 @@
 var muniSelect = "Percent";
 
+var percentFormat = d3.format(".0%");
+
 // Map variables
 
 var margin = {top: 30, right: 10, bottom: 10, left: 50},
@@ -14,8 +16,6 @@ var projection = d3.geoMercator()
 var color = d3.scaleSequential()
     .interpolator(d3.interpolateOrRd);
 
-var parseDate = d3.timeParse("%m/%d/%Y");
-
 var path = d3.geoPath()
     .projection(projection);
 
@@ -25,6 +25,16 @@ var svg = d3.select("#map").append("svg")
       .attr("height", height);
 
 // Bar chart variables
+
+var coordinates = [0, 0];
+
+var body = d3.select("body")
+	.on("mousemove", function() {
+		coordinates = d3.mouse(this);
+	})
+	.on("mousedown", function() {
+		coordinates = d3.mouse(this);
+	});
 
 var barMargin = {top: 20, right: 20, bottom: 30, left: 120},
     barWidth = 740 - barMargin.left - barMargin.right,
@@ -109,6 +119,16 @@ d3.queue()
         function getCommunity(d) { return d.properties.CSDNAME.replace(/ /g, "_").toLowerCase(); }
 
         function viewMuniInfo(d) {
+            d3.select("#infoBoxMap")
+                .style("left", function(temp) {
+                    var shift = (d3.event.pageX + 5) + "px";
+                    if (d.properties.CSDNAME == "Hope" || d.properties.CSDNAME == "Agassiz-Harrison") {
+                      shift = (d3.event.pageX - 330) + "px";
+                    }
+                    return shift;
+                })
+                .style("top", (d3.event.pageY - 12) + "px");
+
             d3.select("#label")
                 .text(muniOds.get(d.properties.CSDNAME)[0]["Community"]);
             d3.select("#op10wk")
@@ -120,16 +140,15 @@ d3.queue()
             d3.select("#ov10ytd")
                 .text(muniOds.get(d.properties.CSDNAME)[0]["Overall YTD"]);
             d3.select("#opovper")
-                .text(muniOds.get(d.properties.CSDNAME)[0]["Percent"]);
+                .text(percentFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent"]));
             
             d3.select(".label-" + getCommunity(d)).classed("selLabel", true);
 
-            d3.select("#hintMap").classed("hidden", true);
-            d3.select("#detailsMap").classed("hidden", false);
+            d3.select("#infoBoxMap").classed("hidden", false);
         }
 
         function labelMuniOut(d) {
-            
+            d3.select("#infoBoxMap").classed("hidden", true);
             d3.select(".label-" + getCommunity(d)).classed("selLabel", false);
         }
 
@@ -139,28 +158,12 @@ d3.queue()
                 d3.max(data, function(d) { return d[muniSelect]; })
             ]);
         }
-
-        d3.select("#selectMuni")
-          .on("change", function(sel) {
-            muniSelect = this.options[this.selectedIndex].value;
-
-                    setColorDomain();
-
-                    city.filter(function(d) { return muniOds.has(d.properties.CSDNAME); })
-                        .style("fill", function(d) { return color(muniOds.get(d.properties.CSDNAME)[0][muniSelect]); });
-                });
         
         // Bar chart
-
-        x.domain([
-            d3.min(data, function(d) { return d[muniSelect]; }) * 0.9, 
-            d3.max(data, function(d) { return d[muniSelect]; })
-          ]);
+        setXDomain();
         y.domain(data.map(function(d) { return d.Community; }));
 
-        console.log(x.domain());
-
-        barSvg.selectAll(".bar")
+        var bars = barSvg.selectAll(".bar")
               .data(data)
             .enter().append("rect")
               .attr("class", "bar")
@@ -168,16 +171,82 @@ d3.queue()
               .attr("width", function(d) { return x(d[muniSelect]); })
               .attr("y", function(d) { return y(d.Community); })
               .attr("height", y.bandwidth())
-              .attr("fill", function(d) { return color(d[muniSelect]); });
+              .attr("fill", function(d) { return color(d[muniSelect]); })
+              .on("mouseover", function(d) { viewBarInfo(d); })
+              .on("mouseout", function(d) { d3.select("#infoBoxMap").classed("hidden", true); });
 
-        barSvg.append("g")
+        var bottomAxis = d3.axisBottom(x)
+          .tickFormat(function(d) {
+            if (muniSelect === "Percent") {
+              return percentFormat(d);
+            }
+            return d;
+          });
+
+        var xAxis = barSvg.append("g")
             .attr("transform", "translate(0," + barHeight + ")")
-            .call(d3.axisBottom(x));
+            .call(bottomAxis);
 
         barSvg.append("g")
             .call(d3.axisLeft(y));
-      });
-        
+
+        function viewBarInfo(d) {
+            d3.select("#infoBoxMap")
+                .style("left", function(temp) {
+                    var shift = (d3.event.pageX + 5) + "px";
+                    if (x.invert(d3.event.pageX) > barWidth / 2) {
+                      shift = (d3.event.pageX - 330) + "px";
+                    }
+                    return shift;
+                })
+                .style("top", (d3.event.pageY - 12) + "px");
+
+            d3.select("#label")
+                .text(d["Community"]);
+            d3.select("#op10wk")
+                .text(d["Opioid 10wk avg"]);
+            d3.select("#opytd")
+                .text(d["Opioid YTD"]);
+            d3.select("#ov10wk")
+                .text(d["Overall 10wk avg"]);
+            d3.select("#ov10ytd")
+                .text(d["Overall YTD"]);
+            d3.select("#opovper")
+                .text(percentFormat(d["Percent"]));
+
+            d3.select("#infoBoxMap").classed("hidden", false);
+      }
+
+      function setXDomain() {
+          x.domain([
+            d3.min(data, function(d) { return d[muniSelect]; }) * 0.9, 
+            d3.max(data, function(d) { return d[muniSelect]; })
+          ]);
+      }
+
+      d3.select("#selectMuni")
+          .on("change", function(sel) {
+              muniSelect = this.options[this.selectedIndex].value;
+              
+              setColorDomain();
+
+              city.filter(function(d) { return muniOds.has(d.properties.CSDNAME); })
+                      .style("fill", function(d) { return color(muniOds.get(d.properties.CSDNAME)[0][muniSelect]); });
+
+              setXDomain();
+              xAxis.call(bottomAxis);
+
+              bars.transition()
+                .ease(d3.easeLinear)
+                .delay(function(d, i) {
+                  return i * 10;
+                })
+                .duration(1000)
+                .attr("width", function(d) { console.log(d); return x(d[muniSelect]); })
+                .attr("fill", function(d) { return color(d[muniSelect]); });
+          });
+  });
+      
 
 function typeMuni(d) {
     d["Opioid 10wk avg"] = +d["Opioid 10wk avg"];

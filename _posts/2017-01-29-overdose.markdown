@@ -9,7 +9,7 @@ Blah blah blah
 
 * * *
 
-<div class="chartTitle">Overdoses by Fraser Valley Municipality</div>
+<div class="chartTitle">Overdoses by Fraser Valley Municipality in 2016</div>
 
 <select id="selectMuni">
     <option value="Percent" selected="selected">Percent of opioid to total overdoses</option>
@@ -19,37 +19,18 @@ Blah blah blah
 
 <div id="map"></div>
 
-<div id="infoBox">
-	<div id="hintMap">
-		<p class="info">Click or hover over a section of the map area to view exact details</p>
-	</div>
-	<div id="detailsMap" class="hidden">
-		<p class="infoTitle"><span id="label"></span></p>
-		<p class="info">Opioid 10 week average: <span id="op10wk"></span> overdoses</p>
-		<p class="info">Opioid year to date: <span id="opytd"></span> overdoses</p>
-		<p class="info">Overall 10 week average: <span id="ov10wk"></span> overdoses</p>
-        <p class="info">Overall year to date: <span id="ov10ytd"></span> overdoses</p>
-        <p class="info">Share of opioid to overall year to date: <span id="opovper"></span></p>
-	</div>
+<div id="infoBoxMap" class="infoBox hidden">
+	<p class="infoTitle"><span id="label"></span></p>
+	<p class="info">Opioid 10 week average: <span id="op10wk"></span> overdoses</p>
+	<p class="info">Opioid year to date: <span id="opytd"></span> overdoses</p>
+	<p class="info">Overall 10 week average: <span id="ov10wk"></span> overdoses</p>
+	<p class="info">Overall year to date: <span id="ov10ytd"></span> overdoses</p>
+	<p class="info">Share of opioid to overall year to date: <span id="opovper"></span></p>
 </div>
 
 * * *
 
 <div id="chart"></div>
-
-<div id="infoBox">
-	<div id="hintChart">
-		<p class="info">Click or hover over a section of the bar chart to view exact details</p>
-	</div>
-	<div id="detailsChart" class="hidden">
-		<p class="infoTitle"><span id="label"></span></p>
-		<p class="info">Opioid 10 week average: <span id="op10wk"></span> overdoses</p>
-		<p class="info">Opioid year to date: <span id="opytd"></span> overdoses</p>
-		<p class="info">Overall 10 week average: <span id="ov10wk"></span> overdoses</p>
-        <p class="info">Overall year to date: <span id="ov10ytd"></span> overdoses</p>
-        <p class="info">Share of opioid to overall year to date: <span id="opovper"></span></p>
-	</div>
-</div>
 
 * * *
 
