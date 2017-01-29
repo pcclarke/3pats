@@ -1,3 +1,7 @@
+.svg-container {
+    z-index: 1;
+}
+
 @media (min-width: 800px) {
     .svg-container {
         margin-left: calc(-100vw / 2 + 800px / 2);
@@ -6,8 +10,8 @@
 }
 
 .chartTitle {
-    font-family: trueno, helvetica, arial, sans-serif;
-    font-size: 1.5em;
+    font-size: 26px;
+    font-style: italic;
     margin-bottom: 0;
     text-align: center;
 }
@@ -53,21 +57,22 @@
 .infoBox {
     background: #fff;
     border: 1px solid #000;
-    font-family: trueno, helvetica, arial, sans-serif;
     margin: 15px auto;
     padding: 10px;
     pointer-events: none;
     position: absolute;
     width: 300px;
+    z-index: 5;
 }
 
 .infoBox .infoTitle {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     margin-bottom: 8px !important;
 }
 
 .infoBox .info {
+    font-family: "Trueno Regular", helvetica, arial, sans-serif;
     font-size: 12px;
     margin: 0;
 }

@@ -1,5 +1,7 @@
 var muniSelect = "Percent";
 
+var showInfo = 0;
+
 var percentFormat = d3.format(".0%");
 
 // Map variables
@@ -22,7 +24,10 @@ var path = d3.geoPath()
 var svg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", "0 0 " + width + " " + height)
-      .classed("svg-content", true);
+      .classed("svg-content", true)
+      .on("click", function(d) {
+          d3.select("#infoBoxMap").classed("hidden", true);
+      });
 
 // Bar chart variables
 
@@ -50,7 +55,13 @@ var barSvg = d3.select("#chart").append("svg")
     .attr("width", barWidth + barMargin.left + barMargin.right)
     .attr("height", barHeight + barMargin.top + barMargin.bottom)
   .append("g")
-    .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
+    .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")")
+    .on("click", function(d) {
+        if (showInfo) {
+            d3.select("#infoBoxMap").classed("hidden", true);
+            showInfo = 0;
+        }
+    });;
 
 d3.queue()
     .defer(d3.json, "{{ site.baseurl }}/data/2017/01/lowermainland.json")
@@ -78,7 +89,8 @@ d3.queue()
             .classed("odCity", true)
             .style("fill", function(d) { return color(muniOds.get(d.properties.CSDNAME)[0][muniSelect]); })
             .on("mouseover", function(d) { viewMuniInfo(d); })
-            .on("mouseout", function(d) { labelMuniOut(d); });
+            .on("mouseout", function(d) { labelMuniOut(d); })
+            .on("click", function(d) { viewMuniInfo(d); });
 
         svg.selectAll(".cityLabel")
             .data(topojson.feature(bcMuni, bcMuni.objects.lowermainland).features)
@@ -114,7 +126,8 @@ d3.queue()
             })
             .text(function(d) { return d.properties.CSDNAME; })
             .on("mouseover", function(d) { viewMuniInfo(d); })
-            .on("mouseout", function(d) { labelMuniOut(d); });
+            .on("mouseout", function(d) { labelMuniOut(d); })
+            .on("click", function(d) { viewMuniInfo(d); });
 
         function getCommunity(d) { return d.properties.CSDNAME.replace(/ /g, "_").toLowerCase(); }
 
@@ -122,7 +135,7 @@ d3.queue()
             d3.select("#infoBoxMap")
                 .style("left", function(temp) {
                     var shift = (d3.event.pageX + 5) + "px";
-                    if (d.properties.CSDNAME == "Hope" || d.properties.CSDNAME == "Agassiz-Harrison") {
+                    if (d.properties.CSDNAME == "Hope" || d.properties.CSDNAME == "Agassiz-Harrison" || d.properties.CSDNAME == "Chilliwack") {
                       shift = (d3.event.pageX - 330) + "px";
                     }
                     return shift;
@@ -145,11 +158,13 @@ d3.queue()
             d3.select(".label-" + getCommunity(d)).classed("selLabel", true);
 
             d3.select("#infoBoxMap").classed("hidden", false);
+            showInfo = 1;
         }
 
         function labelMuniOut(d) {
             d3.select("#infoBoxMap").classed("hidden", true);
             d3.select(".label-" + getCommunity(d)).classed("selLabel", false);
+            showInfo = 0;
         }
 
         function setColorDomain() {
@@ -173,7 +188,11 @@ d3.queue()
               .attr("height", y.bandwidth())
               .attr("fill", function(d) { return color(d[muniSelect]); })
               .on("mouseover", function(d) { viewBarInfo(d); })
-              .on("mouseout", function(d) { d3.select("#infoBoxMap").classed("hidden", true); });
+              .on("mouseout", function(d) { 
+                  d3.select("#infoBoxMap").classed("hidden", true); 
+                  showInfo = 0;
+              })
+              .on("click", function(d) { viewBarInfo(d); });
 
         var bottomAxis = d3.axisBottom(x)
           .tickFormat(function(d) {
@@ -215,6 +234,7 @@ d3.queue()
                 .text(percentFormat(d["Percent"]));
 
             d3.select("#infoBoxMap").classed("hidden", false);
+            showInfo = 1;
       }
 
       function setXDomain() {
