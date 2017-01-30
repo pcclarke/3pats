@@ -79,46 +79,52 @@ d3.queue()
             ]);
         }
 
-        var viewMuniInfo = function(d) {
-            d3.select("#infoBoxMap")
-                .style("left", function(temp) {
-                    var shift = (d3.event.pageX + 5) + "px";
-                    if (d.properties.CSDNAME == "Hope" || 
-                        d.properties.CSDNAME == "Agassiz-Harrison" || 
-                        d.properties.CSDNAME == "Chilliwack") {
-                      shift = (d3.event.pageX - 330) + "px";
-                    }
-                    return shift;
-                })
-                .style("top", (d3.event.pageY - 12) + "px");
+        var mapSelect = (function() {
+            var community = "";
 
-            d3.select("#label")
-                .text(muniOds.get(d.properties.CSDNAME)[0]["Community"]);
-            d3.select("#op10wk")
-                .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid 10wk avg"]);
-            d3.select("#opytd")
-                .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid YTD"]);
-            d3.select("#ov10wk")
-                .text(muniOds.get(d.properties.CSDNAME)[0]["Overall 10wk avg"]);
-            d3.select("#ov10ytd")
-                .text(muniOds.get(d.properties.CSDNAME)[0]["Overall YTD"]);
-            d3.select("#opovper")
-                .text(percentFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent"]));
-            d3.select("#infoOppop").classed("hidden", false);
-            d3.select("#infoOvpop").classed("hidden", false);
-            d3.select("#oppop")
-                .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Opioid"]));
-            d3.select("#ovpop")
-                .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Overall"]));
-            
-            d3.select(".label-" + getCommunity(d)).classed("selLabel", true);
-            d3.select("#infoBoxMap").classed("hidden", false);
-        }
+            return {
+                in : function(d) {
+                    d3.select("#infoBoxMap")
+                        .style("left", function(temp) {
+                            var shift = (d3.event.pageX + 5) + "px";
+                            if (d.properties.CSDNAME == "Hope" || 
+                                d.properties.CSDNAME == "Agassiz-Harrison" || 
+                                d.properties.CSDNAME == "Chilliwack") {
+                              shift = (d3.event.pageX - 330) + "px";
+                            }
+                            return shift;
+                        })
+                        .style("top", (d3.event.pageY - 12) + "px");
 
-        var labelMuniOut = function(d) {
-            d3.select("#infoBoxMap").classed("hidden", true);
-            d3.select(".label-" + getCommunity(d)).classed("selLabel", false);
-        }
+                    d3.select("#label")
+                        .text(muniOds.get(d.properties.CSDNAME)[0]["Community"]);
+                    d3.select("#op10wk")
+                        .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid 10wk avg"]);
+                    d3.select("#opytd")
+                        .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid YTD"]);
+                    d3.select("#ov10wk")
+                        .text(muniOds.get(d.properties.CSDNAME)[0]["Overall 10wk avg"]);
+                    d3.select("#ov10ytd")
+                        .text(muniOds.get(d.properties.CSDNAME)[0]["Overall YTD"]);
+                    d3.select("#opovper")
+                        .text(percentFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent"]));
+                    d3.select("#infoOppop").classed("hidden", false);
+                    d3.select("#infoOvpop").classed("hidden", false);
+                    d3.select("#oppop")
+                        .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Opioid"]));
+                    d3.select("#ovpop")
+                        .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Overall"]));
+                    
+                    community = getCommunity(d);
+                    d3.select(".label-" + community).classed("selLabel", true);
+                    d3.select("#infoBoxMap").classed("hidden", false);
+                },
+                out: function() {
+                    d3.select("#infoBoxMap").classed("hidden", true);
+                    d3.select(".label-" + community).classed("selLabel", false);
+                }
+             };
+        })();
 
         var viewBarInfo = function(d) {
             d3.select("#infoBoxMap")
@@ -165,6 +171,18 @@ d3.queue()
             ]);
         }
 
+        // var equalToEventTarget = function() {
+        //     return this == d3.event.target;
+        // }
+
+        // d3.select("body").on("click",function(){
+        //     var content = d3.selectAll(".odCity, .odCity *, .bar, .bar *");
+        //     var outside = content.filter(equalToEventTarget).empty();
+        //     if (outside) {
+        //         d3.select("#infoBoxMap").classed("hidden", true);
+        //     }
+        // });
+
         // Map
 
         var city = svg.selectAll(".city")
@@ -185,9 +203,13 @@ d3.queue()
         city.filter(function(d) { return muniOds.has(d.properties.CSDNAME); })
             .classed("odCity", true)
             .style("fill", function(d) { return color(muniOds.get(d.properties.CSDNAME)[0][muniSelect]); })
-            .on("mouseover", function(d) { viewMuniInfo(d); })
-            .on("mouseout", function(d) { labelMuniOut(d); })
-            .on("click", function(d) { viewMuniInfo(d); });
+            .on("mouseover", function(d) { mapSelect.in(d); })
+            .on("mouseout", function(d) { mapSelect.out(); })
+            .on("click", function(d) { mapSelect.in(d); });
+
+        city.filter(function(d) { return !(muniOds.has(d.properties.CSDNAME)); })
+            .classed("outerCity", true)
+            .on("click", function(d) { mapSelect.out(d); });
 
         svg.selectAll(".cityLabel")
             .data(topojson.feature(bcMuni, bcMuni.objects.lowermainland).features)
@@ -224,9 +246,9 @@ d3.queue()
                 return shift;
             })
             .text(function(d) { return d.properties.CSDNAME; })
-            .on("mouseover", function(d) { viewMuniInfo(d); })
-            .on("mouseout", function(d) { labelMuniOut(d); })
-            .on("click", function(d) { viewMuniInfo(d); });
+            .on("mouseover", function(d) { mapSelect.in(d); })
+            .on("mouseout", function(d) { mapSelect.out(); })
+            .on("click", function(d) { mapSelect.in(d); });
         
         // Bar chart
         setXDomain();
