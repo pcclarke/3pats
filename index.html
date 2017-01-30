@@ -13,7 +13,7 @@ layout: default
 	  <div class="content">
 	    {{ post.excerpt }}
 			{% if post.thumbnail %}
-			<img class="thumbnail" src="{{ post.thumbnail }}" />
+			<a href="{{ post.url }}"><img class="thumbnail" src="{{ post.thumbnail }}" /></a>
 			{% endif %}
 	  </div>
 	{% endfor %}

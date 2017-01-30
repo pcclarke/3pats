@@ -2,30 +2,34 @@
 layout: post
 title:  "Valley of the dolls"
 date:   2017-01-29 12:00:00
-thumbnail: /img/2017/01/gendergapThumb.jpg
+thumbnail: /img/2017/01/overdoseThumb.jpg
 ---
 
-Blah blah blah
+I recently had the privilege of participating at the [Fraser Health hackathon](https://www.healthhackathon.ca/index.html), where my team presented on the [overdose analytics challenge](https://www.healthhackathon.ca/themes/theme7.html). There we got access to some new data that Fraser Health has made available, including overdoses within the Fraser Health Authority's communities. With the ongoing fentanyl crisis, understanding where surges of overdoses are occurring is valuable information. Here's my first take on it:
 
 * * *
 
 <div class="chartTitle">Overdoses by Fraser Valley Municipality in 2016</div>
 
 <select id="selectMuni">
-    <option value="Percent" selected="selected">Percent of opioid to total overdoses</option>
-    <option value="Opioid YTD">Opioid overdoses in year</option>
-    <option value="Overall YTD">Overall overdoses in year</option>
+    <option value="Percent" selected="selected">Share of opioid to overall</option>
+    <option value="Opioid YTD">Opioid total</option>
+    <option value="Overall YTD">Overall total</option>
+	<option value="Percent Opioid">Opioid by population</option>
+	<option value="Percent Overall">Overall by population</option>
 </select>
 
 <div id="map" class="svg-container"></div>
 
 <div id="infoBoxMap" class="infoBox hidden">
 	<p class="infoTitle"><span id="label"></span></p>
-	<p class="info">Opioid 10 week average: <span id="op10wk"></span> overdoses</p>
-	<p class="info">Opioid year to date: <span id="opytd"></span> overdoses</p>
-	<p class="info">Overall 10 week average: <span id="ov10wk"></span> overdoses</p>
-	<p class="info">Overall year to date: <span id="ov10ytd"></span> overdoses</p>
-	<p class="info">Share of opioid to overall year to date: <span id="opovper"></span></p>
+	<p class="info">Opioid 10 week average: <span class="infoData"><span id="op10wk"></span> overdoses</span></p>
+	<p class="info">Opioid year to date: <span class="infoData"><span id="opytd"></span> overdoses</span></p>
+	<p class="info">Overall 10 week average: <span class="infoData"><span id="ov10wk"></span> overdoses</span></p>
+	<p class="info">Overall year to date: <span class="infoData"><span id="ov10ytd"></span> overdoses</span></p>
+	<p class="info">Share of opioid to overall year to date: <span class="infoData"><span id="opovper"></span></span></p>
+	<p class="info" id="infoOppop">Opioid by population: <span class="infoData"><span id="oppop"></span> overdoses per 1000</span></p>
+	<p class="info" id="infoOvpop">Overall by population: <span class="infoData"><span id="ovpop"></span> overdoses per 1000</span></p>
 </div>
 
 * * *
@@ -34,7 +38,12 @@ Blah blah blah
 
 * * *
 
-Source: [Fraser Health Hackathon Github](https://github.com/healthhackathon)
+Sources: 
+
+- [Fraser Health Hackathon Github](https://github.com/healthhackathon)
+- [BC Stats Population Estimates](http://www.bcstats.gov.bc.ca/StatisticsBySubject/Demography/PopulationEstimates.aspx)
+
+Disclaimer: as an employee of Fraser Health, this post in no way represents Fraser Health in any official capacity whatsoever.
 
 <style>{% include 2017/01/overdose.css %}</style>
 

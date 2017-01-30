@@ -1,8 +1,7 @@
 var muniSelect = "Percent";
 
-var showInfo = 0;
-
-var percentFormat = d3.format(".0%");
+var percentFormat = d3.format(".0%"),
+    decimalFormat = d3.format(".2");
 
 // Map variables
 
@@ -24,10 +23,7 @@ var path = d3.geoPath()
 var svg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", "0 0 " + width + " " + height)
-      .classed("svg-content", true)
-      .on("click", function(d) {
-          d3.select("#infoBoxMap").classed("hidden", true);
-      });
+      .classed("svg-content", true);
 
 // Bar chart variables
 
@@ -55,13 +51,7 @@ var barSvg = d3.select("#chart").append("svg")
     .attr("width", barWidth + barMargin.left + barMargin.right)
     .attr("height", barHeight + barMargin.top + barMargin.bottom)
   .append("g")
-    .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")")
-    .on("click", function(d) {
-        if (showInfo) {
-            d3.select("#infoBoxMap").classed("hidden", true);
-            showInfo = 0;
-        }
-    });;
+    .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
 
 d3.queue()
     .defer(d3.json, "{{ site.baseurl }}/data/2017/01/lowermainland.json")
@@ -112,14 +102,16 @@ d3.queue()
             .attr("dy", function(d) {
                 var shift = ".35em";
 
-                if (d.properties.CSDNAME == "Coquitlam") {
+                if (d.properties.CSDNAME === "Coquitlam") {
                     shift = "-1.5em";
-                } else if (d.properties.CSDNAME == "Pitt Meadows") {
+                } else if (d.properties.CSDNAME === "Pitt Meadows") {
                     shift = "-1em";
-                } else if (d.properties.CSDNAME == "Township of Langley") {
+                } else if (d.properties.CSDNAME === "Township of Langley") {
                     shift = "2em";
-                } else if (d.properties.CSDNAME == "Surrey") {
+                } else if (d.properties.CSDNAME === "Surrey") {
                     shift = "-1em";
+                } else if (d.properties.CSDNAME === "White Rock") {
+                    shift = "1em";
                 }
 
                 return shift;
@@ -135,7 +127,9 @@ d3.queue()
             d3.select("#infoBoxMap")
                 .style("left", function(temp) {
                     var shift = (d3.event.pageX + 5) + "px";
-                    if (d.properties.CSDNAME == "Hope" || d.properties.CSDNAME == "Agassiz-Harrison" || d.properties.CSDNAME == "Chilliwack") {
+                    if (d.properties.CSDNAME == "Hope" || 
+                        d.properties.CSDNAME == "Agassiz-Harrison" || 
+                        d.properties.CSDNAME == "Chilliwack") {
                       shift = (d3.event.pageX - 330) + "px";
                     }
                     return shift;
@@ -154,17 +148,20 @@ d3.queue()
                 .text(muniOds.get(d.properties.CSDNAME)[0]["Overall YTD"]);
             d3.select("#opovper")
                 .text(percentFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent"]));
+            d3.select("#infoOppop").classed("hidden", false);
+            d3.select("#infoOvpop").classed("hidden", false);
+            d3.select("#oppop")
+                .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Opioid"]));
+            d3.select("#ovpop")
+                .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Overall"]));
             
             d3.select(".label-" + getCommunity(d)).classed("selLabel", true);
-
             d3.select("#infoBoxMap").classed("hidden", false);
-            showInfo = 1;
         }
 
         function labelMuniOut(d) {
             d3.select("#infoBoxMap").classed("hidden", true);
             d3.select(".label-" + getCommunity(d)).classed("selLabel", false);
-            showInfo = 0;
         }
 
         function setColorDomain() {
@@ -190,7 +187,6 @@ d3.queue()
               .on("mouseover", function(d) { viewBarInfo(d); })
               .on("mouseout", function(d) { 
                   d3.select("#infoBoxMap").classed("hidden", true); 
-                  showInfo = 0;
               })
               .on("click", function(d) { viewBarInfo(d); });
 
@@ -232,9 +228,19 @@ d3.queue()
                 .text(d["Overall YTD"]);
             d3.select("#opovper")
                 .text(percentFormat(d["Percent"]));
+            if (d.Community !== "Other") {
+                d3.select("#infoOppop").classed("hidden", false);
+                d3.select("#infoOvpop").classed("hidden", false);
+                d3.select("#oppop")
+                    .text(decimalFormat(d["Percent Opioid"]));
+                d3.select("#ovpop")
+                    .text(decimalFormat(d["Percent Overall"]));
+            } else {
+                d3.select("#infoOppop").classed("hidden", true);
+                d3.select("#infoOvpop").classed("hidden", true);
+            }
 
             d3.select("#infoBoxMap").classed("hidden", false);
-            showInfo = 1;
       }
 
       function setXDomain() {
@@ -274,6 +280,8 @@ function typeMuni(d) {
     d["Overall 10wk avg"] = +d["Overall 10wk avg"];
     d["Overall YTD"] = +d["Overall YTD"];
     d["Percent"] = +(d["Percent"]);
+    d["Percent Opioid"] = +d["Percent Opioid"];
+    d["Percent Overall"] = +(d["Percent Overall"]);
 
     return d;
 }
