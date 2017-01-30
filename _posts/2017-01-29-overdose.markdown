@@ -5,7 +5,9 @@ date:   2017-01-29 12:00:00
 thumbnail: /img/2017/01/overdoseThumb.jpg
 ---
 
-I recently had the privilege of participating at the [Fraser Health hackathon](https://www.healthhackathon.ca/index.html), where my team presented on the [overdose analytics challenge](https://www.healthhackathon.ca/themes/theme7.html). There we got access to some new data that Fraser Health has made available, including overdoses within the Fraser Health Authority's communities. With the ongoing fentanyl crisis, understanding where surges of overdoses are occurring is valuable information. Here's my first take on it:
+I recently had the privilege of participating at the [Fraser Health hackathon](https://www.healthhackathon.ca/index.html), where my team presented on the [overdose analytics challenge](https://www.healthhackathon.ca/themes/theme7.html). There we got to work with some new data that Fraser Health has made available, including overdoses within the Fraser Health Authority's communities. Here it is visualized, with some additional data for context.
+
+This data is for 2016, from the start of the year up to December 19th. As far as I know, no other health authority has released similar data, but I would imagine that the overdose situation isn't much different in the rest of British Columbia.
 
 * * *
 
