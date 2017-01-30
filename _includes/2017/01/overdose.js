@@ -1,7 +1,8 @@
 var muniSelect = "Percent";
 
 var percentFormat = d3.format(".0%"),
-    decimalFormat = d3.format(".2");
+    precisionFormat = d3.format(".2"),
+    decimalFormat = d3.format("d");
 
 // Map variables
 
@@ -70,14 +71,14 @@ d3.queue()
     .defer(d3.csv, "{{ site.baseurl }}/data/2017/01/overdose_muni.csv", typeMuni)
     .await(function ready(error, bcMuni, data) {
 
-        var getCommunity = function(d) { return d.properties.CSDNAME.replace(/ /g, "_").toLowerCase(); }
+        var getCommunity = function(d) { return d.properties.CSDNAME.replace(/ /g, "_").toLowerCase(); };
 
         var setColorDomain = function() {
             color.domain([
                 d3.min(data, function(d) { return d[muniSelect]; }), 
                 d3.max(data, function(d) { return d[muniSelect]; })
             ]);
-        }
+        };
 
         var mapSelect = (function() {
             var community = "";
@@ -111,9 +112,9 @@ d3.queue()
                     d3.select("#infoOppop").classed("hidden", false);
                     d3.select("#infoOvpop").classed("hidden", false);
                     d3.select("#oppop")
-                        .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Opioid"]));
+                        .text(precisionFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Opioid"]));
                     d3.select("#ovpop")
-                        .text(decimalFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Overall"]));
+                        .text(precisionFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Overall"]));
                     
                     community = getCommunity(d);
                     d3.select(".label-" + community).classed("selLabel", true);
@@ -153,23 +154,67 @@ d3.queue()
                 d3.select("#infoOppop").classed("hidden", false);
                 d3.select("#infoOvpop").classed("hidden", false);
                 d3.select("#oppop")
-                    .text(decimalFormat(d["Percent Opioid"]));
+                    .text(precisionFormat(d["Percent Opioid"]));
                 d3.select("#ovpop")
-                    .text(decimalFormat(d["Percent Overall"]));
+                    .text(precisionFormat(d["Percent Overall"]));
             } else {
                 d3.select("#infoOppop").classed("hidden", true);
                 d3.select("#infoOvpop").classed("hidden", true);
             }
 
             d3.select("#infoBoxMap").classed("hidden", false);
-        }
+        };
 
         var setXDomain = function() {
             x.domain([
               d3.min(data, function(d) { return d[muniSelect]; }) * 0.9, 
               d3.max(data, function(d) { return d[muniSelect]; })
             ]);
-        }
+        };
+
+        var makeLegend = function() {
+            var leg = svg.selectAll(".legend")
+                .data(function(d) {
+                    var max = d3.max(data, function(d) { return d[muniSelect]; });
+                    var min = d3.min(data, function(d) { return d[muniSelect]; });
+                    var diff = max - min;
+                    var fifths = [];
+
+                    for (var i = 0; i < 4; i ++) {
+                      fifths.push(min + (.2 * i * diff));
+                    }
+                    fifths.push(max);
+
+                    return fifths;
+                })
+                .enter()
+                .append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { return "translate(25," + (25 + i * 15) + ")"; });
+
+            leg.append("rect")
+                .attr("width", 15)
+                .attr("height", 15)
+                .style("fill", function(d) { return color(d); });
+
+            leg.append("text")
+                .attr("x", 20)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .attr("class", "legendText")
+                .style("text-anchor", "start")
+                .text(function(d) {
+                    var dataText = "";
+                    if (muniSelect === "Percent") {
+                        dataText = percentFormat(d);
+                    } else if (muniSelect === "Percent Opioid" || muniSelect === "Percent Overall") {
+                        dataText = decimalFormat(d) + " per 1000";
+                    } else {
+                      dataText = decimalFormat(d);
+                    }
+                    return dataText;
+                });
+        };
 
         // var equalToEventTarget = function() {
         //     return this == d3.event.target;
@@ -249,6 +294,9 @@ d3.queue()
             .on("mouseover", function(d) { mapSelect.in(d); })
             .on("mouseout", function(d) { mapSelect.out(); })
             .on("click", function(d) { mapSelect.in(d); });
+
+        makeLegend();
+        
         
         // Bar chart
         setXDomain();
@@ -284,6 +332,9 @@ d3.queue()
         barSvg.append("g")
             .call(d3.axisLeft(y));
 
+        
+        // Drop-down menu
+
         d3.select("#selectMuni")
           .on("change", function(sel) {
               muniSelect = this.options[this.selectedIndex].value;
@@ -302,7 +353,11 @@ d3.queue()
                   return i * 10;
                 })
                 .duration(1000)
-                .attr("width", function(d) { console.log(d); return x(d[muniSelect]); })
+                .attr("width", function(d) { return x(d[muniSelect]); })
                 .attr("fill", function(d) { return color(d[muniSelect]); });
+
+              d3.selectAll(".legend")
+                  .remove();
+              makeLegend();
           });
   });
