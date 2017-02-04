@@ -87,9 +87,18 @@ function ready(error, world, refugees) {
         .text("Canada");*/
 
     country.filter(function(d) { return refugeesById.has(d.id) && refugeesById.get(d.id)[0][year] > 0; })
-        .style("fill", function(d) { console.log(d); return color(refugeesById.get(d.id)[0][year]); })
+        .style("fill", function(d) { return color(refugeesById.get(d.id)[0][year]); })
         .on("mouseover", function(d) {
             showTooltip(d, this);
+        })
+        .on("mouseout", function(d) {
+            d3.select("#sparkGroup").classed("hidden", true);
+            d3.selectAll("#unchrChart .sel").classed("sel", false);
+        });
+
+    d3.select("#sparkGroup").on("click", function(d) { 
+            d3.select("#sparkGroup").classed("hidden", true);
+            d3.selectAll("#unchrChart .sel").classed("sel", false);
         });
             
     function showTooltip(d, obj) {
@@ -127,16 +136,37 @@ function ready(error, world, refugees) {
         
         d3.select("#sparkValue")
             .text(numFormat(refugeesById.get(d.id).map(function(e) { return e[year]; })));
+
         d3.select("#mapCountry")
             .text(refugeesById.get(d.id)[0].name);
-        
-        d3.select("#sparkGroup").classed("hidden", false);
+
+        d3.select("#sparkGroup")
+            .style("left", function(temp) {
+                var shift = (d3.event.pageX + 5) + "px";
+                if (d3.event.pageX > 500) {
+                    shift = (d3.event.pageX - 230) + "px";
+                }
+                return shift;
+            })
+            .style("top", (d3.event.pageY - 12) + "px")
+            .style("width", function(e) {
+                var boxLen = 170;
+                var textLen = (refugeesById.get(d.id)[0].name).length * 10;
+                if (textLen > boxLen) {
+                    return textLen + "px";
+                }
+                return boxLen + "px";
+            })
+            .on("click", function(d) { console.log("hey"); })
+            .classed("hidden", false);
     }
 
     svg.insert("path", ".graticule")
         .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
         .attr("class", "boundary")
         .attr("d", path);
+
+    var info = 
 
     d3.select("#selectUnhcr")
         .on("change", function() {

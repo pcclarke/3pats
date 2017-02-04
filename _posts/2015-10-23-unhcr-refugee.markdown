@@ -8,7 +8,7 @@ And finally, here is the UNHCR data mapped.
 
 Note that the colour scheme is relative to each year. The darkest red is the country with the most refugees living in Canada for that year. But a dark red in one year is not the same as a dark red in another year; there were twice as many refugees from Poland in 1994 as from Afghanistan in 2001.
 
-**Update 04-02-2017**: Includes 2015 and 2016 refugee data.
+**Update 04-02-2017**: Includes 2015 refugee data.
 
 * * *
 
@@ -41,7 +41,8 @@ Note that the colour scheme is relative to each year. The darkest red is the cou
 <div id="unchrChart" class="svg-container"></div>
 
 <div id="sparkGroup" class="hidden">
-  <span id="mapCountry"></span> <div id="unhcrSparkline"></div><span id="sparkValue"></span>
+  <p id="mapCountry"></p>
+  <div id="unhcrSparkline"></div><span id="sparkValue"></span>
 </div>
 
 * * *
