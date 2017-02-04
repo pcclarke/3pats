@@ -2,6 +2,7 @@
 layout: post
 title:  "UNHCR Refugees in Canada, Mapped"
 date:   2015-10-23 22:00:00
+thumbnail: /img/2015/10/unhcrMapThumb.jpg
 ---
 
 And finally, here is the UNHCR data mapped.
