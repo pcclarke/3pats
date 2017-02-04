@@ -1,3 +1,10 @@
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
 #selectUnhcr {
   font-family: Lora, Georgia, serif;
   font-size: 20px;
@@ -21,6 +28,10 @@
 
 #unchrChart .land {
   fill: #ddd;
+}
+
+.country {
+  transition: all 0.5s ease;
 }
 
 #unchrChart .sel {
