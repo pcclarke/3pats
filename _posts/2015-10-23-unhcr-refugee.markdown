@@ -46,9 +46,10 @@ Source: [UNHCR Population Statistics](http://popstats.unhcr.org/en/overview)
 
 
 <style>{% include 2015/10/unhcrMap.css %}</style>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/0.2.9/d3.geo.projection.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
-<script src="{{ site.baseurl }}/js/colorbrewer.js"></script>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="https://d3js.org/queue.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-ease.v1.min.js"></script>
 <script>{% include 2015/10/unhcrMap.js %}</script>

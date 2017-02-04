@@ -1,25 +1,21 @@
 // Leaning heavily on http://bl.ocks.org/mbostock/5912673
 
-unhcrMap();
-
-function unhcrMap() {
-
 // Map
-var parseDate = d3.time.format("%Y-%m-%d").parse,
-    formatDate = d3.time.format("%x");
+var parseDate = d3.timeFormat("%Y-%m-%d").parse,
+    formatDate = d3.timeFormat("%x");
 
 var width = 740,
     height = 400;
 
-var projection = d3.geo.naturalEarth()
+var projection = d3.geoMercator()
     .scale(130)
     .translate([width / 2, height / 2])
     .precision(.1);
 
-var color = d3.scale.quantize()
-    .range(colorbrewer.Reds[9]);
+var color = d3.scaleSequential()
+    .interpolator(d3.interpolateOrRd);
 
-var path = d3.geo.path()
+var path = d3.geoPath()
     .projection(projection);
 
 // Sparkline
@@ -27,18 +23,18 @@ var margin = {top: 1, right: 1, bottom: 1, left: 1},
     sWidth = 100 - margin.left - margin.right,
     sHeight = 25 - margin.top - margin.bottom;
 		
-var x = d3.scale.linear()
+var x = d3.scaleLinear()
 		.domain([0, 20])
     .range([0, sWidth]);
 
-var y = d3.scale.linear()
+var y = d3.scaleLinear()
     .range([sHeight, 0]);
 		
-var line = d3.svg.line()
+var line = d3.line()
     .x(function(d, i) { return x(i); })
     .y(function(d) { return y(d); });
 		
-var numFormat = d3.format(",.0");
+var numFormat = d3.format(",");
 		
 drawMap("1994");
 
@@ -126,9 +122,12 @@ function drawMap(year) {
 						.attr("r", 3)
 						.attr("cx", x(year - 1994))
 						.attr("cy", y(data[year - 1994]));
+
+      console.log(refugeesById.get(d.id));
+      console.log(year);
 			
 			d3.select("#sparkValue")
-      	.text(numFormat(refugeesById.get(d.id).map(function(e) { return e[year]; })));
+      	.text(numFormat(refugeesById.get(d.id).map(function(e) { console.log(e); return e[year]; })));
 			d3.select("#mapCountry")
 				.text(refugeesById.get(d.id)[0].name);
 				
@@ -155,13 +154,9 @@ function drawMap(year) {
 d3.select(self.frameElement).style("height", height + "px");
 
 d3.select("#selectUnhcr")
-  .on("change", selected);
-
-function selected() {
-	d3.selectAll(".unhcrMap").remove();
-	d3.select("#sparkGroup").classed("hidden", true);
-	
-  drawMap(this.options[this.selectedIndex].value);
-}
-
-}
+    .on("change", function() {
+        d3.selectAll(".unhcrMap").remove();
+        d3.select("#sparkGroup").classed("hidden", true);
+      
+        drawMap(this.options[this.selectedIndex].value);
+    });
