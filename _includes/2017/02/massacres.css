@@ -1,0 +1,18 @@
+.chartTitle {
+    font-size: 26px;
+    font-style: italic;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
+.province {
+	fill: #eee;
+ 	stroke: #ddd;
+}
