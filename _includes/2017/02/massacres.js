@@ -3,6 +3,8 @@
 var mapWidth = 740,
     mapHeight = 400;
 
+var parseDate = d3.timeParse("%d-%b-%Y");
+
 var projection = d3.geoAlbers()
     .scale(920)
     .translate([310, 450]);
@@ -35,6 +37,7 @@ var barSvg = d3.select("#chart").append("svg")
 
 
 var type = function(d) {
+    d.Date = parseDate(d.Date);
     d.Longitude = +d.Longitude;
     d.Latitude = +d.Latitude;
     d.Deaths = +d.Deaths;
@@ -42,14 +45,15 @@ var type = function(d) {
     return d;
 }
 
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 d3.queue()
     .defer(d3.json, "{{ site.baseurl }}/data/2017/02/can_prov.json")
     .defer(d3.csv, "{{ site.baseurl }}/data/2017/02/massacres.csv", type)
     .await(function ready(error, prov, data) {
 
-        console.log(prov);
-        console.log(data);
+        // console.log(prov);
+        // console.log(data);
 
         var viewMapInfo = function(d) {
             d3.select("#infoBox")
@@ -63,7 +67,9 @@ d3.queue()
                 .style("top", (d3.event.pageY - 12) + "px");
 
             d3.select("#label").text(d.Name);
-            d3.select("#date").text(d.Date);
+            d3.select("#date").text(function(e) {
+                return months[d.Date.getMonth()] + " " + d.Date.getFullYear();
+            });
             d3.select("#location").text(d.Location);
             d3.select("#deaths").text(d.Deaths);
 
@@ -91,7 +97,6 @@ d3.queue()
             .filter(function (d) { return d.Name !== "Air India Bombing"; })
             .attr("class", "circle")
             .attr("cx", function(d) {
-                console.log(d);
                 return projection([d.Longitude, d.Latitude])[0];
             })
             .attr("cy", function(d) {
