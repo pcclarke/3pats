@@ -36,7 +36,7 @@ This data is for 2016, from the start of the year up to December 19th. As far as
 
 * * *
 
-<div id="chart" ></div>
+<div id="chart"></div>
 
 * * *
 
@@ -51,7 +51,7 @@ Disclaimer: as an employee of Fraser Health, this post in no way represents Fras
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
-<script src="//d3js.org/queue.v1.min.js"></script>
+<script src="https://d3js.org/queue.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-ease.v1.min.js"></script>
 <script>{% include 2017/01/overdose.js %}</script>
