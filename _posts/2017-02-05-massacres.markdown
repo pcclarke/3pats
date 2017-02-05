@@ -2,7 +2,7 @@
 layout: post
 title:  "Still, mostly peaceful"
 date:   2017-02-05 12:30:00
-thumbnail: /img/2017/01/overdoseThumb.jpg
+thumbnail: /img/2017/02/massacresThumb.jpg
 ---
 
 The recent Quebec mosque shooting may have been yet another reminder that Canada is not immune to extremism or violence, major violence remains thankfully unusual here. Compared to many other countries, our list of mass shootings and massacres is short. Let us hope it stays that way.

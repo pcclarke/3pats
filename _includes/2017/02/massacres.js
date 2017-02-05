@@ -19,7 +19,7 @@ var mapSvg = d3.select("#map").append("svg")
 
 // Bar chart variables
 
-var barMargin = {top: 20, right: 20, bottom: 40, left: 200},
+var barMargin = {top: 20, right: 20, bottom: 40, left: 210},
     barWidth = 740 - barMargin.left - barMargin.right,
     barHeight = 550 - barMargin.top - barMargin.bottom;
 
@@ -149,4 +149,40 @@ d3.queue()
         barSvg.append("g")
             .call(d3.axisLeft(y));
 
+
+        d3.select("#infoBox")
+            .on("click", function(d) {
+                d3.select("#infoBox").classed("hidden", true); 
+            });
+
+
+        // Legend
+
+        var legData = [5, 15, 25, 35];
+
+        var legCircles = mapSvg.selectAll(".legCircle")
+            .data(legData)
+            .enter()
+            .append("circle")
+            .attr("class", "legCircle")
+            .attr("cx", 15)
+            .attr("cy", function(d, i) {
+                return 15 + (18 * i);
+            })
+            .attr("r", function(d) {
+                return Math.sqrt(d) * 1.5;
+            });
+
+        var legText = mapSvg.selectAll(".legText")
+            .data(legData)
+            .enter()
+            .append("text")
+            .attr("class", "legText")
+            .attr("x", 27)
+            .attr("y", function(d, i) {
+                return 18 + (18 * i);
+            })
+            .text(function(d) {
+                return d;
+            });
     });
