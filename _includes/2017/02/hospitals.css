@@ -1,0 +1,85 @@
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
+.chartTitle {
+    font-size: 26px;
+    font-style: italic;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+#selectMuni { 
+    font-size: 14px;
+}
+
+.legendText {
+    font-size: 8px;
+}
+
+.city {
+	fill: #eee;
+ 	stroke: #bbb;
+    stroke-dasharray: 2,2;
+    stroke-linejoin: round;
+}
+
+.odCity {
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.cityLabel {
+    cursor: pointer;
+    fill: #5c5c5c;
+    font-size: 9px;
+    text-anchor: middle;
+    transition: all 0.5s ease;
+    paint-order: stroke;
+    stroke: #cfe0e7;
+    stroke-width: 1;
+    stroke-opacity: 0.8;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+}
+
+.selLabel {
+    fill: #000;
+}
+
+.bar {
+    cursor: pointer;
+    stroke: #cfe0e7;
+}
+
+.hidden {
+	display: none;
+}
+
+.infoBox {
+    background: #fff;
+    border: 1px solid #000;
+    margin: 15px auto;
+    padding: 10px;
+    pointer-events: none;
+    position: absolute;
+    width: 300px;
+}
+
+.infoBox .infoTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px !important;
+}
+
+.infoBox .info {
+    font-size: 12px;
+    margin: 0;
+}
+
+.infoBox .infoData {
+    font-family: "Trueno Regular", helvetica, arial, sans-serif;    
+}

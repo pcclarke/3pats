@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Valley of the dolls, part 1"
-date:   2017-01-30 9:30:00
+title:  "Valley of the dolls, part 2"
+date:   2017-02-15 9:30:00
 thumbnail: /img/2017/01/overdoseThumb.jpg
 ---
 
@@ -22,15 +22,7 @@ This data is for 2016, from the start of the year up to December 19th. As far as
 	<p class="info" id="infoOvpop">Overall by population: <span class="infoData"><span id="ovpop"></span> overdoses per 1000</span></p>
 </div>
 
-<div class="chartTitle">Overdoses by Fraser Valley Municipality in 2016</div>
-
-<select id="selectMuni">
-    <option value="Percent" selected="selected">Share of opioid to overall</option>
-    <option value="Opioid YTD">Opioid total</option>
-    <option value="Overall YTD">Overall total</option>
-	<option value="Percent Opioid">Opioid by population</option>
-	<option value="Percent Overall">Overall by population</option>
-</select>
+<div class="chartTitle">Overdoses in Fraser Health Hospitals in 2016</div>
 
 <div id="map" class="svg-container"></div>
 
@@ -47,11 +39,11 @@ Sources:
 
 Disclaimer: as an employee of Fraser Health, this post in no way represents Fraser Health in any official capacity whatsoever.
 
-<style>{% include 2017/01/overdose.css %}</style>
+<style>{% include 2017/02/hospitals.css %}</style>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-ease.v1.min.js"></script>
-<script>{% include 2017/01/overdose.js %}</script>
+<script>{% include 2017/02/hospitals.js %}</script>
