@@ -12,6 +12,13 @@
     text-align: center;
 }
 
+.legendBox {
+    fill: #ffffff;
+    opacity: 0.8;
+    stroke: #cfe0e7;
+    stroke-width: 1px;
+}
+
 .legendText {
     font-size: 8px;
 }

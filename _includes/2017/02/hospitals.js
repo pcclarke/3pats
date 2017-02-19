@@ -245,12 +245,19 @@ d3.queue()
                 }
             ];
 
+            mapSvg.append("rect")
+                .attr("x", 2)
+                .attr("y", 2)
+                .attr("width", 105)
+                .attr("height", 105)
+                .attr("class", "legendBox");
+
             var leg = mapSvg.selectAll(".legend")
                 .data(legData)
                 .enter()
                 .append("g")
                 .attr("class", "legend")
-                .attr("transform", function(d, i) { return "translate(45," + (15 + i * 15) + ")"; });
+                .attr("transform", function(d, i) { return "translate(45," + (15 + i * (Math.sqrt(d.pie[0].total) / pieScale + 9)) + ")"; });
 
             var legPies = leg.selectAll(".legPie")
                 .data(function(d) { return pie(d.pie); })
@@ -262,7 +269,6 @@ d3.queue()
 
             leg.append("text")
                 .attr("x", 25)
-                .attr("y", 2)
                 .attr("dy", ".35em")
                 .attr("class", "legendText")
                 .style("text-anchor", "start")
@@ -273,14 +279,14 @@ d3.queue()
 
             mapSvg.append("text")
                 .attr("x", 42)
-                .attr("y", 70)
+                .attr("y", 100)
                 .attr("class", "legendText")
                 .style("text-anchor", "end")
                 .text("Homeless");
 
             mapSvg.append("text")
                 .attr("x", 48)
-                .attr("y", 70)
+                .attr("y", 100)
                 .attr("class", "legendText")
                 .style("text-anchor", "start")
                 .text("Non-homeless");
