@@ -206,47 +206,84 @@ d3.queue()
         };
 
         var makeLegend = function() {
+            var legData = [
+                {
+                    pie: [
+                        {
+                            total: 50,
+                            value: 1
+                        },
+                        {
+                            total: 50,
+                            value: 1
+                        }
+                    ]
+                },
+                {
+                    pie: [
+                        {
+                            total: 500,
+                            value: 1
+                        },
+                        {
+                            total: 500,
+                            value: 1
+                        }
+                    ]
+                },
+                {
+                    pie: [
+                        {
+                            total: 1000,
+                            value: 1
+                        },
+                        {
+                            total: 1000,
+                            value: 1
+                        }
+                    ]
+                }
+            ];
+
             var leg = mapSvg.selectAll(".legend")
-                .data(function(d) {
-                    var max = d3.max(data, function(d) { return d[muniSelect]; });
-                    var min = d3.min(data, function(d) { return d[muniSelect]; });
-                    var diff = max - min;
-                    var fifths = [];
-
-                    for (var i = 0; i < 4; i ++) {
-                      fifths.push(min + (.2 * i * diff));
-                    }
-                    fifths.push(max);
-
-                    return fifths;
-                })
+                .data(legData)
                 .enter()
                 .append("g")
                 .attr("class", "legend")
-                .attr("transform", function(d, i) { return "translate(25," + (25 + i * 15) + ")"; });
+                .attr("transform", function(d, i) { return "translate(45," + (15 + i * 15) + ")"; });
 
-            leg.append("rect")
-                .attr("width", 15)
-                .attr("height", 15)
-                .style("fill", function(d) { return color(d); });
+            var legPies = leg.selectAll(".legPie")
+                .data(function(d) { return pie(d.pie); })
+                .enter()
+                .append("path")
+                .attr("d", arc)
+                .attr("class", "legPie")
+                .style("fill", function(d, i) { return color(i); });
 
             leg.append("text")
-                .attr("x", 20)
-                .attr("y", 9)
+                .attr("x", 25)
+                .attr("y", 2)
                 .attr("dy", ".35em")
                 .attr("class", "legendText")
                 .style("text-anchor", "start")
                 .text(function(d) {
-                    var dataText = "";
-                    if (muniSelect === "Percent") {
-                        dataText = percentFormat(d);
-                    } else if (muniSelect === "Percent Opioid" || muniSelect === "Percent Overall") {
-                        dataText = decimalFormat(d) + " per 1000";
-                    } else {
-                      dataText = decimalFormat(d);
-                    }
-                    return dataText;
+                    console.log(d.pie[0]);
+                    return d.pie[0].total;
                 });
+
+            mapSvg.append("text")
+                .attr("x", 42)
+                .attr("y", 70)
+                .attr("class", "legendText")
+                .style("text-anchor", "end")
+                .text("Homeless");
+
+            mapSvg.append("text")
+                .attr("x", 48)
+                .attr("y", 70)
+                .attr("class", "legendText")
+                .style("text-anchor", "start")
+                .text("Non-homeless");
         };
 
 
@@ -260,10 +297,6 @@ d3.queue()
                 return "city " + community;
             })
             .attr("d", path);
-
-        var hospOds = d3.nest()
-            .key(function(d) { return d.Hospital; })
-            .map(data, d3.map);
 
         console.log(data);
 
@@ -321,7 +354,7 @@ d3.queue()
             })
             .text(function(d) { return d.Hospital; });
 
-        // makeLegend();
+        makeLegend();
         
         
         // Bar chart

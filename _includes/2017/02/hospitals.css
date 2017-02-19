@@ -12,10 +12,6 @@
     text-align: center;
 }
 
-#selectMuni { 
-    font-size: 14px;
-}
-
 .legendText {
     font-size: 8px;
 }
@@ -27,9 +23,8 @@
     stroke-linejoin: round;
 }
 
-.odCity {
+.pie {
     cursor: pointer;
-    transition: all 0.5s ease;
 }
 
 .hospitalLabel {
