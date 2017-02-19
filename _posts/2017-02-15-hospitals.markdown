@@ -11,15 +11,11 @@ This data is for 2016, from the start of the year up to December 19th. As far as
 
 * * *
 
-<div id="infoBoxMap" class="infoBox hidden">
+<div id="infoBox" class="infoBox hidden">
 	<p class="infoTitle"><span id="label"></span></p>
-	<p class="info">Opioid 10 week average: <span class="infoData"><span id="op10wk"></span> overdoses</span></p>
-	<p class="info">Opioid year to date: <span class="infoData"><span id="opytd"></span> overdoses</span></p>
-	<p class="info">Overall 10 week average: <span class="infoData"><span id="ov10wk"></span> overdoses</span></p>
-	<p class="info">Overall year to date: <span class="infoData"><span id="ov10ytd"></span> overdoses</span></p>
-	<p class="info">Share of opioid to overall year to date: <span class="infoData"><span id="opovper"></span></span></p>
-	<p class="info" id="infoOppop">Opioid by population: <span class="infoData"><span id="oppop"></span> overdoses per 1000</span></p>
-	<p class="info" id="infoOvpop">Overall by population: <span class="infoData"><span id="ovpop"></span> overdoses per 1000</span></p>
+	<p class="info"><span id="community"></span></p>
+	<p class="info">Homeless: <span class="infoData"><span id="hlsVal"></span> (<span id="hlsPer"></span>) overdoses</span></p>
+	<p class="info">Overall: <span class="infoData"><span id="ovVal"></span> overdoses</span></p>
 </div>
 
 <div class="chartTitle">Overdoses in Fraser Health Hospitals in 2016</div>

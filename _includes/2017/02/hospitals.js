@@ -12,11 +12,11 @@ var margin = {top: 30, right: 10, bottom: 10, left: 50},
 
 var projection = d3.geoMercator()
     .scale(22000)
-    .translate([370, 130])
+    .translate([370, 120])
     .center([-122.275085, 49.292385]);
 
-var color = d3.scaleSequential()
-    .interpolator(d3.interpolateOrRd);
+var color = d3.scaleOrdinal()
+    .range(["#000000", "#ff0000"]);
 
 var path = d3.geoPath()
     .projection(projection);
@@ -25,6 +25,15 @@ var mapSvg = d3.select("#map").append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", "0 0 " + width + " " + height)
       .classed("svg-content", true);
+
+var pie = d3.pie()
+    .value(function(d) { return d.value; });
+
+var pieScale = 1.7;
+
+var arc = d3.arc()
+    .outerRadius(function(d) { return Math.sqrt(d.data.total) / pieScale; })
+    .innerRadius(0);
 
 // Bar chart variables
 
@@ -55,10 +64,22 @@ var barSvg = d3.select("#chart").append("svg")
     .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
 
 var type = function(d) {
+    var pie = [];
+    var homelessData = {};
+    var nonHomelessData = {};
     d.Longitude = +d.Longitude;
     d.Latitude = +d.Latitude;
     d["Homeless YTD"] = +d["Homeless YTD"];
+    d["Non-Homeless YTD"] = +d["Non-Homeless YTD"];
     d["Overall YTD"] = +d["Overall YTD"];
+    
+    nonHomelessData.total = d["Overall YTD"];
+    nonHomelessData.value = d["Non-Homeless YTD"];
+    homelessData.total = d["Overall YTD"];
+    homelessData.value = d["Homeless YTD"];
+    pie.push(nonHomelessData);
+    pie.push(homelessData);
+    d.pie = pie;
 
     return d;
 }
@@ -69,6 +90,28 @@ d3.queue()
     .await(function ready(error, bcMuni, data) {
 
         var getCommunity = function(d) { return d.properties.CSDNAME.replace(/ /g, "_").toLowerCase(); };
+
+        var viewMapInfo = function(d) {
+            d3.select("#infoBox")
+                .style("left", function(temp) {
+                    var shift = (d3.event.pageX + 5) + "px";
+                    if (d3.event.pageX > 500) {
+                      shift = (d3.event.pageX - 330) + "px";
+                    }
+                    return shift;
+                })
+                .style("top", (d3.event.pageY - 12) + "px");
+
+            d3.select("#label").text(d.Hospital);
+            d3.select("#community").text(d.Community);
+            d3.select("#hlsVal").text(d["Homeless YTD"]);
+            d3.select("#hlsPer").text(function(e) {
+                return percentFormat(d["Homeless YTD"] / d["Overall YTD"]);
+            });
+            d3.select("#ovVal").text(d["Overall YTD"]);
+
+            d3.select("#infoBox").classed("hidden", false);
+        };
 
         var mapSelect = (function() {
             // var community = "";
@@ -205,7 +248,7 @@ d3.queue()
                     return dataText;
                 });
         };
-        
+
 
         // Map
 
@@ -222,7 +265,61 @@ d3.queue()
             .key(function(d) { return d.Hospital; })
             .map(data, d3.map);
 
+        console.log(data);
 
+        var groups = mapSvg.selectAll(".hospital")
+            .data(data)
+            .enter().append("g")
+            .attr("transform", function(d) {
+                return "translate(" + projection([d.Longitude, d.Latitude])[0] + ", " + projection([d.Longitude, d.Latitude])[1] + ")";
+            })
+            .attr("class", function(d) {
+                return "hospital " + d.Hospital;
+            })
+            .on("mouseover", viewMapInfo)
+            .on("mouseout", function(d) {
+                d3.select("#infoBox").classed("hidden", true);
+            })
+            .on("click", viewMapInfo);
+
+        var pies = groups.selectAll(".pie")
+            .data(function(d) { return pie(d.pie); })
+            .enter()
+            .append("path")
+            .attr("d", arc)
+            .attr("class", "pie")
+            .style("fill", function(d, i) { return color(i); });
+
+        var labels = groups.append("text")
+            .attr("class", "hospitalLabel")
+            .style("text-anchor", function(d) {
+                if (d.Community === "Burnaby" ||
+                    d.Community === "Surrey" ||
+                    d.Community === "Hope") {
+                    return "end";
+                }
+                return "start";
+            })
+            .attr("x", function(d) {
+                if (d.Community === "Burnaby") {
+                    return 20;
+                } else if (d.Community === "New Westminster") {
+                    return 2;
+                } else if (d.Community === "Surrey" ||
+                    d.Community === "Hope") {
+                    return -(3 + Math.sqrt(d["Overall YTD"]) / pieScale);
+                }
+                return (3 + Math.sqrt(d["Overall YTD"]) / pieScale);
+            })
+            .attr("y", function(d) {
+                if (d.Community === "Burnaby") {
+                    return -(3 + Math.sqrt(d["Overall YTD"]) / pieScale)
+                } else if (d.Community === "New Westminster") {
+                    return -14;
+                }
+                return 5;
+            })
+            .text(function(d) { return d.Hospital; });
 
         // makeLegend();
         
@@ -260,5 +357,10 @@ d3.queue()
 
         barSvg.append("g")
             .call(d3.axisLeft(y));
+
+        d3.select("#infoBox")
+            .on("click", function(d) {
+                d3.select("#infoBox").classed("hidden", true);
+            });
 
   });
