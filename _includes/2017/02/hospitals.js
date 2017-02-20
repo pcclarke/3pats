@@ -12,7 +12,7 @@ var margin = {top: 30, right: 10, bottom: 10, left: 50},
 
 var projection = d3.geoMercator()
     .scale(22000)
-    .translate([370, 120])
+    .translate([370, 128])
     .center([-122.275085, 49.292385]);
 
 var color = d3.scaleOrdinal()
@@ -37,16 +37,6 @@ var arc = d3.arc()
 
 // Bar chart variables
 
-var coordinates = [0, 0];
-
-var body = d3.select("body")
-	.on("mousemove", function() {
-		coordinates = d3.mouse(this);
-	})
-	.on("mousedown", function() {
-		coordinates = d3.mouse(this);
-	});
-
 var barMargin = {top: 20, right: 20, bottom: 30, left: 170},
     barWidth = 740 - barMargin.left - barMargin.right,
     barHeight = 400 - barMargin.top - barMargin.bottom;
@@ -56,6 +46,11 @@ var x = d3.scaleLinear()
 var y = d3.scaleBand()
           .range([0, barHeight])
           .padding(0.1);
+
+var stack = d3.stack()
+    .keys(["Non-Homeless YTD", "Homeless YTD"])
+    .order(d3.stackOrderNone)
+    .offset(d3.stackOffsetNone);
 
 var barSvg = d3.select("#chart").append("svg")
     .attr("width", barWidth + barMargin.left + barMargin.right)
@@ -161,46 +156,30 @@ d3.queue()
         })();
 
         var viewBarInfo = function(d) {
-            // d3.select("#infoBoxMap")
-            //     .style("left", function(temp) {
-            //         var shift = (d3.event.pageX + 5) + "px";
-            //         if (d3.event.pageX > 500) {
-            //           shift = (d3.event.pageX - 330) + "px";
-            //         }
-            //         return shift;
-            //     })
-            //     .style("top", (d3.event.pageY - 12) + "px");
+            d3.select("#infoBox")
+                .style("left", function(temp) {
+                    var shift = (d3.event.pageX + 5) + "px";
+                    if (d3.event.pageX > 500) {
+                      shift = (d3.event.pageX - 330) + "px";
+                    }
+                    return shift;
+                })
+                .style("top", (d3.event.pageY - 12) + "px");
 
-            // d3.select("#label")
-            //     .text(d["Community"]);
-            // d3.select("#op10wk")
-            //     .text(d["Opioid 10wk avg"]);
-            // d3.select("#opytd")
-            //     .text(d["Opioid YTD"]);
-            // d3.select("#ov10wk")
-            //     .text(d["Overall 10wk avg"]);
-            // d3.select("#ov10ytd")
-            //     .text(d["Overall YTD"]);
-            // d3.select("#opovper")
-            //     .text(percentFormat(d["Percent"]));
-            // if (d.Community !== "Other") {
-            //     d3.select("#infoOppop").classed("hidden", false);
-            //     d3.select("#infoOvpop").classed("hidden", false);
-            //     d3.select("#oppop")
-            //         .text(precisionFormat(d["Percent Opioid"]));
-            //     d3.select("#ovpop")
-            //         .text(precisionFormat(d["Percent Overall"]));
-            // } else {
-            //     d3.select("#infoOppop").classed("hidden", true);
-            //     d3.select("#infoOvpop").classed("hidden", true);
-            // }
+            d3.select("#label").text(d.data.Hospital);
+            d3.select("#community").text(d.data.Community);
+            d3.select("#hlsVal").text(d.data["Homeless YTD"]);
+            d3.select("#hlsPer").text(function(e) {
+                return percentFormat(d.data["Homeless YTD"] / d.data["Overall YTD"]);
+            });
+            d3.select("#ovVal").text(d.data["Overall YTD"]);
 
-            // d3.select("#infoBoxMap").classed("hidden", false);
+            d3.select("#infoBox").classed("hidden", false);
         };
 
         var setXDomain = function() {
             x.domain([
-              d3.min(data, function(d) { return d["Overall YTD"]; }), 
+              0, 
               d3.max(data, function(d) { return d["Overall YTD"]; })
             ]);
         };
@@ -273,7 +252,6 @@ d3.queue()
                 .attr("class", "legendText")
                 .style("text-anchor", "start")
                 .text(function(d) {
-                    console.log(d.pie[0]);
                     return d.pie[0].total;
                 });
 
@@ -367,35 +345,33 @@ d3.queue()
         setXDomain();
         y.domain(data.map(function(d) { return d.Hospital; }));
 
-        var bars = barSvg.selectAll(".bar")
-              .data(data)
-            .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d) { return x(x.domain()[0]); })
-              .attr("width", function(d) { return x(d["Overall YTD"]); })
-              .attr("y", function(d) { return y(d.Hospital); })
-              .attr("height", y.bandwidth())
-              .attr("fill", function(d) { return "blue"; });
-            //   .on("mouseover", function(d) { viewBarInfo(d); })
-            //   .on("mouseout", function(d) { 
-            //       d3.select("#infoBoxMap").classed("hidden", true); 
-            //   })
-            //   .on("click", function(d) { viewBarInfo(d); });
+        console.log(stack(data));
 
-        var bottomAxis = d3.axisBottom(x)
-          .tickFormat(function(d) {
-            // if (muniSelect === "Percent") {
-            //   return percentFormat(d);
-            // }
-            return d;
-          });
+        barSvg.append("g")
+            .selectAll("g")
+            .data(stack(data))
+            .enter().append("g")
+            .attr("fill", function(d) { return color(d.key); })
+            .selectAll("rect")
+            .data(function(d) { return d; })
+            .enter().append("rect")
+            .attr("x", function(d) { return x(d[0]); })
+            .attr("y", function(d) { return y(d.data.Hospital); })
+            .attr("height", y.bandwidth())
+            .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+            .on("mouseover", viewBarInfo)
+            .on("mouseout", function(d) { 
+                d3.select("#infoBox").classed("hidden", true)
+            })
+            .on("click", viewBarInfo);
 
         var xAxis = barSvg.append("g")
             .attr("transform", "translate(0," + barHeight + ")")
-            .call(bottomAxis);
+            .call(d3.axisBottom(x));
 
         barSvg.append("g")
             .call(d3.axisLeft(y));
+
 
         d3.select("#infoBox")
             .on("click", function(d) {
