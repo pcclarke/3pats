@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Valley of the dolls, part 2"
-date:   2017-02-21 5:00:00
+date:   2017-02-21 6:30:00
 thumbnail: /img/2017/02/hospitalsThumb.jpg
 ---
 
