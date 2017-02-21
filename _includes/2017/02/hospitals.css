@@ -1,0 +1,89 @@
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
+.chartTitle {
+    font-size: 26px;
+    font-style: italic;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.bottomLabel {
+    fill: #000;
+}
+
+.legendBox {
+    fill: #ffffff;
+    opacity: 0.8;
+    stroke: #cfe0e7;
+    stroke-width: 1px;
+}
+
+.legendText {
+    font-size: 8px;
+}
+
+.city {
+	fill: #eee;
+ 	stroke: #bbb;
+    stroke-dasharray: 2,2;
+    stroke-linejoin: round;
+}
+
+.pie {
+    cursor: pointer;
+}
+
+.hospitalLabel {
+    cursor: pointer;
+    fill: #000;
+    font-size: 9px;
+    text-anchor: middle;
+    transition: all 0.5s ease;
+    paint-order: stroke;
+    stroke: #cfe0e7;
+    stroke-width: 1;
+    stroke-opacity: 0.8;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+}
+
+.selLabel {
+    fill: #000;
+}
+
+.bar {
+    cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
+.infoBox {
+    background: #fff;
+    border: 1px solid #000;
+    margin: 15px auto;
+    padding: 10px;
+    position: absolute;
+    width: 300px;
+}
+
+.infoBox .infoTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px !important;
+}
+
+.infoBox .info {
+    font-size: 12px;
+    margin: 0;
+}
+
+.infoBox .infoData {
+    font-family: "Trueno Regular", helvetica, arial, sans-serif;    
+}
