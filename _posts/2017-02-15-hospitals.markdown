@@ -1,13 +1,13 @@
 ---
 layout: post
 title:  "Valley of the dolls, part 2"
-date:   2017-02-15 9:30:00
+date:   2017-02-20 5:00:00
 thumbnail: /img/2017/01/overdoseThumb.jpg
 ---
 
-I recently had the privilege of participating at the [Fraser Health hackathon](https://www.healthhackathon.ca/index.html), where my team presented on the [overdose analytics challenge](https://www.healthhackathon.ca/themes/theme7.html). There we got to work with some new data that Fraser Health has made available, including overdoses within the Fraser Health Authority's communities. Here it is visualized, with some additional data for context.
+This post follows up [my previous post on overdoses in the Fraser Valley]({% post_url 2017-01-30-overdose %}). This time, I'm visualizing overdoses at hospitals. The data reports on how many of those overdoses were by homeless people, although I'm not sure if you can draw much of a conclusion from that.
 
-This data is for 2016, from the start of the year up to December 19th. As far as I know, no other health authority has released similar data, but I would imagine that the overdose situation isn't much different in the rest of British Columbia.
+Like the previous post, this overdose data is for 2016 from the start of the year up to December 19th.
 
 * * *
 
@@ -31,7 +31,6 @@ This data is for 2016, from the start of the year up to December 19th. As far as
 Sources: 
 
 - [Fraser Health Hackathon Github](https://github.com/healthhackathon)
-- [BC Stats Population Estimates](http://www.bcstats.gov.bc.ca/StatisticsBySubject/Demography/PopulationEstimates.aspx)
 
 Disclaimer: as an employee of Fraser Health, this post in no way represents Fraser Health in any official capacity whatsoever.
 
@@ -40,6 +39,5 @@ Disclaimer: as an employee of Fraser Health, this post in no way represents Fras
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-ease.v1.min.js"></script>
 <script>{% include 2017/02/hospitals.js %}</script>

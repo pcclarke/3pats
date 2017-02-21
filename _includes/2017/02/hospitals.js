@@ -1,8 +1,6 @@
 var muniSelect = "Percent";
 
-var percentFormat = d3.format(".0%"),
-    precisionFormat = d3.format(".2"),
-    decimalFormat = d3.format("d");
+var percentFormat = d3.format(".0%");
 
 // Map variables
 
