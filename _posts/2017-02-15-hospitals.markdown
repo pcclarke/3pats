@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Valley of the dolls, part 2"
-date:   2017-02-20 5:00:00
-thumbnail: /img/2017/01/overdoseThumb.jpg
+date:   2017-02-21 5:00:00
+thumbnail: /img/2017/02/hospitalsThumb.jpg
 ---
 
 This post follows up [my previous post on overdoses in the Fraser Valley]({% post_url 2017-01-30-overdose %}). This time, I'm visualizing overdoses at hospitals. The data reports on how many of those overdoses were by homeless people, although I'm not sure if you can draw much of a conclusion from that.
