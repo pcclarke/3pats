@@ -106,53 +106,6 @@ d3.queue()
             d3.select("#infoBox").classed("hidden", false);
         };
 
-        var mapSelect = (function() {
-            // var community = "";
-
-            // return {
-            //     in : function(d) {
-            //         d3.select("#infoBoxMap")
-            //             .style("left", function(temp) {
-            //                 var shift = (d3.event.pageX + 5) + "px";
-            //                 if (d.properties.CSDNAME == "Hope" || 
-            //                     d.properties.CSDNAME == "Agassiz-Harrison" || 
-            //                     d.properties.CSDNAME == "Chilliwack") {
-            //                   shift = (d3.event.pageX - 330) + "px";
-            //                 }
-            //                 return shift;
-            //             })
-            //             .style("top", (d3.event.pageY - 12) + "px");
-
-            //         d3.select("#label")
-            //             .text(muniOds.get(d.properties.CSDNAME)[0]["Community"]);
-            //         d3.select("#op10wk")
-            //             .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid 10wk avg"]);
-            //         d3.select("#opytd")
-            //             .text(muniOds.get(d.properties.CSDNAME)[0]["Opioid YTD"]);
-            //         d3.select("#ov10wk")
-            //             .text(muniOds.get(d.properties.CSDNAME)[0]["Overall 10wk avg"]);
-            //         d3.select("#ov10ytd")
-            //             .text(muniOds.get(d.properties.CSDNAME)[0]["Overall YTD"]);
-            //         d3.select("#opovper")
-            //             .text(percentFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent"]));
-            //         d3.select("#infoOppop").classed("hidden", false);
-            //         d3.select("#infoOvpop").classed("hidden", false);
-            //         d3.select("#oppop")
-            //             .text(precisionFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Opioid"]));
-            //         d3.select("#ovpop")
-            //             .text(precisionFormat(muniOds.get(d.properties.CSDNAME)[0]["Percent Overall"]));
-                    
-            //         community = getCommunity(d);
-            //         d3.select(".label-" + community).classed("selLabel", true);
-            //         d3.select("#infoBoxMap").classed("hidden", false);
-            //     },
-            //     out: function() {
-            //         d3.select("#infoBoxMap").classed("hidden", true);
-            //         d3.select(".label-" + community).classed("selLabel", false);
-            //     }
-            //  };
-        })();
-
         var viewBarInfo = function(d) {
             d3.select("#infoBox")
                 .style("left", function(temp) {
@@ -280,7 +233,7 @@ d3.queue()
             })
             .attr("d", path);
 
-        console.log(data);
+        // console.log(data);
 
         var groups = mapSvg.selectAll(".hospital")
             .data(data)
@@ -341,17 +294,20 @@ d3.queue()
         
         // Bar chart
         setXDomain();
+        
         y.domain(data.map(function(d) { return d.Hospital; }));
 
-        console.log(stack(data));
+        var barStack = stack(data);
+        // console.log(barStack);
 
-        barSvg.append("g")
-            .selectAll("g")
-            .data(stack(data))
+        var bars = barSvg.selectAll("g")
+            .data(barStack)
             .enter().append("g")
+            .attr("class", "bar")
             .attr("fill", function(d) { return color(d.key); })
-            .selectAll("rect")
-            .data(function(d) { return d; })
+            
+        var stacks = bars.selectAll("rect")
+            .data(function(d) { console.log(d); return d; })
             .enter().append("rect")
             .attr("x", function(d) { return x(d[0]); })
             .attr("y", function(d) { return y(d.data.Hospital); })

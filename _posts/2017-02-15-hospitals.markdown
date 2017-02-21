@@ -18,7 +18,7 @@ Like the previous post, this overdose data is for 2016 from the start of the yea
 	<p class="info">Overall: <span class="infoData"><span id="ovVal"></span> overdoses</span></p>
 </div>
 
-<div class="chartTitle">Overdoses in Fraser Health Hospitals in 2016</div>
+<div class="chartTitle">Overdoses by Fraser Health Hospitals in 2016</div>
 
 <div id="map" class="svg-container"></div>
 
