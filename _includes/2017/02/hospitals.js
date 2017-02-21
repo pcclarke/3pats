@@ -35,9 +35,9 @@ var arc = d3.arc()
 
 // Bar chart variables
 
-var barMargin = {top: 20, right: 20, bottom: 30, left: 170},
+var barMargin = {top: 20, right: 20, bottom: 40, left: 170},
     barWidth = 740 - barMargin.left - barMargin.right,
-    barHeight = 400 - barMargin.top - barMargin.bottom;
+    barHeight = 450 - barMargin.top - barMargin.bottom;
 
 var x = d3.scaleLinear()
           .range([0, barWidth]);
@@ -321,7 +321,11 @@ d3.queue()
 
         var xAxis = barSvg.append("g")
             .attr("transform", "translate(0," + barHeight + ")")
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x))
+            .append("text")
+            .attr("class", "bottomLabel")
+            .attr("transform", "translate(280, 35)")
+            .text("Overdoses");;
 
         barSvg.append("g")
             .call(d3.axisLeft(y));
