@@ -1,0 +1,55 @@
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
+.city {
+    fill: #fff;
+ 	stroke: #bbb;
+}
+
+.ndub {
+    fill: #eee;
+ 	stroke: #bbb;
+}
+
+.fountain {
+    cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
+#infoBox {
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px 6px #ccc;
+    margin: 15px auto;
+    padding: 10px;
+    position: absolute;
+    width: 300px;
+}
+
+#infoBox .infoTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#infoBox .info {
+    font-size: 12px;
+    margin: 0;
+}
+
+#infoBox .infoData {
+    
+}
+
+#infoImg {
+    margin-top: 10px;
+    width: 100%;
+}
