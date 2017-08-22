@@ -68,13 +68,12 @@
 }
 
 #sparkGroup {
-    
-    background: #fff;
-    border: 1px solid #000;
-    height: 80px;
-    margin: 15px auto;
-    padding: 10px;
-    position: absolute;
+  background: #fff;
+  border: 1px solid #000;
+  height: 80px;
+  margin: 15px auto;
+  padding: 10px;
+  position: absolute;
 }
 
 #sparkValue {
