@@ -34,6 +34,10 @@
   transition: all 0.5s ease;
 }
 
+.selectable {
+  cursor: pointer;
+}
+
 #unchrChart .sel {
   fill: #000 !important;
 }

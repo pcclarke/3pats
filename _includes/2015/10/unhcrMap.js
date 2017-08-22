@@ -7,6 +7,9 @@ var parseDate = d3.timeFormat("%Y-%m-%d").parse,
 var width = 740,
     height = 400;
 
+var minYear = 1994,
+	maxYear = 2016;
+
 var projection = d3.geoMercator()
     .scale(130)
     .translate([width / 2, height / 2 + 40])
@@ -24,7 +27,7 @@ var margin = {top: 1, right: 1, bottom: 1, left: 1},
     sHeight = 25 - margin.top - margin.bottom;
 		
 var x = d3.scaleLinear()
-    .domain([0, 20])
+    .domain([0, maxYear - minYear])
     .range([0, sWidth]);
 
 var y = d3.scaleLinear()
@@ -88,6 +91,7 @@ function ready(error, world, refugees) {
 
     country.filter(function(d) { return refugeesById.has(d.id) && refugeesById.get(d.id)[0][year] > 0; })
         .style("fill", function(d) { return color(refugeesById.get(d.id)[0][year]); })
+        .classed("selectable", true)
         .on("mouseover", function(d) {
             showTooltip(d, this);
         })
@@ -115,8 +119,8 @@ function ready(error, world, refugees) {
                     
         var data = [];
             
-        var i = 1994;
-        while (i < 2015) {
+        var i = minYear;
+        while (i < maxYear + 1) {
             var poof = refugeesById.get(d.id);
             data.push(poof[0][i]);
             i++;
@@ -131,8 +135,8 @@ function ready(error, world, refugees) {
             
         sparkLine.append("circle")
             .attr("r", 3)
-            .attr("cx", x(year - 1994))
-            .attr("cy", y(data[year - 1994]));
+            .attr("cx", x(year - minYear))
+            .attr("cy", y(data[year - minYear]));
         
         d3.select("#sparkValue")
             .text(numFormat(refugeesById.get(d.id).map(function(e) { return e[year]; })));
@@ -166,8 +170,6 @@ function ready(error, world, refugees) {
         .attr("class", "boundary")
         .attr("d", path);
 
-    var info = 
-
     d3.select("#selectUnhcr")
         .on("change", function() {
             year = this.options[this.selectedIndex].value;
@@ -184,8 +186,8 @@ function ready(error, world, refugees) {
 
 function type(d) {
     d.id = +d.id;
-        var i = 1994;
-        while (i < 2015) {
+        var i = minYear;
+        while (i < maxYear + 1) {
         d[i] = +d[i];
             i++;
         }

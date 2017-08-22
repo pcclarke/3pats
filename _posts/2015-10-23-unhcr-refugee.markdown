@@ -15,15 +15,15 @@ Note that the colour scheme is relative to each year. The darkest red is the cou
 
 <div><b>Year:</b>
   <select id="selectUnhcr">
-		<option value="1994" selected="selected">1994</option>
-		<option value="1995">1995</option>
+	<option value="1994" selected="selected">1994</option>
+	<option value="1995">1995</option>
     <option value="1996">1996</option>
     <option value="1997">1997</option>
     <option value="1998">1998</option>
     <option value="1999">1999</option>
     <option value="2000">2000</option>
     <option value="2001">2001</option>
-		<option value="2002">2002</option>
+	<option value="2002">2002</option>
     <option value="2003">2003</option>
     <option value="2004">2004</option>
     <option value="2005">2005</option>
@@ -36,6 +36,8 @@ Note that the colour scheme is relative to each year. The darkest red is the cou
     <option value="2012">2012</option>
     <option value="2013">2013</option>
     <option value="2014">2014</option>
+    <option value="2015">2015</option>
+    <option value="2016">2016</option>
   </select>
 </div>
 
