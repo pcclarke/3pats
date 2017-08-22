@@ -1,3 +1,10 @@
+@media (min-width: 800px) {
+    .svg-container {
+        margin-left: calc(-100vw / 2 + 800px / 2);
+        margin-right: calc(-100vw / 2 + 800px / 2);
+    }
+}
+
 #selectUnhcr {
   font-family: Lora, Georgia, serif;
   font-size: 20px;
@@ -23,6 +30,14 @@
   fill: #ddd;
 }
 
+.country {
+  transition: all 0.5s ease;
+}
+
+.selectable {
+  cursor: pointer;
+}
+
 #unchrChart .sel {
   fill: #000 !important;
 }
@@ -34,6 +49,8 @@
 }
 
 #sparkGroup {
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.2);
 	clear: both;
 	height: 40px;
 	margin-bottom: 25px;
@@ -53,19 +70,23 @@
 }
 
 #sparkGroup {
-    font-family: trueno, sans-serif;
-	margin: 0 auto;
-	width: 600px;
+  background: #fff;
+  border: 1px solid #000;
+  height: 80px;
+  margin: 15px auto;
+  padding: 10px;
+  position: absolute;
 }
 
 #sparkValue {
 	display: inline-block;
+  font-family: trueno, sans-serif;
 	padding: 5px;
 }
 
 #mapCountry {
-	font-size: 24px;
-    font-weight: bold;
+	font-size: 18px;
+  font-weight: bold;
 	margin-right: 10px;
 }
 
