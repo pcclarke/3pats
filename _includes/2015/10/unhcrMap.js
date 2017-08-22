@@ -22,7 +22,7 @@ var path = d3.geoPath()
     .projection(projection);
 
 // Sparkline
-var margin = {top: 1, right: 1, bottom: 1, left: 1},
+var margin = {top: 1, right: 3, bottom: 1, left: 3},
     sWidth = 100 - margin.left - margin.right,
     sHeight = 25 - margin.top - margin.bottom;
 		
