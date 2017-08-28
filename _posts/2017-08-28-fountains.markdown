@@ -5,7 +5,7 @@ date:   2017-08-28 13:30:00
 thumbnail: /img/2017/08/fountainsThumb.jpg
 ---
 
-blah blah blah
+Ever wonder where the drinking fountains in New Westminster are? Or where you can find a dog fountain? Here’s a map that can tell you just that, courtesy of New Westminster’s open data and me running around taking photos of drinking fountains.
 
 * * *
 
