@@ -24,14 +24,10 @@ Ever wonder where the drinking fountains in New Westminster are? Or where you ca
 
 Source: [New Westminster Open Data](http://opendata.newwestcity.ca/datasets/drinking-fountains)
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-   crossorigin=""/>
+<link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
 <style>{% include 2017/08/fountains.css %}</style>
 
-<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
-   crossorigin=""></script>
+<script src="https://mapzen.com/js/mapzen.min.js"></script>
 <script src="//d3js.org/d3.v4.min.js"></script>
 <script src="//d3js.org/d3-tile.v0.0.min.js"></script>
 <script>{% include 2017/08/fountains.js %}</script>

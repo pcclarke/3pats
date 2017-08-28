@@ -1,10 +1,12 @@
+L.Mapzen.apiKey = 'mapzen-8obQaFK';
+
 var iconColour = d3.scaleOrdinal()
   .domain(["Standard", "Combo", "Dog", "Decomissioned", "Tap"])
   .range(["#590CE8", "#C500DB", "#E80C35", "#754c24", "#078e6c"]);
 
 var iconSize = d3.scaleOrdinal()
-  .domain([14, 15, 16, 17, 18])
-  .range([12, 16, 22, 30, 40]);
+  .domain([14, 15, 16, 17, 18, 19, 20])
+  .range([12, 16, 22, 30, 40, 40, 40]);
 
 var detectMob = function() { 
  if( navigator.userAgent.match(/Android/i)
@@ -25,22 +27,16 @@ var corner1 = L.latLng(49.254074, -123.003616),
   corner2 = L.latLng(49.162721, -122.857018),
 bounds = L.latLngBounds(corner1, corner2);
 
-var map = L.map('map', {
+var map = L.Mapzen.map('map', {
     renderer: L.svg(),
     maxBounds: bounds,
-    minZoom: 14
+    minZoom: 14,
+    maxZoom: 20,
+    tangramOptions: {
+      scene: L.Mapzen.BasemapStyles.Refill
+    }
   })
   .setView([49.205718, -122.910956], 13);
-
-var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-
-L.tileLayer(
-  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
-  {
-    attribution: '&copy; ' + mapLink + ' Contributors',
-    maxZoom: 18,
-  }
-).addTo(map);
 
 var svgLayer = L.svg();
 svgLayer.addTo(map);
@@ -143,17 +139,3 @@ d3.csv("{{ site.baseurl }}/data/2017/08/fountains.csv", function(error, fountain
 
     legend.addTo(map);
 });
-
-// if (!detectMob()) {
-//   var legend = d3.select("#legend")
-//     .style("bottom", function(d) {
-//       return (mapObj.getBoundingClientRect().bottom + 250) + "px";
-//     })
-//     .style ("right", function(d) {
-//       return (mapObj.getBoundingClientRect().right + 280) + "px";
-//     });
-// } else {
-//     d3.select("#legend")
-//       .style("display", "none");
-// }
-
