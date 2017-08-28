@@ -129,7 +129,7 @@ d3.csv("{{ site.baseurl }}/data/2017/08/fountains.csv", function(error, fountain
       .attr("height", function(d) { return iconSize(map.getZoom()); });
     }
 
-    var legend = L.control({position: 'bottomright'});
+    var legend = L.control({position: 'topleft'});
 
     legend.onAdd = function (map) {
         var div = L.DomUtil.create('div', 'legend');

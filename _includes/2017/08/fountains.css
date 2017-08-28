@@ -41,7 +41,7 @@ svg {
     padding: 8px 15px;
     position: absolute;
     width: 270px;
-    z-index: 1000;
+    z-index: 25000;
 }
 
 #infoBox .infoTitle {
@@ -71,7 +71,6 @@ svg {
     font-family: "Trueno Regular", helvetica, arial, sans-serif;
     width: 210px;
     padding: 10px;
-    z-index: 1500;
 }
 
 .legend .legTitle {
