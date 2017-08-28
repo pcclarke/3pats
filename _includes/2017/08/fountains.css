@@ -34,33 +34,29 @@ svg {
 	display: none;
 }
 
-#infoBox {
-    box-shadow: 3px 3px 5px 6px rgba(68, 68, 68, 0.3);
-    color: #ffffff;
+.leaflet-popup {
     font-family: "Trueno Regular", helvetica, arial, sans-serif;
-    padding: 8px 15px;
-    position: absolute;
-    width: 270px;
     z-index: 25000;
 }
 
-#infoBox .infoTitle {
-    font-size: 24px;
+.leaflet-popup .infoTitle {
+    font-size: 16px;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 8px;
+    width: 250px;
 }
 
-#infoBox .info {
+.leaflet-popup .info {
     font-size: 11px;
     margin: 0;
 }
 
-#infoBox .infoLabel {
+.leaflet-popup .infoLabel {
     font-weight: bold;
 }
 
-#infoImg {
+.leaflet-popup img {
     margin-top: 10px;
     width: 100%;
 }
