@@ -13,13 +13,6 @@ Ever wonder where the drinking fountains in New Westminster are? Or where you ca
 
 <div class="chartTitle">Drinking Fountains in New Westminster</div>
 
-<div id="infoBox" class="hidden">
-    <p class="infoTitle"><span id="type"></span> Fountain</p>
-    <p class="info"><span class="infoLabel">Location</span>: <span class="infoData"><span id="area"></span></span></p>
-    <p class="info"><span class="infoLabel">Neighbourhood</span>: <span class="infoData"><span id="neighbourhood"></span></span></p>
-    <img id="infoImg" />
-</div>
-
 <div id="map"></div>
 
 * * *
