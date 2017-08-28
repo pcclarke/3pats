@@ -1,5 +1,3 @@
-L.Mapzen.apiKey = 'mapzen-8obQaFK';
-
 var iconColour = d3.scaleOrdinal()
   .domain(["Standard", "Combo", "Dog", "Decomissioned", "Tap"])
   .range(["#590CE8", "#C500DB", "#E80C35", "#754c24", "#078e6c"]);
@@ -8,20 +6,7 @@ var iconSize = d3.scaleOrdinal()
   .domain([14, 15, 16, 17, 18, 19, 20])
   .range([12, 16, 22, 30, 40, 40, 40]);
 
-var detectMob = function() { 
- if( navigator.userAgent.match(/Android/i)
-    || navigator.userAgent.match(/webOS/i)
-    || navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-    || navigator.userAgent.match(/BlackBerry/i)
-    || navigator.userAgent.match(/Windows Phone/i)
-  ){
-    return true;
-  } else {
-    return false;
-  }
-}
+L.Mapzen.apiKey = 'mapzen-8obQaFK';
 
 var corner1 = L.latLng(49.254074, -123.003616),
   corner2 = L.latLng(49.162721, -122.857018),
@@ -84,7 +69,7 @@ d3.csv("{{ site.baseurl }}/data/2017/08/fountains.csv", function(error, fountain
     if (error) throw error;
 
     fountains.forEach(function(d) {
-      d.LatLng = new L.LatLng(d.Y, d.X);
+      d.LatLng = new L.LatLng(d.Latitude, d.Longitude);
     });
 
     var fountainCircles = g.selectAll(".fountain")
