@@ -6,6 +6,21 @@ var iconSize = d3.scaleOrdinal()
   .domain([14, 15, 16, 17, 18])
   .range([12, 16, 22, 30, 40]);
 
+var detectMob = function() { 
+ if( navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    || navigator.userAgent.match(/Windows Phone/i)
+  ){
+    return true;
+  } else {
+    return false;
+  }
+}
+
 var corner1 = L.latLng(49.254074, -123.003616),
   corner2 = L.latLng(49.162721, -122.857018),
 bounds = L.latLngBounds(corner1, corner2);
@@ -117,32 +132,28 @@ d3.csv("{{ site.baseurl }}/data/2017/08/fountains.csv", function(error, fountain
       .attr("width", function(d) { return iconSize(map.getZoom()); })
       .attr("height", function(d) { return iconSize(map.getZoom()); });
     }
+
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'legend');
+        div.innerHTML = "<div class='legTitle'>Legend</div><div class='legItem'><img src='{{ site.baseurl }}/img/2017/08/standard_fountain.png'> Standard drinking fountain</div><div class='legItem'><img src='{{ site.baseurl }}/img/2017/08/dog_fountain.png'> Dog tap</div><div class='legItem'><img src='{{ site.baseurl }}/img/2017/08/combo_fountain.png'> Combo standard/dog fountain</div><div class='legItem'><img src='{{ site.baseurl }}/img/2017/08/tap_fountain.png'> Drinking tap</div><div class='legItem'><img src='{{ site.baseurl }}/img/2017/08/decomissioned_fountain.png'> Decomissioned fountain</div>";
+        return div;
+    };
+
+    legend.addTo(map);
 });
 
-if (!detectmob()) {
-  var legend = d3.select("#legend")
-    .style("bottom", function(d) {
-      return (mapObj.getBoundingClientRect().bottom + 250) + "px";
-    })
-    .style ("right", function(d) {
-      return (mapObj.getBoundingClientRect().right + 280) + "px";
-    });
-  } else {
-    d3.select("#legend")
-      .style("display", "none");
-  }
+// if (!detectMob()) {
+//   var legend = d3.select("#legend")
+//     .style("bottom", function(d) {
+//       return (mapObj.getBoundingClientRect().bottom + 250) + "px";
+//     })
+//     .style ("right", function(d) {
+//       return (mapObj.getBoundingClientRect().right + 280) + "px";
+//     });
+// } else {
+//     d3.select("#legend")
+//       .style("display", "none");
+// }
 
-function detectmob() { 
- if( navigator.userAgent.match(/Android/i)
-    || navigator.userAgent.match(/webOS/i)
-    || navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-    || navigator.userAgent.match(/BlackBerry/i)
-    || navigator.userAgent.match(/Windows Phone/i)
-  ){
-    return true;
-  } else {
-    return false;
-  }
-}
