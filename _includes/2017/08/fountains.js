@@ -53,7 +53,7 @@ d3.csv("{{ site.baseurl }}/data/2017/08/fountains.csv", function(error, fountain
 
     fountains.forEach(function(d) {
         var fountainImage = "{{ site.baseurl }}/img/2017/08/" + d.OBJECTID + ".jpg";
-        var popupHtml = "<p class='infoTitle'>" + d.Type + " Fountain</p><p class='info'><span class='infoLabel'>Location</span>: " + d.Area + "</p><p class='info'><span class='infoLabel'>Neighbourhood</span>: " + d.Neighbourhood + "</p><img id='infoImg' src=" + fountainImage + "/>"
+        var popupHtml = "<p class='infoTitle'>" + d.Type + " Fountain</p><p class='info'><span class='infoLabel'>Location</span>: " + d.Area + "</p><p class='info'><span class='infoLabel'>Neighbourhood</span>: " + d.Neighbourhood + "</p><img id='infoImg' src=" + fountainImage + " >"
 
         switch (d.Type) {
           case "Combo":
