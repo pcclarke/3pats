@@ -5,6 +5,10 @@
     }
 }
 
+#map {
+    overflow: hidden;
+}
+
 .chartTitle {
     font-size: 26px;
     font-style: italic;
