@@ -15,7 +15,7 @@ Blah blah blah
 	<option value="employment_income">Employment income</option>
 </select>
 
-<div id="slope"></div>
+<div id="incomes"></div>
 
 * * *
 

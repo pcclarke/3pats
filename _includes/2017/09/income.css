@@ -1,10 +1,16 @@
-#slope .axis path,
-#slope .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+#incomes text {
+	font-family: Lora, Georgia, serif;
 }
 
-#slope .axis-y path {
-  display: none;
+.slopeLabel {
+	alignment-baseline: middle;
+	font-size: 10px !important;
+}
+
+.label-male {
+	fill: #0095FF;
+}
+
+.label-female {
+	fill: #FF1D19;
 }
