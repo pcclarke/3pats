@@ -1,0 +1,10 @@
+#slope .axis path,
+#slope .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#slope .axis-y path {
+  display: none;
+}

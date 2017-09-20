@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "Reel Around the Fountain"
+date:   2017-09-19 13:30:00
+thumbnail: /img/2017/08/fountainsThumb.jpg
+---
+
+Blah blah blah
+
+* * *
+
+<div id="slope"></div>
+
+* * *
+
+<style>{% include 2017/09/income.css %}</style>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script>{% include 2017/09/income.js %}</script>
