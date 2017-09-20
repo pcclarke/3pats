@@ -9,7 +9,7 @@ var y = d3.scaleLinear()
     .range([height, 0]);
 
 var line = d3.line()
-    .x(function(d) { console.log(x(2016)); return x(d.year); })
+    .x(function(d) { console.log(d); return x(d.year); })
     .y(function(d) { return y(d.value); });
 
 var svg = d3.select("#slope")
@@ -63,9 +63,12 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
 
       console.log(data);
 
-  data.forEach(function(c) {
-    svg.append("path")
-        .datum(c)
+
+    var slope = svg.append("g")
+        .selectAll("path")
+        .data(data)
+        .enter()
+      .append("path")
         .attr("fill", "none")
         .attr("stroke", function(d) {
           if (d.Gender === "Male") {
@@ -85,5 +88,4 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
           console.log(d);
           return line(d.totalIncome);
         });
-  });
 });
