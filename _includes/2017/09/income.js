@@ -9,7 +9,7 @@ var y = d3.scaleLinear()
     .range([height, 0]);
 
 var line = d3.line()
-    .x(function(d) { console.log(d); return x(d.year); })
+    .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.value); });
 
 var svg = d3.select("#slope")
@@ -23,9 +23,22 @@ var svg = d3.select("#slope")
 var type = function(d) {
   d["Median 2005 Total Income"] = +d["Median 2005 Total Income"];
   d["Median 2016 Total Income"] = +d["Median 2016 Total Income"];
+  d["Median 2005 After-tax Income"] = +d["Median 2005 After-tax Income"];
+  d["Median 2016 After-tax Income"] = +d["Median 2016 After-tax Income"];
+  d["Median 2005 Employment Income"] = +d["Median 2005 Employment Income"];
+  d["Median 2016 Employment Income"] = +d["Median 2016 Employment Income"];
+  
   d.totalIncome = [
     {year: 2005, value: d["Median 2005 Total Income"]}, 
     {year: 2016, value: d["Median 2016 Total Income"]}
+  ];
+  d.afterTaxIncome = [
+    {year: 2005, value: d["Median 2005 After-tax Income"]}, 
+    {year: 2016, value: d["Median 2016 After-tax Income"]}
+  ];
+  d.employmentIncome = [
+    {year: 2005, value: d["Median 2005 Employment Income"]}, 
+    {year: 2016, value: d["Median 2016 Employment Income"]}
   ];
 
   return d;
@@ -63,7 +76,6 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
 
       console.log(data);
 
-
     var slope = svg.append("g")
         .selectAll("path")
         .data(data)
@@ -72,10 +84,10 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
         .attr("fill", "none")
         .attr("stroke", function(d) {
           if (d.Gender === "Male") {
-            return "steelblue";
+            return "#0095FF";
           } 
           if (d.Gender === "Female") {
-            return "red";
+            return "#FF1D19";
           }
         })
         .attr("stroke-linejoin", "round")
@@ -85,7 +97,34 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
           return d["Median 2016 Total Income"];
         })
         .attr("d", function(d) {
-          console.log(d);
           return line(d.totalIncome);
+        });
+
+    d3.select("#incomeType")
+        .on("change", function(sel) {
+              var incomeType = this.options[this.selectedIndex].value;
+            
+              if (incomeType === "total_income") {
+                  y.domain([d3.min(data, function(d) { return d["Median 2005 Total Income"]; }),
+                    d3.max(data, function(d) { return d["Median 2016 Total Income"]; })]);
+                  
+                  slope.attr("d", function(d) {
+                    return line(d.totalIncome);
+                  });
+              } else if (incomeType === "after_tax_income") {
+                  y.domain([d3.min(data, function(d) { return d["Median 2005 After-tax Income"]; }),
+                    d3.max(data, function(d) { return d["Median 2016 After-tax Income"]; })]);
+                  
+                  slope.attr("d", function(d) {
+                    return line(d.afterTaxIncome);
+                  });
+              } else {
+                  y.domain([d3.min(data, function(d) { return d["Median 2005 Employment Income"]; }),
+                    d3.max(data, function(d) { return d["Median 2016 Employment Income"]; })]);
+                  
+                  slope.attr("d", function(d) {
+                    return line(d.employmentIncome);
+                  });
+              }
         });
 });

@@ -9,6 +9,12 @@ Blah blah blah
 
 * * *
 
+<select id="incomeType">
+	<option value="total_income" selected>Total income</option>
+	<option value="after_tax_income">After-tax income</option>
+	<option value="employment_income">Employment income</option>
+</select>
+
 <div id="slope"></div>
 
 * * *

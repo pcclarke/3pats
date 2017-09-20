@@ -1,29 +1,29 @@
-Region,Gender,Median 2005 Total Income,Median 2016 Total Income,,,
-Canada,Male,38207,40782,,,
-Canada,Female,24230,28860,,,
-Newfoundland and Labrador,Male,30690,40880,,,
-Newfoundland and Labrador,Female,18720,25314,,,
-Prince Edward Island,Male,31541,36021,,,
-Prince Edward Island,Female,22515,28065,,,
-Nova Scotia,Male,21366,26750,,,
-Nova Scotia,Female,24594,28627,,,
-New Brunswick,Male,33214,37516,,,
-New Brunswick,Female,20823,25796,,,
-Quebec,Male,35652,37842,,,
-Quebec,Female,23508,28522,,,
-Ontario,Male,40872,39889,,,
-Ontario,Female,25662,28676,,,
-Manitoba,Male,35451,40379,,,
-Manitoba,Female,23891,29220,,,
-Saskatchewan,Male,35034,46117,,,
-Saskatchewan,Female,23527,31978,,,
-Alberta,Male,45310,54891,,,
-Alberta,Female,25756,33213,,,
-British Columbia,Male,37488,40370,,,
-British Columbia,Female,23650,27543,,,
-Yukon,Male,41093,48685,,,
-Yukon,Female,35372,43192,,,
-Northwest Territories,Male,47260,54924,,,
-Northwest Territories,Female,36055,46322,,,
-Nunavut,Male,26424,28817,,,
-Nunavut,Female,23668,30326,,,
+Region,Gender,Median 2005 Total Income,Median 2016 Total Income,Median 2005 After-tax Income,Median 2016 After-tax Income,Median 2005 Employment Income,Median 2016 Employment Income
+Canada,Male,38207,40782,33537,35933,38972,39836
+Canada,Female,24230,28860,22840,26621,25507,28474
+Newfoundland and Labrador,Male,30690,40880,27103,36040,27385,41659
+Newfoundland and Labrador,Female,18720,25314,17974,23623,16991,24445
+Prince Edward Island,Male,31541,36021,27496,31453,25801,29875
+Prince Edward Island,Female,22515,28065,21034,25484,20207,24280
+Nova Scotia,Male,21366,26750,30709,33642,33357,35676
+Nova Scotia,Female,24594,28627,20262,24590,21308,25405
+New Brunswick,Male,33214,37516,29297,33169,31627,34784
+New Brunswick,Female,20823,25796,19803,23945,20537,24769
+Quebec,Male,35652,37842,31173,33110,35767,35627
+Quebec,Female,23508,28522,22458,26119,24776,27219
+Ontario,Male,40872,39889,35782,35753,42322,39490
+Ontario,Female,25662,28676,23917,26585,28122,29413
+Manitoba,Male,35451,40379,30903,35150,34919,39365
+Manitoba,Female,23891,29220,22234,26561,24030,28679
+Saskatchewan,Male,35034,46117,30712,40492,33083,44551
+Saskatchewan,Female,23527,31978,22082,29564,22811,30027
+Alberta,Male,45310,54891,39302,47131,46177,54361
+Alberta,Female,25756,33213,24136,30478,26027,32982
+British Columbia,Male,37488,40370,33503,35383,38371,39186
+British Columbia,Female,23650,27543,22413,25659,24226,26034
+Yukon,Male,41093,48685,36030,43240,40272,45938
+Yukon,Female,35372,43192,32008,39353,35413,40804
+Northwest Territories,Male,47260,54924,41265,48505,53091,57762
+Northwest Territories,Female,36055,46322,33070,41935,41341,48970
+Nunavut,Male,26424,28817,23633,28635,34371,30603
+Nunavut,Female,23668,30326,24655,27517,29578,28640
