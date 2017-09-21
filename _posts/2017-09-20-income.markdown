@@ -2,10 +2,10 @@
 layout: post
 title:  "Candy Cane"
 date:   2017-09-20 13:30:00
-thumbnail: /img/2017/08/fountainsThumb.jpg
+thumbnail: /img/2017/09/incomeThumb.jpg
 ---
 
-Blah blah blah
+Statistics Canada is soliciting visualizations for income census data, and here's my entry.
 
 * * *
 
@@ -25,6 +25,8 @@ Blah blah blah
 <div id="incomes"></div>
 
 * * *
+
+Source: [Statistics Canada, Income Highlight Tables, 2016 Census: Median total income, after-tax income and employment income for income recipients by sex](http://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/inc-rev/index-eng.cfm)
 
 <style>{% include 2017/09/income.css %}</style>
 
