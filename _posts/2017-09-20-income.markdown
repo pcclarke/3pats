@@ -9,16 +9,18 @@ Blah blah blah
 
 * * *
 
-<select id="incomeType">
-	<option value="totalIncome" selected>Total income</option>
-	<option value="afterTaxIncome">After-tax income</option>
-	<option value="employmentIncome">Employment income</option>
-</select>
-
 <div id="legend">
+	<select id="incomeType">
+		<option value="totalIncome" selected>Total income</option>
+		<option value="afterTaxIncome">After-tax income</option>
+		<option value="employmentIncome">Employment income</option>
+	</select>
 	<span class="womenLegend">Women</span>
-	<span class="womenLegend">Men</span>
+	<span class="menLegend">Men</span>
 </div>
+
+<div class="chartTitle">Median Incomes from 2005-2016 by Gender</div>
+<div class="chartSubTitle">2015 constant dollars</div>
 
 <div id="incomes"></div>
 
