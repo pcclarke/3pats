@@ -1,0 +1,43 @@
+#legend {
+	display: inline-block;
+	font-family: "Trueno Regular";
+	margin-bottom: 20px;
+}
+
+.chartTitle {
+    font-size: 26px;
+    font-style: italic;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.chartSubTitle {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.womenLegend {
+	color: #FF1D19;
+	padding: 0 40px;
+}
+
+.menLegend {
+	color: #0095FF;
+}
+
+.slope path {
+	stroke-width: 1px;
+}
+
+.slopeLabel text {
+	alignment-baseline: middle;
+	font-size: 10px !important;
+}
+
+.label-male {
+	fill: #0095FF;
+}
+
+.label-female {
+	fill: #FF1D19;
+}

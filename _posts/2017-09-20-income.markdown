@@ -1,0 +1,34 @@
+---
+layout: post
+title:  "Candy Cane"
+date:   2017-09-20 13:30:00
+thumbnail: /img/2017/09/incomeThumb.jpg
+---
+
+Statistics Canada is soliciting visualizations for income census data, and here's my entry.
+
+* * *
+
+<div id="legend">
+	<select id="incomeType">
+		<option value="totalIncome" selected>Total income</option>
+		<option value="afterTaxIncome">After-tax income</option>
+		<option value="employmentIncome">Employment income</option>
+	</select>
+	<span class="womenLegend">Women</span>
+	<span class="menLegend">Men</span>
+</div>
+
+<div class="chartTitle">Median Incomes from 2005-2016 by Gender</div>
+<div class="chartSubTitle">2015 constant dollars</div>
+
+<div id="incomes"></div>
+
+* * *
+
+Source: [Statistics Canada, Income Highlight Tables, 2016 Census: Median total income, after-tax income and employment income for income recipients by sex](http://www12.statcan.gc.ca/census-recensement/2016/dp-pd/hlt-fst/inc-rev/index-eng.cfm)
+
+<style>{% include 2017/09/income.css %}</style>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script>{% include 2017/09/income.js %}</script>
