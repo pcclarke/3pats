@@ -2,7 +2,11 @@
 	font-family: Lora, Georgia, serif;
 }
 
-.slopeLabel {
+.slope path {
+	stroke-width: 1px;
+}
+
+.slopeLabel text {
 	alignment-baseline: middle;
 	font-size: 10px !important;
 }

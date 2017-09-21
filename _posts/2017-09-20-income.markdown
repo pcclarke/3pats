@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Reel Around the Fountain"
-date:   2017-09-19 13:30:00
+title:  "Candy Cane"
+date:   2017-09-20 13:30:00
 thumbnail: /img/2017/08/fountainsThumb.jpg
 ---
 
@@ -10,10 +10,15 @@ Blah blah blah
 * * *
 
 <select id="incomeType">
-	<option value="total_income" selected>Total income</option>
-	<option value="after_tax_income">After-tax income</option>
-	<option value="employment_income">Employment income</option>
+	<option value="totalIncome" selected>Total income</option>
+	<option value="afterTaxIncome">After-tax income</option>
+	<option value="employmentIncome">Employment income</option>
 </select>
+
+<div id="legend">
+	<span class="womenLegend">Women</span>
+	<span class="womenLegend">Men</span>
+</div>
 
 <div id="incomes"></div>
 

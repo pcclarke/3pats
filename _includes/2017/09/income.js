@@ -1,4 +1,4 @@
-var margin = {top: 30, right: 180, bottom: 30, left: 180},
+var margin = {top: 50, right: 200, bottom: 30, left: 200},
     width = 740 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom;
 
@@ -7,6 +7,8 @@ var x = d3.scaleOrdinal()
 
 var y = d3.scaleLinear()
     .range([height, 0]);
+
+var format = d3.format(",");
 
 var line = d3.line()
     .x(function(d) { return x(d.year); })
@@ -56,15 +58,16 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
  
   svg.append("text")
       .attr("fill", "#000")
-      .attr("y", -15)
+      .attr("x", -10)
+      .attr("y", -30)
       .attr("text-anchor", "end")
       .text("2005");
 
   svg.append("text")
       .attr("fill", "#000")
       .attr("transform", "translate(" + width + ", 0)")
-      .attr("x", 5)
-      .attr("y", -15)
+      .attr("x", 10)
+      .attr("y", -30)
       .attr("text-anchor", "start")
       .text("2016");
 
@@ -97,7 +100,6 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
         })
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
         .attr("blah", function(d) {
           return d["Median 2016 Total Income"];
         })
@@ -105,63 +107,82 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
           return line(d.totalIncome);
         });
 
-    var leftLabels = slope.append("text")
-      .attr("class", function(d) {
-        if (d.Gender === "Male") {
-          return "slopeLabel label-male";
-        } 
-        if (d.Gender === "Female") {
-          return "slopeLabel label-female";
-        }
-      })
-      .attr("x", x(2005))
-      .attr("y", function(d) {
-        return y(d["Median 2005 Total Income"]);
-      })
-      .attr("text-anchor", "end")
-      .text(function(d) {
-        return d["Region"] + " " + d["Median 2005 Total Income"];
-      });
+    var leftLabels = svg.selectAll(".label-left")
+        .data(data)
+        .enter()
+      .append("g")
+        .attr("class", function(d) {
+            if (d.Gender === "Male") {
+                return "slopeLabel label-left label-male";
+            } 
+            if (d.Gender === "Female") {
+                return "slopeLabel label-left label-female";
+            }
+        })
+        .attr("transform", function(d) {
+            return "translate(" + x(2005) + "," + y(d["Median 2005 Total Income"]) + ")";
+        });
 
-    var rightLabels = slope.append("text")
-      .attr("class", function(d) {
-        if (d.Gender === "Male") {
-          return "slopeLabel label-male";
-        } 
-        if (d.Gender === "Female") {
-          return "slopeLabel label-female";
-        }
-      })
-      .attr("x", x(2016))
-      .attr("y", function(d) {
-        return y(d["Median 2016 Total Income"]);
-      })
-      .text(function(d) {
-        return d["Region"] + " " + d["Median 2016 Total Income"];
-      });
+    var leftRegionLabels = leftLabels.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -55)
+        .text(function(d) { return d["Region"]; });
 
+    var leftValueLabels = leftLabels.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -10)
+        .text(function(d) { return format(d["Median 2005 Total Income"]); });
 
+    var rightLabels = svg.selectAll(".label-right")
+        .data(data)
+        .enter()
+      .append("g")
+        .attr("class", function(d) {
+            if (d.Gender === "Male") {
+                return "slopeLabel label-right label-male";
+            } 
+            if (d.Gender === "Female") {
+                return "slopeLabel label-right label-female";
+            }
+        })
+        .attr("transform", function(d) {
+            return "translate(" + x(2016) + "," + y(d["Median 2016 Total Income"]) + ")";
+        });
+
+      var rightRegionLabels = rightLabels.append("text")
+          .attr("x", 55)
+          .text(function(d) { return d["Region"]; });
+
+      var rightValueLabels = rightLabels.append("text")
+          .attr("x", 10)
+          .text(function(d) { return format(d["Median 2016 Total Income"]); });
 
     var alpha = 0.5;
     var spacing = 12;
 
-    function relax() { // Borrowed from: https://www.safaribooksonline.com/blog/2014/03/11/solving-d3-label-placement-constraint-relaxing/
+    function relax(label) { // Borrowed from: https://www.safaribooksonline.com/blog/2014/03/11/solving-d3-label-placement-constraint-relaxing/
         again = false;
-        d3.selectAll(".slopeLabel").each(function (d, i) {
+        d3.selectAll("." + label).each(function (d, i) {
+            var re = /,|\(|\)/;
             var a = this,
                 da = d3.select(a),
-                y1 = da.attr("y");
-            d3.selectAll(".slopeLabel").each(function (d, j) {
+                transforma = da.attr("transform"),
+                xPos = +transforma.split(re)[1]
+                y1 = +transforma.split(re)[2];
+
+            d3.selectAll("." + label).each(function (d, j) {
                 var b = this;
                 // a & b are the same element and don't collide.
                 if (a == b) return;
                 var db = d3.select(b);
                 // a & b are on opposite sides of the chart and
                 // don't collide
-                if (da.attr("text-anchor") != db.attr("text-anchor")) return;
+                // if (da.attr("text-anchor") != db.attr("text-anchor")) return;
                 // Now let's calculate the distance between
                 // these elements. 
-                var y2 = db.attr("y");
+
+                transformb = db.attr("transform")
+                y2 = +transformb.split(re)[2];
                 var deltaY = y1 - y2;
                 
                 // If spacing is greater than our specified spacing,
@@ -173,48 +194,36 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
                 again = true;
                 var sign = deltaY > 0 ? 1 : -1;
                 var adjust = sign * alpha;
-                da.attr("y",+y1 + adjust);
-                db.attr("y",+y2 - adjust);
+                da.attr("transform", "translate(" + xPos + "," + (+y1 + adjust) + ")");
+                db.attr("transform", "translate(" + xPos + "," + (+y2 - adjust) + ")");
             });
         });
         // Adjust our line leaders here
         // so that they follow the labels. 
         if(again) {
-            relax();
+            relax(label);
         }
     }
 
-    relax();
+    relax("label-left");
+    relax("label-right");
 
     d3.select("#incomeType")
         .on("change", function(sel) {
-              var incomeType = this.options[this.selectedIndex].value;
-            
-              if (incomeType === "total_income") {
-                  setYDomain(data, "totalIncome");
-                  lines.attr("d", function(d) { return line(d.totalIncome); });
-                  leftLabels.attr("y", function(d) { return y(d["Median 2005 Total Income"]); })
-                      .text(function(d) { return d["Region"] + " " + d["Median 2005 Total Income"]; });
-                  rightLabels.attr("y", function(d) { return y(d["Median 2016 Total Income"]); })
-                      .text(function(d) { return d["Region"] + " " + d["Median 2016 Total Income"]; });
+            var incomeType = this.options[this.selectedIndex].value;
 
-              } else if (incomeType === "after_tax_income") {
-                  setYDomain(data, "afterTaxIncome");
-                  lines.attr("d", function(d) { return line(d.afterTaxIncome); });
-                  leftLabels.attr("y", function(d) { return y(d["Median 2005 After-tax Income"]); })
-                      .text(function(d) { return d["Region"] + " " + d["Median 2005 After-tax Income"]; });
-                  rightLabels.attr("y", function(d) { return y(d["Median 2016 After-tax Income"]); })
-                      .text(function(d) { return d["Region"] + " " + d["Median 2016 After-tax Income"]; });
+            setYDomain(data, incomeType);
+            lines.attr("d", function(d) { return line(d[incomeType]); });
+            leftLabels.attr("transform", function(d) {
+                return "translate(" + x(2005) + "," + y(d[incomeType][0].value) + ")";
+            });
+            leftValueLabels.text(function(d) { return format(d[incomeType][0].value); });
+            rightLabels.attr("transform", function(d) {
+                return "translate(" + x(2016) + "," + y(d[incomeType][1].value) + ")";
+            });
+            rightValueLabels.text(function(d) { return format(d[incomeType][1].value); });
 
-              } else {
-                  setYDomain(data, "employmentIncome");
-                  lines.attr("d", function(d) { return line(d.employmentIncome); });
-                  leftLabels.attr("y", function(d) { return y(d["Median 2005 Employment Income"]); })
-                      .text(function(d) { return d["Region"] + " " + d["Median 2005 Employment Income"]; });
-                  rightLabels.attr("y", function(d) { return y(d["Median 2016 Employment Income"]); })
-                      .text(function(d) { return d["Region"] + " " + d["Median 2016 Employment Income"]; });
-              }
-
-              relax();
+            relax("label-left");
+            relax("label-right");
         });
 });
