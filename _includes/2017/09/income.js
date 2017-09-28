@@ -78,7 +78,16 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
         .data(data)
         .enter()
       .append("g")
-        .attr("class", "slope");
+        .attr("class", function(d) {
+            console.log(d);
+            d.slope = this;
+            return "slope";
+        })
+        .on("mouseover", function(d) {
+            if (d.slope) {
+              d.slope.parentNode.appendChild(d.slope);
+            }
+        });
 
     var lines = slope.append("path")
         .attr("class", function(d) {
@@ -103,9 +112,7 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
         .attr("blah", function(d) {
           return d["Median 2016 Total Income"];
         })
-        .attr("d", function(d) {
-          return line(d.totalIncome);
-        });
+        .attr("d", function(d) { return line(d.totalIncome); });
 
     var leftLabels = slope.append("g")
         .attr("class", function(d) {
