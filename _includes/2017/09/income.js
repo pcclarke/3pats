@@ -85,8 +85,15 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
         })
         .on("mouseover", function(d) {
             if (d.slope) {
-              d.slope.parentNode.appendChild(d.slope);
+                d.slope.parentNode.appendChild(d.slope);
             }
+            
+            d3.selectAll(".slope").classed("faded", true);
+
+            d3.select(this).classed("faded", false);
+        })
+        .on("mouseout", function(d) {
+            d3.selectAll(".slope").classed("faded", false);
         });
 
     var lines = slope.append("path")
