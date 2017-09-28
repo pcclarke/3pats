@@ -107,10 +107,7 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
           return line(d.totalIncome);
         });
 
-    var leftLabels = svg.selectAll(".label-left")
-        .data(data)
-        .enter()
-      .append("g")
+    var leftLabels = slope.append("g")
         .attr("class", function(d) {
             if (d.Gender === "Male") {
                 return "slopeLabel label-left label-male";
@@ -133,10 +130,7 @@ d3.csv("{{ site.baseurl }}/data/2017/09/gender_income.csv", type, function(error
         .attr("x", -10)
         .text(function(d) { return format(d["Median 2005 Total Income"]); });
 
-    var rightLabels = svg.selectAll(".label-right")
-        .data(data)
-        .enter()
-      .append("g")
+    var rightLabels = slope.append("g")
         .attr("class", function(d) {
             if (d.Gender === "Male") {
                 return "slopeLabel label-right label-male";
