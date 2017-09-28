@@ -1,0 +1,127 @@
+"Geographic code","Geographic name","Global non-response rate","Data quality flag","Income source","Sex","Total population 15 years and over, 2006","Total population 15 years and over, 2016","Number of income recipients, 2005","Number of income recipients, 2015","Median amount (2015 constant dollars), 2005","Median amount (2015 constant dollars), 2015","Median amount (2015 constant dollars), % change"
+"01","Canada",4.0,"20000","Total income","Both sexes",25511875,28642980,24340040,27488530,30359,34204,12.7
+"01","Canada",4.0,"20000","Total income","Males",12395135,13990620,11901645,13444340,38207,40782,6.7
+"01","Canada",4.0,"20000","Total income","Females",13116740,14652355,12438395,14044190,24230,28860,19.1
+"01","Canada",4.0,"20000","After-tax income","Both sexes",25511875,28642980,24335535,27499185,27616,30866,11.8
+"01","Canada",4.0,"20000","After-tax income","Males",12395135,13990620,11898260,13449005,33537,35933,7.1
+"01","Canada",4.0,"20000","After-tax income","Females",13116740,14652355,12437270,14050180,22840,26621,16.6
+"01","Canada",4.0,"20000","Employment income","Both sexes",25511875,28642980,18155330,20428685,31798,33684,5.9
+"01","Canada",4.0,"20000","Employment income","Males",12395135,13990620,9449530,10547765,38972,39836,2.2
+"01","Canada",4.0,"20000","Employment income","Females",13116740,14652355,8705800,9880925,25507,28474,11.6
+"10","Newfoundland and Labrador",4.0,"00000","Total income","Both sexes",420895,437940,396790,422335,23168,31754,37.1
+"10","Newfoundland and Labrador",4.0,"00000","Total income","Males",203195,212785,193445,205910,30690,40880,33.2
+"10","Newfoundland and Labrador",4.0,"00000","Total income","Females",217700,225155,203345,216420,18720,25314,35.2
+"10","Newfoundland and Labrador",4.0,"00000","After-tax income","Both sexes",420895,437940,396845,422475,21480,28883,34.5
+"10","Newfoundland and Labrador",4.0,"00000","After-tax income","Males",203195,212785,193420,205925,27103,36040,33.0
+"10","Newfoundland and Labrador",4.0,"00000","After-tax income","Females",217700,225155,203425,216550,17974,23623,31.4
+"10","Newfoundland and Labrador",4.0,"00000","Employment income","Both sexes",420895,437940,270725,299155,21409,31528,47.3
+"10","Newfoundland and Labrador",4.0,"00000","Employment income","Males",203195,212785,141390,154695,27385,41659,52.1
+"10","Newfoundland and Labrador",4.0,"00000","Employment income","Females",217700,225155,129335,144455,16991,24445,43.9
+"11","Prince Edward Island",4.1,"00000","Total income","Both sexes",109345,117055,105890,113480,26512,31744,19.7
+"11","Prince Edward Island",4.1,"00000","Total income","Males",52395,56365,50990,54635,31541,36021,14.2
+"11","Prince Edward Island",4.1,"00000","Total income","Females",56950,60690,54905,58840,22515,28065,24.7
+"11","Prince Edward Island",4.1,"00000","After-tax income","Both sexes",109345,117055,105880,113500,23921,28298,18.3
+"11","Prince Edward Island",4.1,"00000","After-tax income","Males",52395,56365,50975,54640,27496,31453,14.4
+"11","Prince Edward Island",4.1,"00000","After-tax income","Females",56950,60690,54910,58860,21034,25484,21.2
+"11","Prince Edward Island",4.1,"00000","Employment income","Both sexes",109345,117055,80350,86035,23070,26851,16.4
+"11","Prince Edward Island",4.1,"00000","Employment income","Males",52395,56365,40645,43395,25801,29875,15.8
+"11","Prince Edward Island",4.1,"00000","Employment income","Females",56950,60690,39700,42640,20207,24280,20.2
+"12","Nova Scotia",3.9,"00000","Total income","Both sexes",753420,774750,716165,744265,27003,31813,17.8
+"12","Nova Scotia",3.9,"00000","Total income","Males",359600,372455,344460,358060,35010,38379,9.6
+"12","Nova Scotia",3.9,"00000","Total income","Females",393815,402295,371705,386205,21366,26750,25.2
+"12","Nova Scotia",3.9,"00000","After-tax income","Both sexes",753420,774750,716150,744545,24594,28627,16.4
+"12","Nova Scotia",3.9,"00000","After-tax income","Males",359600,372455,344415,358090,30709,33642,9.6
+"12","Nova Scotia",3.9,"00000","After-tax income","Females",393815,402295,371735,386455,20262,24590,21.4
+"12","Nova Scotia",3.9,"00000","Employment income","Both sexes",753420,774750,506915,523015,26740,29979,12.1
+"12","Nova Scotia",3.9,"00000","Employment income","Males",359600,372455,259970,264370,33357,35676,7.0
+"12","Nova Scotia",3.9,"00000","Employment income","Females",393815,402295,246950,258645,21308,25405,19.2
+"13","New Brunswick",3.9,"00000","Total income","Both sexes",598695,620395,571710,594710,26066,30961,18.8
+"13","New Brunswick",3.9,"00000","Total income","Males",288865,301645,278110,289220,33214,37516,13.0
+"13","New Brunswick",3.9,"00000","Total income","Females",309835,318750,293600,305485,20823,25796,23.9
+"13","New Brunswick",3.9,"00000","After-tax income","Both sexes",598695,620395,571725,594920,23763,28107,18.3
+"13","New Brunswick",3.9,"00000","After-tax income","Males",288865,301645,278070,289240,29297,33169,13.2
+"13","New Brunswick",3.9,"00000","After-tax income","Females",309835,318750,293655,305680,19803,23945,20.9
+"13","New Brunswick",3.9,"00000","Employment income","Both sexes",598695,620395,407880,423915,25497,29124,14.2
+"13","New Brunswick",3.9,"00000","Employment income","Males",288865,301645,212420,219140,31627,34784,10.0
+"13","New Brunswick",3.9,"00000","Employment income","Females",309835,318750,195465,204780,20537,24769,20.6
+"24","Quebec",3.7,"20000","Total income","Both sexes",6145665,6634295,5853255,6417615,28978,32975,13.8
+"24","Quebec",3.7,"20000","Total income","Males",2990700,3260155,2872480,3160600,35652,37842,6.1
+"24","Quebec",3.7,"20000","Total income","Females",3154965,3374145,2980770,3257015,23508,28522,21.3
+"24","Quebec",3.7,"20000","After-tax income","Both sexes",6145665,6634295,5852920,6419175,26640,29535,10.9
+"24","Quebec",3.7,"20000","After-tax income","Males",2990700,3260155,2872080,3160780,31173,33110,6.2
+"24","Quebec",3.7,"20000","After-tax income","Females",3154965,3374145,2980840,3258395,22458,26119,16.3
+"24","Quebec",3.7,"20000","Employment income","Both sexes",6145665,6634295,4217435,4627790,30149,31263,3.7
+"24","Quebec",3.7,"20000","Employment income","Males",2990700,3260155,2216300,2408420,35767,35627,-0.4
+"24","Quebec",3.7,"20000","Employment income","Females",3154965,3374145,2001135,2219370,24776,27219,9.9
+"35","Ontario",3.7,"20000","Total income","Both sexes",9773340,11038440,9312465,10556935,32305,33539,3.8
+"35","Ontario",3.7,"20000","Total income","Males",4720660,5342850,4522685,5115460,40872,39889,-2.4
+"35","Ontario",3.7,"20000","Total income","Females",5052680,5695590,4789780,5441475,25662,28676,11.7
+"35","Ontario",3.7,"20000","After-tax income","Both sexes",9773340,11038440,9310535,10559805,29154,30641,5.1
+"35","Ontario",3.7,"20000","After-tax income","Males",4720660,5342850,4521350,5115825,35782,35753,-0.1
+"35","Ontario",3.7,"20000","After-tax income","Females",5052680,5695590,4789180,5443980,23917,26585,11.2
+"35","Ontario",3.7,"20000","Employment income","Both sexes",9773340,11038440,6975065,7790680,34748,33946,-2.3
+"35","Ontario",3.7,"20000","Employment income","Males",4720660,5342850,3610070,3998330,42322,39490,-6.7
+"35","Ontario",3.7,"20000","Employment income","Females",5052680,5695590,3364995,3792350,28122,29413,4.6
+"46","Manitoba",4.3,"00000","Total income","Both sexes",897755,1001305,861910,954040,28686,34188,19.2
+"46","Manitoba",4.3,"00000","Total income","Males",435535,491590,418960,467790,35451,40379,13.9
+"46","Manitoba",4.3,"00000","Total income","Females",462215,509720,442955,486245,23891,29220,22.3
+"46","Manitoba",4.3,"00000","After-tax income","Both sexes",897755,1001305,861830,954205,25839,30465,17.9
+"46","Manitoba",4.3,"00000","After-tax income","Males",435535,491590,418920,467820,30903,35150,13.7
+"46","Manitoba",4.3,"00000","After-tax income","Females",462215,509720,442910,486385,22234,26561,19.5
+"46","Manitoba",4.3,"00000","Employment income","Both sexes",897755,1001305,648430,722785,28994,33677,16.2
+"46","Manitoba",4.3,"00000","Employment income","Males",435535,491590,336205,374845,34919,39365,12.7
+"46","Manitoba",4.3,"00000","Employment income","Females",462215,509720,312225,347940,24030,28679,19.3
+"47","Saskatchewan",4.8,"00000","Total income","Both sexes",760270,857270,727695,822620,28122,38299,36.2
+"47","Saskatchewan",4.8,"00000","Total income","Males",370635,424245,355690,407715,35034,46117,31.6
+"47","Saskatchewan",4.8,"00000","Total income","Females",389635,433025,372010,414905,23527,31978,35.9
+"47","Saskatchewan",4.8,"00000","After-tax income","Both sexes",760270,857270,727525,822745,25661,34570,34.7
+"47","Saskatchewan",4.8,"00000","After-tax income","Males",370635,424245,355555,407730,30712,40492,31.8
+"47","Saskatchewan",4.8,"00000","After-tax income","Females",389635,433025,371970,415015,22082,29564,33.9
+"47","Saskatchewan",4.8,"00000","Employment income","Both sexes",760270,857270,552945,636950,27247,36612,34.4
+"47","Saskatchewan",4.8,"00000","Employment income","Males",370635,424245,288380,331980,33083,44551,34.7
+"47","Saskatchewan",4.8,"00000","Employment income","Females",389635,433025,264565,304975,22811,30027,31.6
+"48","Alberta",4.7,"20000","Total income","Both sexes",2602405,3206050,2506850,3053470,34236,42717,24.8
+"48","Alberta",4.7,"20000","Total income","Males",1296425,1602690,1257060,1528280,45310,54891,21.1
+"48","Alberta",4.7,"20000","Total income","Females",1305980,1603360,1249790,1525190,25756,33213,29.0
+"48","Alberta",4.7,"20000","After-tax income","Both sexes",2602405,3206050,2506130,3054135,30807,38067,23.6
+"48","Alberta",4.7,"20000","After-tax income","Males",1296425,1602690,1256550,1528420,39302,47131,19.9
+"48","Alberta",4.7,"20000","After-tax income","Females",1305980,1603360,1249585,1525715,24136,30478,26.3
+"48","Alberta",4.7,"20000","Employment income","Both sexes",2602405,3206050,2052735,2473670,35220,42679,21.2
+"48","Alberta",4.7,"20000","Employment income","Males",1296425,1602690,1083380,1301635,46177,54361,17.7
+"48","Alberta",4.7,"20000","Employment income","Females",1305980,1603360,969350,1172035,26027,32982,26.7
+"59","British Columbia",4.9,"20000","Total income","Both sexes",3375870,3870330,3217555,3727360,29468,33012,12.0
+"59","British Columbia",4.9,"20000","Total income","Males",1639455,1882870,1572340,1815505,37488,40370,7.7
+"59","British Columbia",4.9,"20000","Total income","Females",1736415,1987460,1645215,1911860,23650,27543,16.5
+"59","British Columbia",4.9,"20000","After-tax income","Both sexes",3375870,3870330,3216295,3731980,26996,29783,10.3
+"59","British Columbia",4.9,"20000","After-tax income","Males",1639455,1882870,1571525,1819375,33503,35383,5.6
+"59","British Columbia",4.9,"20000","After-tax income","Females",1736415,1987460,1644765,1912605,22413,25659,14.5
+"59","British Columbia",4.9,"20000","Employment income","Both sexes",3375870,3870330,2384510,2775005,30475,31713,4.1
+"59","British Columbia",4.9,"20000","Employment income","Males",1639455,1882870,1230310,1415295,38371,39186,2.1
+"59","British Columbia",4.9,"20000","Employment income","Females",1736415,1987460,1154195,1359715,24226,26034,7.5
+"60","Yukon",6.7,"00100","Total income","Both sexes",24160,28890,23240,27975,37487,45804,22.2
+"60","Yukon",6.7,"00100","Total income","Males",12085,14325,11605,13845,41093,48685,18.5
+"60","Yukon",6.7,"00100","Total income","Females",12070,14570,11630,14130,35372,43192,22.1
+"60","Yukon",6.7,"00100","After-tax income","Both sexes",24160,28890,23235,27975,34029,41235,21.2
+"60","Yukon",6.7,"00100","After-tax income","Males",12085,14325,11600,13840,36030,43240,20.0
+"60","Yukon",6.7,"00100","After-tax income","Females",12070,14570,11630,14135,32008,39353,22.9
+"60","Yukon",6.7,"00100","Employment income","Both sexes",24160,28890,19895,23945,37435,43341,15.8
+"60","Yukon",6.7,"00100","Employment income","Males",12085,14325,10085,11930,40272,45938,14.1
+"60","Yukon",6.7,"00100","Employment income","Females",12070,14570,9810,12015,35413,40804,15.2
+"61","Northwest Territories",7.5,"00100","Total income","Both sexes",30835,32330,29310,31290,41416,50618,22.2
+"61","Northwest Territories",7.5,"00100","Total income","Males",15730,16475,15030,15980,47260,54924,16.2
+"61","Northwest Territories",7.5,"00100","Total income","Females",15105,15855,14280,15310,36055,46322,28.5
+"61","Northwest Territories",7.5,"00100","After-tax income","Both sexes",30835,32330,29285,31290,36895,45254,22.7
+"61","Northwest Territories",7.5,"00100","After-tax income","Males",15730,16475,15015,15980,41265,48505,17.5
+"61","Northwest Territories",7.5,"00100","After-tax income","Females",15105,15855,14270,15310,33070,41935,26.8
+"61","Northwest Territories",7.5,"00100","Employment income","Both sexes",30835,32330,25065,27155,47164,53161,12.7
+"61","Northwest Territories",7.5,"00100","Employment income","Males",15730,16475,13230,14120,53091,57762,8.8
+"61","Northwest Territories",7.5,"00100","Employment income","Females",15105,15855,11835,13025,41341,48970,18.5
+"62","Nunavut",7.9,"00100","Total income","Both sexes",19220,23930,17200,22440,24723,29743,20.3
+"62","Nunavut",7.9,"00100","Total income","Males",9855,12180,8795,11345,26424,28817,9.1
+"62","Nunavut",7.9,"00100","Total income","Females",9370,11755,8405,11090,23668,30326,28.1
+"62","Nunavut",7.9,"00100","After-tax income","Both sexes",19220,23930,17185,22440,23633,28635,21.2
+"62","Nunavut",7.9,"00100","After-tax income","Males",9855,12180,8785,11345,24655,27517,11.6
+"62","Nunavut",7.9,"00100","After-tax income","Females",9370,11755,8400,11095,22613,29403,30.0
+"62","Nunavut",7.9,"00100","Employment income","Both sexes",19220,23930,13385,18590,31296,29724,-5.0
+"62","Nunavut",7.9,"00100","Employment income","Males",9855,12180,7140,9605,34371,30603,-11.0
+"62","Nunavut",7.9,"00100","Employment income","Females",9370,11755,6250,8985,29578,28640,-3.2

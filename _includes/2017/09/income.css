@@ -40,6 +40,16 @@
 	font-size: 10px !important;
 }
 
+.line-male {
+	fill: none;
+	stroke: #0095FF;
+}
+
+.line-female {
+	fill: none;
+	stroke: #FF1D19;
+}
+
 .label-male {
 	fill: #0095FF;
 }
