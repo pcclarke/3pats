@@ -18,20 +18,36 @@
 
 .womenLegend {
 	color: #FF1D19;
-	padding: 0 40px;
+	padding: 0 40px 0 156px;
 }
 
 .menLegend {
 	color: #0095FF;
 }
 
-.slope path {
+.slope {
+	cursor: pointer;
 	stroke-width: 1px;
+	transition: all 0.5s ease;
+}
+
+.slope:hover {
+	stroke-width: 2px;
 }
 
 .slopeLabel text {
 	alignment-baseline: middle;
 	font-size: 10px !important;
+}
+
+.line-male {
+	fill: none;
+	stroke: #0095FF;
+}
+
+.line-female {
+	fill: none;
+	stroke: #FF1D19;
 }
 
 .label-male {
@@ -40,4 +56,8 @@
 
 .label-female {
 	fill: #FF1D19;
+}
+
+.faded {
+	opacity: 0.5;
 }

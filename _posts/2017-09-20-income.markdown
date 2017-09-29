@@ -5,9 +5,21 @@ date:   2017-09-20 13:30:00
 thumbnail: /img/2017/09/incomeThumb.jpg
 ---
 
-Statistics Canada is soliciting visualizations for income census data, and here's my entry.
+Statistics Canada recently released a summary of income data from the 2016 census. They were soliciting visualizations on Twitter, so here's my entry on the subject of shifts in median income by gender and province, including Canada overall.
+
+This data is interesting because there's something for every political stripe in it: 
+- Total income growth was strong in the Northwest Territories, Alberta, the Yukon, and Newfoundland and Labrador
+- Women's total incomes remain well below men's everywhere except Nunavut in 2015
+- Nunavut's gains come entirely from after-tax income; employment income decreased for men and women
+- Despite rapid growth Alberta, the Yukon, and Newfoundland and Labrador, women's incomes don't appear to be catching up to men's
+- Men's employment incomes have decreased in Ontario and Quebec, Canada's two most populous provinces
+
+While the big picture looks positive, Canada's income growth has been very uneven over the period from 2005 to 2015.
 
 * * *
+
+<div class="chartTitle">Median Incomes from 2005-2016 by Sex</div>
+<div class="chartSubTitle">2015 constant dollars</div>
 
 <div id="legend">
 	<select id="incomeType">
@@ -18,9 +30,6 @@ Statistics Canada is soliciting visualizations for income census data, and here'
 	<span class="womenLegend">Women</span>
 	<span class="menLegend">Men</span>
 </div>
-
-<div class="chartTitle">Median Incomes from 2005-2016 by Sex</div>
-<div class="chartSubTitle">2015 constant dollars</div>
 
 <div id="incomes"></div>
 

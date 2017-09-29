@@ -112,6 +112,7 @@ var petroChart = function() {
       d3.select("#petroTip").select("#wageAmount")
 				.text("$" + numFormat(Math.abs(d.value)) + " million dollars");
 
+        console.log(d);
       d3.select(d.budget.line).classed("budget--hover", true);
       d.budget.line.parentNode.appendChild(d.budget.line);
       focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
