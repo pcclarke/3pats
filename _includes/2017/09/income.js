@@ -31,10 +31,30 @@ var type = function(d) {
 }
 
 var setYDomain = function(data, income) {
-  y.domain([d3.min(data, function(c) { return d3.min(c[income], function(d) { return d.value; }); }),
-            d3.max(data, function(c) { return d3.max(c[income], function(d) { return d.value; }); })]);
+  y.domain([d3.min(data, function(c) { return d3.min(c[income].values, function(d) { return d.value; }); }),
+            d3.max(data, function(c) { return d3.max(c[income].values, function(d) { return d.value; }); })]);
 
 }
+
+// var showPopup = function(d, income) {
+//     d3.select("#infoBox")
+//         .style("left", function(e) {
+//             var shift = (d3.event.pageX + 5) + "px";
+//             if (d3.event.pageX > 500) {
+//                 shift = (d3.event.pageX - 330) + "px";
+//             }
+//             return shift;
+//         })
+//         .style("top", (d3.event.pageY - 12) + "px");
+
+//         console.log(d);
+//     d3.select("#region").text(d.region);
+//     d3.select("#sex").text(d.sex);
+//     d3.select("#median2005").text(format(d[income].values[0].value));
+//     d3.select("#median2015").text(format(d[income].values[1].value));
+
+//     d3.select("#infoBox").classed("hidden", false);
+// };
 
 d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type, function(error, rawData) {
 
@@ -184,49 +204,54 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
     var alpha = 0.5;
     var spacing = 12;
 
-    function relax(label) { // Borrowed from: https://www.safaribooksonline.com/blog/2014/03/11/solving-d3-label-placement-constraint-relaxing/
-        again = false;
-        d3.selectAll("." + label).each(function (d, i) {
+    function relax(label) {
+        var again = false;
+        var list = [];
+        var items = d3.selectAll("." + label).each(function(d, i) {
             var re = /,|\(|\)/;
             var a = this,
                 da = d3.select(a),
-                transforma = da.attr("transform"),
-                xPos = +transforma.split(re)[1]
-                y1 = +transforma.split(re)[2];
+                transform = da.attr("transform");
 
-            d3.selectAll("." + label).each(function (d, j) {
-                var b = this;
-                // a & b are the same element and don't collide.
-                if (a == b) return;
-                var db = d3.select(b);
-                // a & b are on opposite sides of the chart and
-                // don't collide
-                // if (da.attr("text-anchor") != db.attr("text-anchor")) return;
-                // Now let's calculate the distance between
-                // these elements. 
-
-                transformb = db.attr("transform")
-                y2 = +transformb.split(re)[2];
-                var deltaY = y1 - y2;
-                
-                // If spacing is greater than our specified spacing,
-                // they don't collide.
-                if (Math.abs(deltaY) > spacing) return;
-                
-                // If the labels collide, we'll push each 
-                // of the two labels up and down a little bit.
-                again = true;
-                var sign = deltaY > 0 ? 1 : -1;
-                var adjust = sign * alpha;
-                da.attr("transform", "translate(" + xPos + "," + (+y1 + adjust) + ")");
-                db.attr("transform", "translate(" + xPos + "," + (+y2 - adjust) + ")");
+            list.push({
+                that: a,
+                elem: da,
+                transform: transform,
+                xPos: +transform.split(re)[1],
+                y: +transform.split(re)[2]
             });
         });
-        // Adjust our line leaders here
-        // so that they follow the labels. 
-        if(again) {
-            relax(label);
+
+        function adjustY() {
+            again = false;
+
+            for (var i = 0; i < list.length; i++) {
+                for (var j = list.length - 1; j > 0; j--) {
+                      if (list[i].that == list[j].that) continue;
+       
+                      var deltaY = list[i].y - list[j].y;
+                      
+                      if (Math.abs(deltaY) > spacing) continue;
+                      
+                      again = true;
+                      var sign = deltaY > 0 ? 1 : -1;
+                      var adjust = sign * alpha;
+
+                      list[i].y = list[i].y + adjust;
+                      list[j].y = list[j].y - adjust;
+                }
+            }
+
+            if(again) {
+                adjustY();
+            }
         }
+
+        adjustY();
+
+        list.forEach(function(d) {
+            d.elem.attr("transform", "translate(" + d.xPos + "," + d.y + ")");
+        });
     }
 
     relax("label-left");
@@ -238,7 +263,11 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
 
             setYDomain(data, incomeType);
 
-            lines.attr("d", function(d) { return line(d[incomeType].values); });
+            lines
+              // .transition()
+              // .duration(1000)
+              // .ease(d3.easeLinear)
+              .attr("d", function(d) { return line(d[incomeType].values); });
             leftLabels.attr("transform", function(d) {
                 return "translate(" + x(2005) + "," + y(d[incomeType].values[0].value) + ")";
             });

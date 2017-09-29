@@ -9,6 +9,9 @@ Statistics Canada is soliciting visualizations for income census data, and here'
 
 * * *
 
+<div class="chartTitle">Median Incomes from 2005-2016 by Sex</div>
+<div class="chartSubTitle">2015 constant dollars</div>
+
 <div id="legend">
 	<select id="incomeType">
 		<option value="totalIncome" selected>Total income</option>
@@ -18,9 +21,6 @@ Statistics Canada is soliciting visualizations for income census data, and here'
 	<span class="womenLegend">Women</span>
 	<span class="menLegend">Men</span>
 </div>
-
-<div class="chartTitle">Median Incomes from 2005-2016 by Sex</div>
-<div class="chartSubTitle">2015 constant dollars</div>
 
 <div id="incomes"></div>
 
