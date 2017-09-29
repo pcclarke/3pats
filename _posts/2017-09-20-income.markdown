@@ -18,7 +18,7 @@ While the big picture looks positive, Canada's income growth has been very uneve
 
 * * *
 
-<div class="chartTitle">Median Incomes from 2005-2016 by Sex</div>
+<div class="chartTitle">Median Incomes from 2005-2015 by Sex</div>
 <div class="chartSubTitle">2015 constant dollars</div>
 
 <div id="legend">
