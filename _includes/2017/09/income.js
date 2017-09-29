@@ -37,7 +37,6 @@ var type = function(d) {
 var setYDomain = function(data, income) {
   y.domain([d3.min(data, function(c) { return d3.min(c[income].values, function(d) { return d.value; }); }),
             d3.max(data, function(c) { return d3.max(c[income].values, function(d) { return d.value; }); })]);
-
 }
 
 // var showPopup = function(d, income) {
@@ -60,147 +59,200 @@ var setYDomain = function(data, income) {
 //     d3.select("#infoBox").classed("hidden", false);
 // };
 
-d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type, function(error, rawData) {
+var relax = function (label, year, income, trans) {
+    var again = false;
+    var list = [];
+    var items = d3.selectAll("." + label).each(function(d, i) {
+        var that = this,
+            elem = d3.select(that);
 
-  var entries = d3.nest()
-    .key(function(d) { return d["Income source"]; })
-    .rollup(function(d) {
-        var items = [];
-
-        d.forEach(function(e) {
-            items.push({
-                region: e["Geographic name"],
-                sex: e.Sex,
-                values: [
-                    {year: 2005, value: e["Median amount (2015 constant dollars), 2005"]},
-                    {year: 2015, value: e["Median amount (2015 constant dollars), 2015"]}
-                ],
-                change: e["Median amount (2015 constant dollars), % change"]
-            });
+        list.push({
+            that: that,
+            elem: elem,
+            y: y(d[income].values[year === 2005 ? 0 : 1].value)
         });
-        return items;
-    })
-    .entries(rawData);
+    });
 
-    var data = [];
-    for (var i = 0; i < entries[0].value.length; i++) {
-        if (entries[0].value[i].sex === "Males" || entries[0].value[i].sex === "Females") {
-            var item = {
-                region: entries[0].value[i].region,
-                sex: entries[0].value[i].sex
-            };
+    var alpha = 0.5;
+    var spacing = 12;
 
-            for (var j = 0; j < entries.length; j++) {
-                var key = function(d) {
-                    if (entries[j].key === "Total income") {
-                        return "totalIncome";
-                    } else if (entries[j].key === "After-tax income") {
-                        return "afterTaxIncome";
-                    }
-                    return "employmentIncome";
-                }();
-                item[key] = {};
-                item[key].values = entries[j].value[i].values;
-                item[key].change = entries[j].value[i].change;
+    function adjustY() {
+        again = false;
+
+        for (var i = 0; i < list.length; i++) {
+            for (var j = list.length - 1; j > 0; j--) {
+                if (list[i].that == list[j].that) continue;
+
+                var deltaY = list[i].y - list[j].y;
+                
+                if (Math.abs(deltaY) > spacing) continue;
+                
+                again = true;
+                var sign = deltaY > 0 ? 1 : -1;
+                var adjust = sign * alpha;
+
+                list[i].y = list[i].y + adjust;
+                list[j].y = list[j].y - adjust;
             }
+        }
 
-            data.push(item);
+        if(again) {
+            adjustY();
         }
     }
 
-    x.domain([2005, 2015]);
-    setYDomain(data, "totalIncome");
- 
-    svg.append("text")
-        .attr("fill", "#000")
-        .attr("x", -10)
-        .attr("y", -30)
-        .attr("text-anchor", "end")
-        .text("2005");
+    adjustY();
 
-    svg.append("text")
-        .attr("fill", "#000")
-        .attr("transform", "translate(" + width + ", 0)")
-        .attr("x", 10)
-        .attr("y", -30)
-        .attr("text-anchor", "start")
-        .text("2015");
-
-    var slope = svg.append("g")
-        .attr("class", "slopeGroup")
-        .selectAll("path")
-        .data(data)
-        .enter()
-      .append("g")
-        .attr("class", function(d) {
-            d.slope = this;
-            return "slope";
-        })
-        .on("mouseover", function(d) {
-            if (d.slope) {
-                d.slope.parentNode.appendChild(d.slope);
-            }
-            d3.selectAll(".slope").classed("faded", true);
-            d3.select(this).classed("faded", false);
-        })
-        .on("mouseout", function(d) {
-            d3.selectAll(".slope").classed("faded", false);
+    if (trans) {
+        list.forEach(function(d) {
+            d.elem.transition()
+                .duration(1000)
+                .ease(d3.easeLinear)
+                .attr("transform", "translate(" + x(year) + "," + d.y + ")");
         });
+    } else {
+        list.forEach(function(d) {
+            d.elem.attr("transform", "translate(" + x(year) + "," + d.y + ")");
+        });
+    }
+}
 
-    var lines = slope.append("path")
-        .attr("class", function(d) {
-          if (d.sex === "Males") {
-            return "line-male";
-          } 
-          if (d.sex === "Females") {
-            return "line-female";
+d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type, function(error, rawData) {
+
+    var entries = d3.nest()
+      .key(function(d) { return d["Income source"]; })
+      .rollup(function(d) {
+          var items = [];
+
+          d.forEach(function(e) {
+              items.push({
+                  region: e["Geographic name"],
+                  sex: e.Sex,
+                  values: [
+                      {year: 2005, value: e["Median amount (2015 constant dollars), 2005"]},
+                      {year: 2015, value: e["Median amount (2015 constant dollars), 2015"]}
+                  ],
+                  change: e["Median amount (2015 constant dollars), % change"]
+              });
+          });
+          return items;
+      })
+      .entries(rawData);
+
+      var data = [];
+      for (var i = 0; i < entries[0].value.length; i++) {
+          if (entries[0].value[i].sex === "Males" || entries[0].value[i].sex === "Females") {
+              var item = {
+                  region: entries[0].value[i].region,
+                  sex: entries[0].value[i].sex
+              };
+
+              for (var j = 0; j < entries.length; j++) {
+                  var key = function(d) {
+                      if (entries[j].key === "Total income") {
+                          return "totalIncome";
+                      } else if (entries[j].key === "After-tax income") {
+                          return "afterTaxIncome";
+                      }
+                      return "employmentIncome";
+                  }();
+                  item[key] = {};
+                  item[key].values = entries[j].value[i].values;
+                  item[key].change = entries[j].value[i].change;
+              }
+
+              data.push(item);
           }
-          return "line-both";
-        })
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("d", function(d) { return lineStart(d.totalIncome.values); });
+      }
 
-    lines.transition()
-        .duration(1000)
-        .ease(d3.easeLinear)
-        .attr("d", function(d) { return line(d.totalIncome.values); });
+      x.domain([2005, 2015]);
+      setYDomain(data, "totalIncome");
+   
+      svg.append("text")
+          .attr("fill", "#000")
+          .attr("x", -10)
+          .attr("y", -30)
+          .attr("text-anchor", "end")
+          .text("2005");
 
-    var leftLabels = slope.append("g")
-        .attr("class", function(d) {
+      svg.append("text")
+          .attr("fill", "#000")
+          .attr("transform", "translate(" + width + ", 0)")
+          .attr("x", 10)
+          .attr("y", -30)
+          .attr("text-anchor", "start")
+          .text("2015");
+
+      var slope = svg.append("g")
+          .attr("class", "slopeGroup")
+          .selectAll("path")
+          .data(data)
+          .enter()
+        .append("g")
+          .attr("class", function(d) {
+              d.slope = this;
+              return "slope";
+          })
+          .on("mouseover", function(d) {
+              if (d.slope) {
+                  d.slope.parentNode.appendChild(d.slope);
+              }
+              d3.selectAll(".slope").classed("faded", true);
+              d3.select(this).classed("faded", false);
+          })
+          .on("mouseout", function(d) {
+              d3.selectAll(".slope").classed("faded", false);
+          });
+
+      var lines = slope.append("path")
+          .attr("class", function(d) {
             if (d.sex === "Males") {
-                return "slopeLabel label-left label-male";
+              return "line-male";
             } 
             if (d.sex === "Females") {
-                return "slopeLabel label-left label-female";
+              return "line-female";
             }
-        })
-        .attr("transform", function(d) {
-            return "translate(" + x(2005) + "," + 0 + ")";
-        });
+            return "line-both";
+          })
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-linecap", "round")
+          .attr("d", function(d) { return line(d.totalIncome.values); });
 
-    var leftRegionLabels = leftLabels.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", -55)
-        .text(function(d) { return d.region; });
+      var leftLabels = slope.append("g")
+          .attr("class", function(d) {
+              if (d.sex === "Males") {
+                  return "slopeLabel label-left label-male";
+              } 
+              if (d.sex === "Females") {
+                  return "slopeLabel label-left label-female";
+              }
+          })
+          .attr("transform", function(d) {
+              return "translate(" + x(2005) + "," + 0 + ")";
+          });
 
-    var leftValueLabels = leftLabels.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", -10)
-        .text(function(d) { return format(d.totalIncome.values[0].value); });
+      var leftRegionLabels = leftLabels.append("text")
+          .attr("text-anchor", "end")
+          .attr("x", -55)
+          .text(function(d) { return d.region; });
 
-    var rightLabels = slope.append("g")
-        .attr("class", function(d) {
-            if (d.sex === "Males") {
-                return "slopeLabel label-right label-male";
-            } 
-            if (d.sex === "Females") {
-                return "slopeLabel label-right label-female";
-            }
-        })
-        .attr("transform", function(d) {
-            return "translate(" + x(2015) + "," + 0 + ")";
-        });
+      var leftValueLabels = leftLabels.append("text")
+          .attr("text-anchor", "end")
+          .attr("x", -10)
+          .text(function(d) { return format(d.totalIncome.values[0].value); });
+
+      var rightLabels = slope.append("g")
+          .attr("class", function(d) {
+              if (d.sex === "Males") {
+                  return "slopeLabel label-right label-male";
+              } 
+              if (d.sex === "Females") {
+                  return "slopeLabel label-right label-female";
+              }
+          })
+          .attr("transform", function(d) {
+              return "translate(" + x(2015) + "," + 0 + ")";
+          });
 
       var rightRegionLabels = rightLabels.append("text")
           .attr("x", 55)
@@ -210,77 +262,24 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
           .attr("x", 10)
           .text(function(d) { return format(d.totalIncome.values[1].value); });
 
-    var alpha = 0.5;
-    var spacing = 12;
+      relax("label-left", 2005, "totalIncome", false);
+      relax("label-right", 2015, "totalIncome", false);
 
-    function relax(label, year, income) {
-        var again = false;
-        var list = [];
-        var items = d3.selectAll("." + label).each(function(d, i) {
-            var a = this,
-                elem = d3.select(a);
+      d3.select("#incomeType")
+          .on("change", function(sel) {
+              var incomeType = this.options[this.selectedIndex].value;
 
-            list.push({
-                that: a,
-                elem: elem,
-                xPos: x(year),
-                y: y(d[income].values[year === 2005 ? 0 : 1].value)
-            });
-        });
+              setYDomain(data, incomeType);
 
-        function adjustY() {
-            again = false;
+              lines.transition()
+                .duration(1000)
+                .ease(d3.easeLinear)
+                .attr("d", function(d) { return line(d[incomeType].values); });
 
-            for (var i = 0; i < list.length; i++) {
-                for (var j = list.length - 1; j > 0; j--) {
-                      if (list[i].that == list[j].that) continue;
-       
-                      var deltaY = list[i].y - list[j].y;
-                      
-                      if (Math.abs(deltaY) > spacing) continue;
-                      
-                      again = true;
-                      var sign = deltaY > 0 ? 1 : -1;
-                      var adjust = sign * alpha;
+              leftValueLabels.text(function(d) { return format(d[incomeType].values[0].value); });
+              rightValueLabels.text(function(d) { return format(d[incomeType].values[1].value); });
 
-                      list[i].y = list[i].y + adjust;
-                      list[j].y = list[j].y - adjust;
-                }
-            }
-
-            if(again) {
-                adjustY();
-            }
-        }
-
-        adjustY();
-
-        list.forEach(function(d) {
-            d.elem.transition()
-              .duration(1000)
-              .ease(d3.easeLinear)
-              .attr("transform", "translate(" + d.xPos + "," + d.y + ")");
-        });
-    }
-
-    relax("label-left", 2005, "totalIncome");
-    relax("label-right", 2015, "totalIncome");
-
-    d3.select("#incomeType")
-        .on("change", function(sel) {
-            var incomeType = this.options[this.selectedIndex].value;
-
-            setYDomain(data, incomeType);
-
-            lines.transition()
-              .duration(1000)
-              .ease(d3.easeLinear)
-              .attr("d", function(d) { return line(d[incomeType].values); });
-
-            leftValueLabels.text(function(d) { return format(d[incomeType].values[0].value); });
-            rightValueLabels.text(function(d) { return format(d[incomeType].values[1].value); });
-
-            relax("label-left", 2005, incomeType);
-            relax("label-right", 2015, incomeType);
-        });
+              relax("label-left", 2005, incomeType, true);
+              relax("label-right", 2015, incomeType, true);
+          });
 });
