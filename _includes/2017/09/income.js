@@ -10,6 +10,10 @@ var y = d3.scaleLinear()
 
 var format = d3.format(",");
 
+var lineStart = d3.line()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return 0; });
+
 var line = d3.line()
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.value); });
@@ -155,6 +159,11 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
         })
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
+        .attr("d", function(d) { return lineStart(d.totalIncome.values); });
+
+    lines.transition()
+        .duration(1000)
+        .ease(d3.easeLinear)
         .attr("d", function(d) { return line(d.totalIncome.values); });
 
     var leftLabels = slope.append("g")
@@ -167,7 +176,7 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
             }
         })
         .attr("transform", function(d) {
-            return "translate(" + x(2005) + "," + y(d.totalIncome.values[0].value) + ")";
+            return "translate(" + x(2005) + "," + 0 + ")";
         });
 
     var leftRegionLabels = leftLabels.append("text")
@@ -190,7 +199,7 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
             }
         })
         .attr("transform", function(d) {
-            return "translate(" + x(2015) + "," + y(d.totalIncome.values[1].value) + ")";
+            return "translate(" + x(2015) + "," + 0 + ")";
         });
 
       var rightRegionLabels = rightLabels.append("text")
@@ -204,21 +213,18 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
     var alpha = 0.5;
     var spacing = 12;
 
-    function relax(label) {
+    function relax(label, year, income) {
         var again = false;
         var list = [];
         var items = d3.selectAll("." + label).each(function(d, i) {
-            var re = /,|\(|\)/;
             var a = this,
-                da = d3.select(a),
-                transform = da.attr("transform");
+                elem = d3.select(a);
 
             list.push({
                 that: a,
-                elem: da,
-                transform: transform,
-                xPos: +transform.split(re)[1],
-                y: +transform.split(re)[2]
+                elem: elem,
+                xPos: x(year),
+                y: y(d[income].values[year === 2005 ? 0 : 1].value)
             });
         });
 
@@ -250,12 +256,15 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
         adjustY();
 
         list.forEach(function(d) {
-            d.elem.attr("transform", "translate(" + d.xPos + "," + d.y + ")");
+            d.elem.transition()
+              .duration(1000)
+              .ease(d3.easeLinear)
+              .attr("transform", "translate(" + d.xPos + "," + d.y + ")");
         });
     }
 
-    relax("label-left");
-    relax("label-right");
+    relax("label-left", 2005, "totalIncome");
+    relax("label-right", 2015, "totalIncome");
 
     d3.select("#incomeType")
         .on("change", function(sel) {
@@ -263,21 +272,15 @@ d3.csv("{{ site.baseurl }}/data/2017/09/98-402-X2016006-T2-CANPR-Eng.CSV", type,
 
             setYDomain(data, incomeType);
 
-            lines
-              // .transition()
-              // .duration(1000)
-              // .ease(d3.easeLinear)
+            lines.transition()
+              .duration(1000)
+              .ease(d3.easeLinear)
               .attr("d", function(d) { return line(d[incomeType].values); });
-            leftLabels.attr("transform", function(d) {
-                return "translate(" + x(2005) + "," + y(d[incomeType].values[0].value) + ")";
-            });
+
             leftValueLabels.text(function(d) { return format(d[incomeType].values[0].value); });
-            rightLabels.attr("transform", function(d) {
-                return "translate(" + x(2015) + "," + y(d[incomeType].values[1].value) + ")";
-            });
             rightValueLabels.text(function(d) { return format(d[incomeType].values[1].value); });
 
-            relax("label-left");
-            relax("label-right");
+            relax("label-left", 2005, incomeType);
+            relax("label-right", 2015, incomeType);
         });
 });
